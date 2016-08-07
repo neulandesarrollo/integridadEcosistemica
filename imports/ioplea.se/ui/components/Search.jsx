@@ -51,7 +51,7 @@ class Search extends Component {
 
   render() {
     return (
-      <form className='m-t-2'>
+      <form className='m-t-2' id='ioplease-search'>
         <div className="form-group">
           <Autocomplete
             inputProps={{

@@ -3,7 +3,7 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const App = (props) => (
-  <div id="ioPlease">
+  <div id="ioplease">
     {props.main}
   </div>
 );

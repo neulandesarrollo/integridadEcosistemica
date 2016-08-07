@@ -1,4 +1,26 @@
-a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
+html, body, #ioplease {
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  font-family: 'Poiret One', cursive;
+  position: relative;
+}
+
+.ioplease-banner-full {
+  position: fixed;
+  background-image: url('/hands-full.jpg');
+  width: 100%;
+  height: 100%;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+
+
+/*a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
   text-decoration: none;
   color: #000;
 }
@@ -40,6 +62,7 @@ a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
 }
 
 /* IE 6 */
+/*
 * html #ioplease-footer {
   position: absolute;
   top:expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
@@ -68,4 +91,4 @@ html, body, #render-target, #render-target > div , #ioplease {
   height:100%;
   min-height: 100%;
   width:100%;
-}
+}*/
