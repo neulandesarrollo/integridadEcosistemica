@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Stuffs } from '../../../common/collections/stuffs.js';
-import { Compatibilities } from '../../../common/collections/compatibilities.js';
+import { Stuffs } from '../../common/collections/stuffs.js';
+import { Compatibilities } from '../../common/collections/compatibilities.js';
 
 class Results extends Component {
   renderOptional(stuff, fieldName, title) {

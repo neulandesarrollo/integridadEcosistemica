@@ -26,3 +26,4 @@ accounts-ui@1.1.9
 accounts-password@1.2.12
 session@1.1.6
 simple:rest
+kadira:flow-router

@@ -3,7 +3,7 @@ import Footer from '../components/Footer.jsx';
 import Results from '../components/Results.jsx';
 import Search from '../components/Search.jsx';
 
-export default class Index extends Component {
+export default class IndexPage extends Component {
   constructor(props) {
     super(props);
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import Autocomplete from 'react-autocomplete';
-import { Things } from '../../../common/collections/things.js';
+
+import { Things } from '../../common/collections/things.js';
 
 const styles = {
   item: {
