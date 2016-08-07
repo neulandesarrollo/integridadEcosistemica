@@ -24,19 +24,24 @@ export default class IndexPage extends Component {
     this.setState({query, thingId})
   }
 
+  renderSearchDiv() {
+    return (
+      <div className="container-fluid text-xs-center">
+        <h1 className='ioplease-title'><stong>Do stuff</stong> with your IoThings</h1>
+        <div className="row">
+          <div className="col-xs-12 col-sm-10 offset-sm-1 col-md-6 offset-md-3">
+            <Search setQuery={this.setQuery.bind(this)}/>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   renderWQuery() {
     return (
       <div id='ioplease-index'>
         <div className="ioplease-banner">
-          <div className="container-fluid text-xs-center">
-            <div className="row">
-              <div className="col-xs-12 col-sm-10 offset-sm-1 col-md-6 offset-md-3">
-                <h1 className='ioplease-title'><stong>Do stuff</stong> with your IoThings</h1>
-
-                <Search setQuery={this.setQuery.bind(this)}/>
-              </div>
-            </div>
-          </div>
+          {this.renderSearchDiv()}
         </div>
 
         <div className="container-fluid text-xs-center" id='content'>
@@ -60,16 +65,7 @@ export default class IndexPage extends Component {
     return (
       <div id='ioplease-index'>
         <div className="ioplease-banner-full">
-          <div className="container-fluid text-xs-center">
-            <div className="row">
-              <div className="col-xs-12 col-sm-10 offset-sm-1 col-md-6 offset-md-3">
-                <h1 className='ioplease-title'><stong>Do stuff</stong> with your IoT</h1>
-
-                <Search setQuery={this.setQuery.bind(this)}/>
-
-              </div>
-            </div>
-          </div>
+          {this.renderSearchDiv()}
         </div>
 
         <div id="ioplease-footer">
@@ -83,7 +79,7 @@ export default class IndexPage extends Component {
 
   render() {
     if(this.hasQuery()) {
-      return <h1>With Query</h1>//this.renderWQuery();
+      return this.renderWQuery();
     } else {
       return this.renderWOQuery();
     }

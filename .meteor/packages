@@ -27,3 +27,4 @@ accounts-password@1.2.12
 session@1.1.6
 simple:rest
 kadira:flow-router
+matb33:collection-hooks

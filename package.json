@@ -5,6 +5,7 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "algoliasearch": "^3.18.0",
     "mapbox": "^1.0.0-beta3",
     "mapbox-gl": "^0.21.0",
     "mapbox-gl-draw": "^0.11.13",

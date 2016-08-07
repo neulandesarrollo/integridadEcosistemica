@@ -18,13 +18,6 @@ html, body, #ioplease {
   background-position: center center;
 }
 
-
-
-/*a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
-  text-decoration: none;
-  color: #000;
-}
-
 .ioplease-banner {
   position: fixed;
   background-image: url('/hands.jpg');
@@ -37,21 +30,20 @@ html, body, #ioplease {
   background-position: center center;
 }
 
-.ioplease-banner-full {
-  position: fixed;
-  background-image: url('/hands-full.jpg');
-  width: 100%;
-  height: 100%;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.ioplease-title {
+.ioplease-title, .ioplease-hint {
   color: #fff;
 }
+
+div.ioplease-search-box, #iothing-autocomplete {
+  /*gba(150, 132, 115, 0.58);*/
+  background-color: rgba(137, 121, 112, 0.4);
+}
+
+/*a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
+  text-decoration: none;
+  color: #000;
+}
+
 
 #ioplease-footer {
   height: 8rem;

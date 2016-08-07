@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import Autocomplete from 'react-autocomplete';
 
@@ -31,6 +32,10 @@ class Search extends Component {
     };
   }
 
+  componentDidMount() {
+    ReactDOM.findDOMNode(this.refs.iopleaseSearchAutocomplete).focus();
+  }
+
   handleSearch(event, value, thingId) {
     if(event)
       event.preventDefault()
@@ -61,7 +66,8 @@ class Search extends Component {
                 type: "text",
               }}
               wrapperStyle={{}}
-              ref="autocomplete"
+              wrapperProps={{className: 'ioplease-search-box'}}
+              ref="iopleaseSearchAutocomplete"
               value={this.state.value}
               items={this.props.things}
               getItemValue={(item) => item.name}
@@ -69,12 +75,11 @@ class Search extends Component {
                 // set the menu to only the selected item
                 this.setState({ value, things: [ item ] })
                 this.handleSearch(undefined, value, item._id)
-
               }}
               onChange={this.handleSearch.bind(this)}
               renderItem={this.renderItem.bind(this)}
           />
-          <small id="iothing-help" className="form-text text-muted">Device name, manufacturer, etc.</small>
+        <small className="form-text ioplease-hint">Device name, manufacturer, etc.</small>
         </div>
       </form>
     );
