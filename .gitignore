@@ -1,0 +1,5 @@
+node_modules/
+settings
+packages/bootstrap
+scripts
+imports/ioplea.se/server/fixtures
