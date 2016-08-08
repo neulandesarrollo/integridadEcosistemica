@@ -5,7 +5,7 @@ import { Things } from '../common/collections/things.js';
 Meteor.startup(() => {
   console.log('Setting attributesToIndex');
   const client = algoliasearch(
-    Meteor.settings.AGOLIA_SEARCH.applicationID,
+    Meteor.settings.public.AGOLIA_SEARCH.applicationID,
     Meteor.settings.AGOLIA_SEARCH.apiKey
   );
 
@@ -25,7 +25,7 @@ Meteor.startup(() => {
 Things.after.insert((thingId, doc) => {
   console.log('Adding Thing to Algolia index');
   const client = algoliasearch(
-    Meteor.settings.AGOLIA_SEARCH.applicationID,
+    Meteor.settings.public.AGOLIA_SEARCH.applicationID,
     Meteor.settings.AGOLIA_SEARCH.apiKey
   );
 

@@ -39,6 +39,10 @@ div.ioplease-search-box, #iothing-autocomplete {
   background-color: rgba(137, 121, 112, 0.4);
 }
 
+#iothing-autocomplete {
+  color: rgba(255, 255, 255, 1);
+}
+
 /*a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
   text-decoration: none;
   color: #000;

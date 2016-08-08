@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import Autocomplete from 'react-autocomplete';
+// import algoliasearch from 'algoliasearch';
+
 
 import { Things } from '../../common/collections/things.js';
 
@@ -28,7 +30,8 @@ class Search extends Component {
     super(props);
 
     this.state = {
-      value: ''
+      value: '',
+      things: props.things
     };
   }
 
@@ -37,10 +40,28 @@ class Search extends Component {
   }
 
   handleSearch(event, value, thingId) {
+    const thiz = this;
+
     if(event)
       event.preventDefault()
 
-    const thiz = this;
+    const client = window.algoliasearch(
+      Meteor.settings.public.AGOLIA_SEARCH.applicationID,
+      Meteor.settings.public.AGOLIA_SEARCH.searchApiKey
+    );
+
+    const thingsIndex = client.initIndex('things');
+
+    thingsIndex.search(value, (err, content) => {
+      if (err) {
+        // console.error(err);
+        return;
+      }
+
+      thiz.setState({things: content.hits})
+    });
+
+
     this.setState({ value })
 
     this.props.setQuery(value, thingId);
@@ -69,7 +90,7 @@ class Search extends Component {
               wrapperProps={{className: 'ioplease-search-box'}}
               ref="iopleaseSearchAutocomplete"
               value={this.state.value}
-              items={this.props.things}
+              items={this.state.things}
               getItemValue={(item) => item.name}
               onSelect={(value, item) => {
                 // set the menu to only the selected item
