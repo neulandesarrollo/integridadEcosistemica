@@ -24,7 +24,7 @@ aldeed:simple-schema
 http@1.2.8
 accounts-ui@1.1.9
 accounts-password@1.2.12
-session@1.1.6
+session
 simple:rest
 kadira:flow-router
 matb33:collection-hooks

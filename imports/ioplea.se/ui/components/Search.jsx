@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Session } from 'meteor/session'
 import { createContainer } from 'meteor/react-meteor-data';
 import Autocomplete from 'react-autocomplete';
 // import algoliasearch from 'algoliasearch';
@@ -35,13 +36,20 @@ class Search extends Component {
     };
   }
 
+  componentWillReceiveProps(newProps) {
+    const isThingsDefault = "isDefault" in this.state.things[0]
+
+    if(isThingsDefault && newProps.things.length > 0) {
+      this.setState({things: newProps.things})
+    }
+  }
+
   componentDidMount() {
     ReactDOM.findDOMNode(this.refs.iopleaseSearchAutocomplete).focus();
   }
 
   handleSearch(event, value, thingId) {
     const thiz = this;
-
     if(event)
       event.preventDefault()
 
@@ -108,10 +116,25 @@ class Search extends Component {
 }
 
 export default createContainer(({setQuery}) => {
-  Meteor.subscribe("things");
+  Session.setDefault("hits", [{name: "Loading...", isDefault: true}]);
+
+  const client = window.algoliasearch(
+    Meteor.settings.public.AGOLIA_SEARCH.applicationID,
+    Meteor.settings.public.AGOLIA_SEARCH.searchApiKey
+  );
+
+  const thingsIndex = client.initIndex('things');
+
+  thingsIndex.search("", (err, content) => {
+    if (err) {
+      // console.error(err);
+      return;
+    }
+    Session.set("hits", content.hits)
+  });
 
   return {
-    things: Things.find().fetch(),
+    things: Session.get("hits"),
     setQuery
   };
 }, Search);
