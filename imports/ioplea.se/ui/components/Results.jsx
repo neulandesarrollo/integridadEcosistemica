@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import KindsBadges from './KindsBadges.jsx';
 import { Stuffs } from '../../common/collections/stuffs.js';
 import { Compatibilities } from '../../common/collections/compatibilities.js';
 
@@ -14,13 +15,14 @@ class Results extends Component {
       <div key={stuff._id} className='col-lg-4 col-sm-6 col-xs-12'>
         <a href={stuff.url} className='stuff-card'>
           <div className="card">
-            <img className="card-img-top img-fluid m-x-auto" src={stuff.iconUrl} alt={stuff.name} />
+            <img className="card-img-top m-x-auto ioplease-stuff-img m-t-1" src={stuff.iconUrl} alt={stuff.name} />
             <div className="card-block">
               <h4 className="card-title"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h4>
               <p className="card-text">{stuff.description}</p>
               {_.has(stuff, "version") ? <p>Version: {stuff.version}</p> : null}
               {_.has(stuff, "popularity") ? <p>Rating: {stuff.popularity}</p> : null}
               {_.has(stuff, "updatedAt") ? <p>Updated: {stuff.updatedAt}</p> : null}
+              <KindsBadges stuffId={stuff._id} />
             </div>
           </div>
         </a>
