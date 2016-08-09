@@ -58,11 +58,15 @@ export default createContainer(({query, thingId}) => {
     const stuffsHandle = Meteor.subscribe("stuffs.list", compats);
 
     if(stuffsHandle.ready()) {
+      console.log("stuffs ready");
+
       loading = false;
       stuffs = Stuffs.find().fetch()
     }
-
   }
+
+  console.log("stuffs");
+  console.log(stuffs);
 
   return {
     stuffs,

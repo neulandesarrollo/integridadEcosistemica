@@ -40,3 +40,21 @@ Things.after.insert((thingId, doc) => {
     }
   });
 });
+
+export function resetIndices() {
+  console.log('resetting all indices');
+
+  const client = algoliasearch(
+    Meteor.settings.public.AGOLIA_SEARCH.applicationID,
+    Meteor.settings.AGOLIA_SEARCH.apiKey
+  );
+
+  const thingsIndex = client.initIndex('things');
+  thingsIndex.deleteByQuery('', error => {
+    console.log(error);
+    if (!error) {
+      console.log('successfully deleted all indices');
+    }
+  });
+
+}
