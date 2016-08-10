@@ -49,10 +49,12 @@ div.ioplease-search-box, #iothing-autocomplete {
   z-index: 100;
   height: 100%;
   overflow: hidden;
+  padding-bottom: 8rem;
 }
 
 .ioplease-stuff-img {
   height: 10rem;
+  max-height: 10rem;
 }
 
 a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
