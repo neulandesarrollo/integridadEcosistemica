@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import KindsBadges from './KindsBadges.jsx';
+import Loading from './Loading.jsx';
+
 import { Stuffs } from '../../common/collections/stuffs.js';
 import { Compatibilities } from '../../common/collections/compatibilities.js';
 
@@ -58,7 +60,7 @@ class Results extends Component {
 
   render() {
     if(this.props.loading) {
-      return <h1>Loading...</h1>
+      return <Loading />
     } else {
       return (
         <div>
