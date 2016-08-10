@@ -37,7 +37,7 @@ class Search extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const isThingsDefault = "isDefault" in this.state.things[0]
+    const isThingsDefault = (this.state.things.length > 0) && ("isDefault" in this.state.things[0])
 
     if(isThingsDefault && newProps.things.length > 0) {
       this.setState({things: newProps.things})
@@ -67,6 +67,9 @@ class Search extends Component {
       }
 
       thiz.setState({things: content.hits})
+
+      if(content.hits.length > 0)
+        this.props.setQuery(value, content.hits[0]._id);
     });
 
 
@@ -133,8 +136,13 @@ export default createContainer(({setQuery}) => {
     Session.set("hits", content.hits)
   });
 
+  let things = Session.get("hits")
+  if(things.length === 0) {
+
+  }
+
   return {
-    things: Session.get("hits"),
+    things,
     setQuery
   };
 }, Search);
