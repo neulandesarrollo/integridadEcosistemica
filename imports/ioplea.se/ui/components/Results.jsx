@@ -12,6 +12,15 @@ class Results extends Component {
     return _.has(stuff, fieldName) ? <p>{title}: {stuff[fieldName]}</p> : null;
   }
 
+  componentWillReceiveProps(newProps) {
+    const currentStuffsL = this.props.stuffs.length
+    const newStuffsL = newProps.stuffs.length
+
+    if(currentStuffsL !== newStuffsL) {
+      this.props.setStuffCount(newStuffsL)
+    }
+  }
+
   renderStuff(stuff) {
     return (
       <div key={stuff._id} className='col-lg-4 col-sm-6 col-xs-12'>
@@ -30,10 +39,6 @@ class Results extends Component {
         </a>
       </div>
     )
-  }
-
-  renderResultsCount() {
-    return this.props.stuffs.length == 1 ? "result" : "results"
   }
 
   renderStuffRowEvery(stuffs, n) {
@@ -64,7 +69,7 @@ class Results extends Component {
     } else {
       return (
         <div>
-          <h2 className='m-b-2 m-t-3'>{this.props.stuffs.length} {this.renderResultsCount()}</h2>
+          <h2 className='m-b-2 m-t-3'></h2>
           <div className='hidden-sm-up'>
             {this.renderStuffRowEvery(this.props.stuffs, 1)}
           </div>
@@ -79,7 +84,7 @@ class Results extends Component {
     }
   }
 }
-export default createContainer(({query, thingId}) => {
+export default createContainer(({query, thingId, setStuffCount}) => {
   let loading = true;
   let stuffs = [];
   const compatsHandle = Meteor.subscribe("compatibilities");

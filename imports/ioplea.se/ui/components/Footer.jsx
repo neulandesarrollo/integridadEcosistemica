@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class Footer extends Component {
   render() {
     return (
-      <nav className="navbar navbar-fixed-bottom navbar-light bg-faded">
+      <nav className="navbar navbar-light bg-faded">
         <div className="nav navbar-nav pull-xs-right">
           <a className="nav-item nav-link" href="ioplease-search">Search</a>
           <a className="nav-item nav-link" href="ioplease-submit">Submit</a>

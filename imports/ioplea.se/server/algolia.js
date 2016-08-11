@@ -41,7 +41,7 @@ Things.after.insert((thingId, doc) => {
   });
 });
 
-export function resetIndices() {
+export function resetIndices(callback) {
   console.log('resetting all indices');
 
   const client = algoliasearch(
@@ -55,6 +55,7 @@ export function resetIndices() {
     if (!error) {
       console.log('successfully deleted all indices');
     }
+    callback(error)
   });
 
 }

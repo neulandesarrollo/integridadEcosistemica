@@ -31,7 +31,7 @@ class Search extends Component {
     super(props);
 
     this.state = {
-      value: '',
+      value: props.query ? props.query : '' ,
       things: props.things
     };
   }
@@ -86,9 +86,25 @@ class Search extends Component {
     )
   }
 
+  renderResultsCount() {
+    return this.props.stuffCount == 1 ? "result" : "results"
+  }
+
+  renderHelper() {
+    if(this.props.hasQuery) {
+      return (
+        <h4 className='ioplease-count m-t-1'>{this.props.stuffCount} {this.renderResultsCount()}</h4>
+      )
+    } else {
+      return (
+        <small className="form-text ioplease-hint">Device name, manufacturer, etc.</small>
+      )
+    }
+  }
+
   render() {
     return (
-      <form className='m-t-2' id='ioplease-search'>
+      <form id='ioplease-search'>
         <div className="form-group">
           <Autocomplete
             inputProps={{
@@ -111,14 +127,14 @@ class Search extends Component {
               onChange={this.handleSearch.bind(this)}
               renderItem={this.renderItem.bind(this)}
           />
-        <small className="form-text ioplease-hint">Device name, manufacturer, etc.</small>
+        {this.renderHelper()}
         </div>
       </form>
     );
   }
 }
 
-export default createContainer(({setQuery}) => {
+export default createContainer(({setQuery, query, hasQuery, stuffCount}) => {
   Session.setDefault("hits", [{name: "Loading...", isDefault: true}]);
 
   const client = window.algoliasearch(
@@ -138,11 +154,14 @@ export default createContainer(({setQuery}) => {
 
   let things = Session.get("hits")
   if(things.length === 0) {
-
+    things = [{name: "No results."}]
   }
 
   return {
     things,
-    setQuery
+    setQuery,
+    query,
+    hasQuery,
+    stuffCount
   };
 }, Search);
