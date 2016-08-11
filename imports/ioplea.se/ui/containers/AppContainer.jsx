@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import Footer from '../components/Footer.jsx';
+
 const App = (props) => (
   <div id="ioplease">
     {props.main}
