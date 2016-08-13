@@ -63,24 +63,40 @@ class Results extends Component {
     )
   }
 
+  renderNoResults() {
+    return (
+      <div>
+        <h1>No results</h1>
+      </div>
+    )
+  }
+
+  renderStuffs() {
+    return (
+      <div>
+        <h2 className='m-b-2 m-t-3'></h2>
+        <div className='hidden-sm-up'>
+          {this.renderStuffRowEvery(this.props.stuffs, 1)}
+        </div>
+        <div className='hidden-lg-up hidden-xs-down'>
+          {this.renderStuffRowEvery(this.props.stuffs, 2)}
+        </div>
+        <div className='hidden-md-down'>
+          {this.renderStuffRowEvery(this.props.stuffs, 3)}
+        </div>
+      </div>
+    );
+  }
+
   render() {
     if(this.props.loading) {
       return <Loading />
     } else {
-      return (
-        <div>
-          <h2 className='m-b-2 m-t-3'></h2>
-          <div className='hidden-sm-up'>
-            {this.renderStuffRowEvery(this.props.stuffs, 1)}
-          </div>
-          <div className='hidden-lg-up hidden-xs-down'>
-            {this.renderStuffRowEvery(this.props.stuffs, 2)}
-          </div>
-          <div className='hidden-md-down'>
-            {this.renderStuffRowEvery(this.props.stuffs, 3)}
-          </div>
-        </div>
-      );
+      if(this.props.stuffs.length === 0 ) {
+        return this.renderNoResults()
+      } else {
+        return this.renderStuffs()
+      }
     }
   }
 }

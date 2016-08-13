@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { Session } from 'meteor/session'
 import { createContainer } from 'meteor/react-meteor-data';
 import Autocomplete from 'react-autocomplete';
-// import algoliasearch from 'algoliasearch';
-
 
 import { Things } from '../../common/collections/things.js';
+
+import { algoliaThingsIndex } from '../../client/algolia.js';
 
 const styles = {
   item: {
@@ -71,16 +71,9 @@ class Search extends Component {
     if(event)
       event.preventDefault()
 
-    const client = window.algoliasearch(
-      Meteor.settings.public.AGOLIA_SEARCH.applicationID,
-      Meteor.settings.public.AGOLIA_SEARCH.searchApiKey
-    );
-
-    const thingsIndex = client.initIndex('things');
-
-    thingsIndex.search(value, (err, content) => {
+    algoliaThingsIndex(window).search(value, (err, content) => {
       if (err) {
-        // console.error(err);
+        console.error(err);
         return;
       }
 
@@ -120,7 +113,6 @@ class Search extends Component {
   }
 
   handleInput(event) {
-    console.log('handleInput');
     this.handleSearch(event, event.target.value)
   }
 

@@ -41,6 +41,9 @@ export default class Footer extends Component {
             <a className="nav-item nav-link" href="#" onClick={this.handleClick.bind(this)}>Submit</a>
             <a className="nav-item nav-link" href="https://github.com/marvinmarnold/nola-data">Github</a>
             <a className="nav-item nav-link" href="mailto:marvin@unplugged.im">Contact</a>
+          </div>
+          <div className="nav navbar-nav pull-xs-right pull-sm-left">
+            <span className="nav-item nav-link"><img src='ioplea.se/algolia_light.svg' className="img algolia-icon"></img></span>
             <a className="nav-item nav-link" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>
           </div>
         </nav>

@@ -1,17 +1,23 @@
+import { Meteor } from 'meteor/meteor';
 import algoliasearch from 'algoliasearch';
 
 import { Things } from '../common/collections/things.js';
 
-Meteor.startup(() => {
-  console.log('Setting attributesToIndex');
+import { indexName } from '../common/algolia.js';
+
+const algoliaThingsIndex = () => {
   const client = algoliasearch(
     Meteor.settings.public.AGOLIA_SEARCH.applicationID,
     Meteor.settings.AGOLIA_SEARCH.apiKey
   );
 
-  const thingsIndex = client.initIndex('things');
+  return client.initIndex(indexName('things'));
+}
 
-  thingsIndex.setSettings({attributesToIndex: ["searchableName"]}, err => {
+Meteor.startup(() => {
+  console.log('Setting attributesToIndex');
+
+  algoliaThingsIndex().setSettings({attributesToIndex: ["searchableName"]}, err => {
     if (err) {
       console.log('Error setting attributesToIndex');
       console.error(err);
@@ -24,14 +30,8 @@ Meteor.startup(() => {
 
 Things.after.insert((thingId, doc) => {
   console.log('Adding Thing to Algolia index');
-  const client = algoliasearch(
-    Meteor.settings.public.AGOLIA_SEARCH.applicationID,
-    Meteor.settings.AGOLIA_SEARCH.apiKey
-  );
 
-  const thingsIndex = client.initIndex('things');
-
-  thingsIndex.addObject(doc, thingId, (err, content) => {
+  algoliaThingsIndex().addObject(doc, thingId, (err, content) => {
     if (err) {
       console.log('Error adding index');
       console.error(err);
@@ -44,13 +44,7 @@ Things.after.insert((thingId, doc) => {
 export function resetIndices(callback) {
   console.log('resetting all indices');
 
-  const client = algoliasearch(
-    Meteor.settings.public.AGOLIA_SEARCH.applicationID,
-    Meteor.settings.AGOLIA_SEARCH.apiKey
-  );
-
-  const thingsIndex = client.initIndex('things');
-  thingsIndex.deleteByQuery('', error => {
+  algoliaThingsIndex().deleteByQuery('', error => {
     console.log(error);
     if (!error) {
       console.log('successfully deleted all indices');

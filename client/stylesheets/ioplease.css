@@ -64,3 +64,7 @@ a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
 .ioplease-count {
   color: #fff;
 }
+
+.algolia-icon {
+  height: 1.5rem;
+}
