@@ -24,7 +24,7 @@ class Results extends Component {
   renderStuff(stuff) {
     return (
       <div key={stuff._id} className='col-lg-4 col-sm-6 col-xs-12 m-t-2'>
-        <a href={stuff.url} className='stuff-card' target="_blank">
+        <a href="#" className='stuff-card' target="_blank">
           <div className="card">
             <img className="card-img-top m-x-auto img-fluid ioplease-stuff-img m-t-1" src={stuff.iconUrl} alt={stuff.name} />
             <div className="card-block">

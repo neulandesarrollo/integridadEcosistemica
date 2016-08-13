@@ -8,9 +8,6 @@ export default StuffsSchema = new SimpleSchema({
   company: {
     type: String
   },
-  url: {
-    type: String
-  },
   iconUrl: {
     type: String
   },
