@@ -5,5 +5,8 @@ export default ControllersSchema = new SimpleSchema({
   description: {
     type: String,
     optional: true
+  },
+  iconUrl: {
+    type: String
   }
 });

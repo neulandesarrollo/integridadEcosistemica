@@ -8,6 +8,9 @@ export default ControllingsSchema = new SimpleSchema({
   controllerName: {
     type: String
   },
+  controllerIconUrl: {
+    type: String
+  },
   url: {
     type: String
   },

@@ -101,15 +101,11 @@ class Search extends Component {
   }
 
   renderHelper() {
-    if(this.props.hasQuery) {
-      return (
-        <h4 className='ioplease-count m-t-1'>{this.props.stuffCount} {this.renderResultsCount()}</h4>
-      )
-    } else {
-      return (
-        <small className="form-text ioplease-hint">Device name, manufacturer, etc.</small>
-      )
-    }
+    return !this.props.hasQuery ? <small className="form-text ioplease-hint">Device name, manufacturer, etc.</small> : null;
+  }
+
+  renderCount() {
+    return this.props.hasQuery ? <h4 className='ioplease-count'>{this.props.stuffCount} {this.renderResultsCount()}</h4> : null;
   }
 
   handleInput(event) {
@@ -163,6 +159,7 @@ class Search extends Component {
     return (
       <form id='ioplease-search' onSubmit={this.handleSubmit.bind(this)}>
         <div className="form-group">
+          {this.renderCount()}
           {this.renderInput()}
           {this.renderHelper()}
         </div>

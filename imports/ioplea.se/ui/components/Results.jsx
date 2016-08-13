@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import DownloadOptions from './DownloadOptions.jsx';
 import KindsBadges from './KindsBadges.jsx';
 import Loading from './Loading.jsx';
 
@@ -24,19 +25,16 @@ class Results extends Component {
   renderStuff(stuff) {
     return (
       <div key={stuff._id} className='col-lg-4 col-sm-6 col-xs-12 m-t-2'>
-        <a href="#" className='stuff-card' target="_blank">
-          <div className="card">
-            <img className="card-img-top m-x-auto img-fluid ioplease-stuff-img m-t-1" src={stuff.iconUrl} alt={stuff.name} />
-            <div className="card-block">
-              <h4 className="card-title"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h4>
-              <p className="card-text">{stuff.description}</p>
-              {_.has(stuff, "version") ? <p>Version: {stuff.version}</p> : null}
-              {_.has(stuff, "popularity") ? <p>Rating: {stuff.popularity}</p> : null}
-              {_.has(stuff, "updatedAt") ? <p>Updated: {stuff.updatedAt}</p> : null}
-              <KindsBadges stuffId={stuff._id} />
-            </div>
+        <div className="card">
+          <img className="card-img-top m-x-auto img-fluid ioplease-stuff-img m-t-1" src={stuff.iconUrl} alt={stuff.name} />
+          <div className="card-block">
+            <h3 className="card-title"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h3>
+            <p className="card-text m-y-2">{stuff.description}</p>
+            {_.has(stuff, "popularity") ? <p>Rating: {stuff.popularity}</p> : null}
+            <DownloadOptions stuffId={stuff._id} />
+            <KindsBadges stuffId={stuff._id} />
           </div>
-        </a>
+        </div>
       </div>
     )
   }
@@ -66,7 +64,8 @@ class Results extends Component {
   renderNoResults() {
     return (
       <div>
-        <h1>No results</h1>
+        <h1 className="m-t-3">No results found</h1>
+        <h2 className='m-t-2 text-muted'>Try modifying your search</h2>
       </div>
     )
   }
@@ -113,6 +112,10 @@ export default createContainer(({query, thingId, setStuffCount}) => {
       loading = false;
       stuffs = Stuffs.find().fetch()
     }
+  }
+
+  if(!thingId) {
+    loading = false;
   }
 
   return {

@@ -37,9 +37,9 @@ export default class Footer extends Component {
         </div>
         <nav className="navbar navbar-light bg-faded">
           <div className="nav navbar-nav pull-xs-right">
-            <a className="nav-item nav-link" href="ioplease-search">Search</a>
+            <a className="nav-item nav-link" href="ioplease">Search</a>
             <a className="nav-item nav-link" href="#" onClick={this.handleClick.bind(this)}>Submit</a>
-            <a className="nav-item nav-link" href="https://github.com/marvinmarnold/nola-data">Github</a>
+            <a className="nav-item nav-link" href="https://github.com/marvinmarnold/geeky.rocks" target="_blank">Github</a>
             <a className="nav-item nav-link" href="mailto:marvin@unplugged.im">Contact</a>
           </div>
           <div className="nav navbar-nav pull-xs-right pull-sm-left">

@@ -4,5 +4,11 @@ export default ClassificationsSchema = new SimpleSchema({
   },
   stuffId: {
     type: String
+  },
+  kindName: {
+    type: String
+  },
+  kindIconUrl: {
+    type: String
   }
 });

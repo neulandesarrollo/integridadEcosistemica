@@ -15,12 +15,4 @@ export default StuffsSchema = new SimpleSchema({
     type: Number,
     optional: true
   },
-  version: {
-    type: String,
-    optional: true
-  },
-  updatedAt: {
-    type: Date,
-    optional: true
-  }
 });
