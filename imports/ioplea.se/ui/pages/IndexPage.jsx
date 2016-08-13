@@ -56,6 +56,10 @@ export default class IndexPage extends Component {
     }
   }
 
+  handleInput(event) {
+    this.setQuery(event.target.value)
+  }
+
   render() {
     return (
       <div id='ioplease-index'>

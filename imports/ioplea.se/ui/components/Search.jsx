@@ -37,6 +37,8 @@ class Search extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    ReactDOM.findDOMNode(this.refs.iopleaseSearchAutocomplete).focus();
+
     const isThingsDefault = (this.state.things.length > 0) && ("isDefault" in this.state.things[0])
 
     if(isThingsDefault && newProps.things.length > 0) {
@@ -44,8 +46,24 @@ class Search extends Component {
     }
   }
 
+  componentWillUnmount() {
+  }
+
   componentDidMount() {
-    ReactDOM.findDOMNode(this.refs.iopleaseSearchAutocomplete).focus();
+    this.focus()
+  }
+
+  focus() {
+    const input = $('#iothing-autocomplete')
+    input.focus();
+    var tmpStr = input.val();
+    input.val('');
+    input.val(tmpStr);
+    // ReactDOM.findDOMNode(this.refs.iopleaseSearchAutocomplete).focus();
+  }
+
+  componentDidUpdate() {
+    this.focus()
   }
 
   handleSearch(event, value, thingId) {
@@ -72,11 +90,10 @@ class Search extends Component {
         this.props.setQuery(value, content.hits[0]._id);
     });
 
-
     this.setState({ value })
-
     this.props.setQuery(value, thingId);
   }
+
 
   renderItem(item, isHighlighted) {
     return (
@@ -102,32 +119,60 @@ class Search extends Component {
     }
   }
 
+  handleInput(event) {
+    console.log('handleInput');
+    this.handleSearch(event, event.target.value)
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  renderInput() {
+    if(this.props.hasQuery) {
+      return (
+        <Autocomplete
+          inputProps={{
+              className: "form-control form-control-lg",
+              id: "iothing-autocomplete",
+              placeholder: "I want to do something with my...",
+              type: "text"
+            }}
+            wrapperStyle={{}}
+            wrapperProps={{className: 'ioplease-search-box'}}
+            ref="iopleaseSearchAutocomplete"
+            value={this.state.value}
+            items={this.state.things}
+            getItemValue={(item) => item.name}
+            onSelect={(value, item) => {
+              // set the menu to only the selected item
+              this.setState({ value, things: [ item ] })
+              this.handleSearch(undefined, value, item._id)
+            }}
+            onChange={this.handleSearch.bind(this)}
+            renderItem={this.renderItem.bind(this)}
+        />
+      )
+    } else {
+      return (
+        <div className="ioplease-search-box">
+          <input
+            placeholder="I want to do something with my..."
+            className="form-control form-control-lg"
+            id="iothing-autocomplete"
+            ref="iopleaseSearchAutocomplete"
+            onChange={this.handleInput.bind(this)} />
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
-      <form id='ioplease-search'>
+      <form id='ioplease-search' onSubmit={this.handleSubmit.bind(this)}>
         <div className="form-group">
-          <Autocomplete
-            inputProps={{
-                className: "form-control form-control-lg",
-                id: "iothing-autocomplete",
-                placeholder: "I want to do something with my...",
-                type: "text",
-              }}
-              wrapperStyle={{}}
-              wrapperProps={{className: 'ioplease-search-box'}}
-              ref="iopleaseSearchAutocomplete"
-              value={this.state.value}
-              items={this.state.things}
-              getItemValue={(item) => item.name}
-              onSelect={(value, item) => {
-                // set the menu to only the selected item
-                this.setState({ value, things: [ item ] })
-                this.handleSearch(undefined, value, item._id)
-              }}
-              onChange={this.handleSearch.bind(this)}
-              renderItem={this.renderItem.bind(this)}
-          />
-        {this.renderHelper()}
+          {this.renderInput()}
+          {this.renderHelper()}
         </div>
       </form>
     );
@@ -165,3 +210,32 @@ export default createContainer(({setQuery, query, hasQuery, stuffCount}) => {
     stuffCount
   };
 }, Search);
+
+// <Autocomplete
+//   inputProps={{
+//       className: "form-control form-control-lg",
+//       id: "iothing-autocomplete",
+//       placeholder: "I want to do something with my...",
+//       type: "text",
+//     }}
+//     wrapperStyle={{}}
+//     wrapperProps={{className: 'ioplease-search-box'}}
+//     ref="iopleaseSearchAutocomplete"
+//     value={this.state.value}
+//     items={this.state.things}
+//     getItemValue={(item) => item.name}
+//     onSelect={(value, item) => {
+//       // set the menu to only the selected item
+//       this.setState({ value, things: [ item ] })
+//       this.handleSearch(undefined, value, item._id)
+//     }}
+//     onChange={this.handleSearch.bind(this)}
+//     renderItem={this.renderItem.bind(this)}
+// />
+
+
+
+
+// <div className="ioplease-search-box">
+//   <input className="form-control form-control-lg" id="iothing-autocomplete" ref="iopleaseSearchAutocomplete" />
+// </div>
