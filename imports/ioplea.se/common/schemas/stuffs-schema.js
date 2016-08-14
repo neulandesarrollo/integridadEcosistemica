@@ -15,4 +15,7 @@ export default StuffsSchema = new SimpleSchema({
     type: Number,
     optional: true
   },
+  isVisible: {
+    type: Boolean
+  }
 });

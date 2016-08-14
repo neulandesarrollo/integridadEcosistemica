@@ -8,3 +8,7 @@ Meteor.publish("kinds", stuffId => {
   const kindIds = classifications.map(classification => { return classification.kindId })
   return Kinds.find({_id: {$in: kindIds}})
 });
+
+Meteor.publish("kinds.all", () => {
+  return Kinds.find()
+});
