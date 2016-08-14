@@ -80,7 +80,7 @@ class Search extends Component {
       thiz.setState({things: content.hits})
 
       if(content.hits.length > 0)
-        this.props.setQuery(value, content.hits[0]._id);
+        this.props.setQuery(value, content.hits[0]._id, content.hits[0].name);
     });
 
     this.setState({ value })

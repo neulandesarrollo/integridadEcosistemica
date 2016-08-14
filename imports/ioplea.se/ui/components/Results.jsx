@@ -73,7 +73,7 @@ class Results extends Component {
   renderStuffs() {
     return (
       <div>
-        <h2 className='m-b-2 m-t-3'></h2>
+        <h2 className='m-b-2 m-t-3'>{this.props.thingName}</h2>
         <div className='hidden-sm-up'>
           {this.renderStuffRowEvery(this.props.stuffs, 1)}
         </div>
@@ -99,7 +99,7 @@ class Results extends Component {
     }
   }
 }
-export default createContainer(({query, thingId, setStuffCount}) => {
+export default createContainer(({query, thingId, setStuffCount, thingName}) => {
   let loading = true;
   let stuffs = [];
   const compatsHandle = Meteor.subscribe("compatibilities");
@@ -114,12 +114,20 @@ export default createContainer(({query, thingId, setStuffCount}) => {
     }
   }
 
+  if((thingName !== undefined) && (thingName !== query)) {
+    thingName = "Showing results for \"" + thingName + "\"."
+  } else {
+    thingName = ""
+  }
+
+
   if(!thingId) {
     loading = false;
   }
 
   return {
     stuffs,
-    loading
+    loading,
+    thingName
   };
 }, Results);

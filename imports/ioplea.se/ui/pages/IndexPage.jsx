@@ -13,7 +13,8 @@ export default class IndexPage extends Component {
     this.state = {
       query: '',
       thingId: undefined,
-      stuffCount: 0
+      stuffCount: 0,
+      thingName: ''
     };
   }
 
@@ -29,8 +30,8 @@ export default class IndexPage extends Component {
     return this.state.query !== ""
   }
 
-  setQuery(query, thingId) {
-    this.setState({query, thingId})
+  setQuery(query, thingId, thingName) {
+    this.setState({query, thingId, thingName})
   }
 
   setStuffCount(count) {
@@ -46,6 +47,7 @@ export default class IndexPage extends Component {
               <Results
                 query={this.state.query}
                 thingId={this.state.thingId}
+                thingName={this.state.thingName}
                 setStuffCount={this.setStuffCount.bind(this)} />
             </div>
           </div>
