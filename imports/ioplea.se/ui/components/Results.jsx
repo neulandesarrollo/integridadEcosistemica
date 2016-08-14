@@ -120,7 +120,6 @@ export default createContainer(({query, thingId, setStuffCount, thingName}) => {
     thingName = ""
   }
 
-
   if(!thingId) {
     loading = false;
   }
