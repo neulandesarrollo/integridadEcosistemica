@@ -21,7 +21,6 @@ static-html@1.1.11
 react-meteor-data
 aldeed:collection2
 aldeed:simple-schema
-http@1.2.8
 accounts-ui@1.1.9
 accounts-password@1.2.12
 session
