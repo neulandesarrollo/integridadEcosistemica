@@ -1,5 +1,28 @@
-html, body, #geeky-rocks {
+html, body, #react-root, #geeky-rocks {
   height: 100%;
   min-height: 100%;
   width: 100%;
+  font-family: 'Press Start 2P', cursive;
+  background-color: rgba(5, 9, 38, 0.95)
 }
+
+a.geeky-text, p.geeky-text {
+  font-family: 'Source Code Pro', monospace;
+}
+
+.project-card {
+  height: 17.3rem;
+}
+
+.geeky-title {
+  color: #939253;
+}
+
+a.geeky-card, a.geeky-card:visited, a.geeky-card:active {
+  text-decoration: none;
+  color: #000;
+}
+
+ a.geeky-card:hover, div.geeky-card:hover {
+   background: #939253;
+ }
