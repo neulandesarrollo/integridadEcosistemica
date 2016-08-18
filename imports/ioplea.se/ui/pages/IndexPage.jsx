@@ -43,7 +43,7 @@ export default class IndexPage extends Component {
       return (
         <div className="container-fluid text-xs-center" id='content'>
           <div className="row m-b-3">
-            <div className="col-xs-12 col-md-10 offset-md-1">
+            <div className="col-xs-12 col-lg-10 offset-lg-1">
               <Results
                 query={this.state.query}
                 thingId={this.state.thingId}

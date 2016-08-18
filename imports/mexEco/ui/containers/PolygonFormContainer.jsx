@@ -3,7 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import PolygonForm from '../components/PolygonForm.jsx';
 
-import { Questions } from '../../../common/collections/questions.js';
+import { Questions } from '../../common/collections/questions.js';
 
 export default PolygonFormContainer = createContainer(({currentPolygon, insertingPolygon}) => {
   console.log("rerender PolygonForm");

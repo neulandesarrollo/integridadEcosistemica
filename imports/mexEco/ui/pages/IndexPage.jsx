@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Navbar } from '../components/Navbar.jsx';
-import PolygonFormContainer from '../containers/PolygonFormContainer.jsx';
+// import PolygonFormContainer from '../containers/PolygonFormContainer.jsx';
 
-export default class MexEco extends Component {
+export default class IndexPage extends Component {
   constructor(props) {
     super(props);
 
@@ -24,13 +24,14 @@ export default class MexEco extends Component {
   }
 
   renderInsertingPolygon() {
-    if(this.props.loading) {
-      return <h1>Loading</h1>
-    } else {
-      return <PolygonFormContainer
-        currentPolygon={this.props.currentPolygon}
-        insertingPolygon={this.props.insertingPolygon} />
-    }
+    // if(this.props.loading) {
+    //   return <h1>Loading</h1>
+    // } else {
+    //   return <PolygonFormContainer
+    //     currentPolygon={this.props.currentPolygon}
+    //     insertingPolygon={this.props.insertingPolygon} />
+    // }
+    return null
   }
 
   render() {
@@ -53,7 +54,7 @@ export default class MexEco extends Component {
   }
 }
 
-MexEco.propTypes = {
+IndexPage.propTypes = {
   map: React.PropTypes.object,
   initMap: React.PropTypes.func,
   currentPolygon: React.PropTypes.object,

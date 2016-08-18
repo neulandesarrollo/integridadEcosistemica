@@ -4,7 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { SESSION, SCORES } from '../../constants.js';
+import { SESSION, SCORES } from '../../client/constants.js';
 
 export default class PolygonForm extends Component {
   constructor(props) {

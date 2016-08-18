@@ -13,6 +13,7 @@ html, body, #ioplease, #ioplease-index, #react-root, #ioplease-submit {
   width: 100%;
   font-family: 'Poiret One', cursive;
   position: relative;
+  background-color: rgb(255, 255, 255)
 }
 
 .ioplease-banner-full {
@@ -58,6 +59,7 @@ div.ioplease-search-box, #iothing-autocomplete {
   z-index: 100;
   min-height: 100%;
   overflow: hidden;
+  background-color: rgb(255, 255, 255)
 }
 
 .ioplease-stuff-img {
