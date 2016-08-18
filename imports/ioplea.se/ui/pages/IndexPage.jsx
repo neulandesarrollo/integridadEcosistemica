@@ -67,7 +67,11 @@ export default class IndexPage extends Component {
       <div id='ioplease-index'>
         <div className={this.searchDivClass()}>
           <div className="container-fluid text-xs-center">
-            {this.hasQuery() ? null : <h1 className='ioplease-title'><stong>Do stuff</stong> with your IoThings</h1>}
+            <div className="row">
+              <div className="col-xs-10 offset-xs-1">
+                {this.hasQuery() ? null : <h1 className='ioplease-title'><stong>Do stuff</stong> with your IoThings</h1>}
+              </div>
+            </div>
             <div className="row">
               <div className="col-xs-12 col-sm-10 offset-sm-1 col-md-6 offset-md-3">
                 <Search
