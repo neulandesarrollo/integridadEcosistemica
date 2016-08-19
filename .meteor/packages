@@ -30,3 +30,5 @@ matb33:collection-hooks
 twbs:bootstrap
 meteorhacks:kadira
 kadira:debug
+http
+random
