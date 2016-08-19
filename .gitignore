@@ -3,3 +3,4 @@ settings
 packages/bootstrap
 scripts
 imports/ioplea.se/server/fixtures
+packages/piwik-http-sandstorm
