@@ -6,7 +6,7 @@ import { Controllers } from '../../common/collections/controllers.js';
 class ControllersCheckboxes extends Component {
   renderCheckbox(cont) {
     return (
-      <label className="form-check-inline" key={cont._id}>
+      <label className="form-check-inline m-l-0 m-r-3" key={cont._id}>
         <input className="form-check-input" type="checkbox" id={cont._id} value={cont._id}  name="controllers" /> {cont.name}
       </label>
     )
@@ -32,7 +32,7 @@ export default createContainer(() => {
   const contHandle = Meteor.subscribe("controllers")
 
   if(contHandle.ready()) {
-    controllers = Controllers.find().fetch()
+    controllers = Controllers.find({}, {sort: {name: 1}}).fetch()
 
     loading = false;
   }

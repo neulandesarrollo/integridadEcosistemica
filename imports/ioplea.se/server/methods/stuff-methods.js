@@ -8,6 +8,13 @@ import { Things } from '../../common/collections/things.js';
 
 Meteor.methods({
   'stuffs.insert': (stuff, thingIds, kindIds) => {
+    Stuffs.simpleSchema().namedContext().validate(stuff)
+    new SimpleSchema({
+      thingIds: { type: [String] },
+      kindIds: { type: [String] }
+    }).validate({thingIds, kindIds});
+
+    // Make sure people aren't playing games
     stuff["isVisible"] = false
     const stuffId = Stuffs.insert(stuff)
 

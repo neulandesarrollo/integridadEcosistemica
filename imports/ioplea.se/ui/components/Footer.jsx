@@ -7,6 +7,7 @@ import KindsCheckboxes from './KindsCheckboxes.jsx';
 import ThingsCheckboxes from './ThingsCheckboxes.jsx';
 
 const SHOW_SUCCESS = "showSuccess";
+const ERRORS = "ioplease-errors-"
 
 class Footer extends Component {
   handleClick(event) {
@@ -38,10 +39,17 @@ class Footer extends Component {
     })
 
     Meteor.call("stuffs.insert", stuff, thingIds, kindIds, (error, result) => {
-      if(error){
-        console.log("error", error);
+      if(error) {
+        let errors = JSON.parse(error.details)
+        errors = _.object(_.map(errors, (e) => {
+          return [e.name, e.type]
+        }))
+
+        Session.set(ERRORS, errors)
       }
       if(result) {
+        Session.set(ERRORS, {})
+
         // Reset form values
         t.name.value = ""
         t.description.value = ""
@@ -60,6 +68,10 @@ class Footer extends Component {
     });
   }
 
+  formGroup(attr) {
+    return this.props.errors[attr] ? "form-group has-danger" : "form-group"
+  }
+
   renderForm() {
     return (
       <div className="modal-content">
@@ -73,24 +85,29 @@ class Footer extends Component {
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className="modal-body">
               <h5 className='m-t-1'>Details</h5>
-              <div className="form-group">
+              <div className={this.formGroup("name")}>
                 <label htmlFor="name">Name</label>
-                <input type="text" className="form-control" id="name" aria-describedby="Name" />
+                <input type="text" className="form-control form-control-sm" id="name" aria-describedby="Name" />
+                <div className="form-control-feedback">Name is required</div>
               </div>
 
-              <div className="form-group">
+              <div className={this.formGroup("description")}>
                 <label htmlFor="description">Description</label>
-                <textarea className="form-control" id="description" rows="5"></textarea>
+                <textarea className="form-control form-control-sm" id="description" rows="3"></textarea>
+                <div className="form-control-feedback">Description is required</div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="compnay">Company</label>
-                <input type="text" className="form-control" id="company" aria-describedby="company" />
+              <div className={this.formGroup("company")}>
+                <label htmlFor="company">Company</label>
+                <input type="text" className="form-control form-control-sm" id="company" aria-describedby="company" />
+                <div className="form-control-feedback">Company is required</div>
               </div>
 
-              <div className="form-group">
+              <div className={this.formGroup("iconUrl")}>
                 <label htmlFor="iconUrl">Icon URL</label>
-                <input type="text" className="form-control" id="iconUrl" aria-describedby="IconURL" />
+                <input type="text" className="form-control form-control-sm" id="iconUrl" aria-describedby="IconURL" />
+                <div className="form-control-feedback">You must enter an icon URL</div>
+                <small className="form-text text-muted">Address to a logo or picture for the Stuff.</small>
               </div>
 
               <h5>Compatible IoT</h5>
@@ -104,6 +121,7 @@ class Footer extends Component {
           </div>
           <div className="modal-footer">
             <button type="submit" className="btn btn-primary btn-lg btn-block">Submit</button>
+            {this.hasErrors() ? <h4 className="text-xs-left text-danger m-t-1">Fix errors above</h4> : null}
           </div>
         </form>
       </div>
@@ -146,6 +164,10 @@ class Footer extends Component {
     )
   }
 
+  hasErrors() {
+    return _.keys(this.props.errors).length > 0
+  }
+
   render() {
     return (
       <div>
@@ -170,8 +192,10 @@ class Footer extends Component {
 export default createContainer(({}) => {
   Session.setDefault(SHOW_SUCCESS, false)
   const showSuccess = Session.get(SHOW_SUCCESS)
+  const errors = Session.get(ERRORS) || {}
 
   return {
     showSuccess,
+    errors
   };
 }, Footer);

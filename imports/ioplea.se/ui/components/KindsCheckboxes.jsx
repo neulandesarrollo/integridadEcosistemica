@@ -6,7 +6,7 @@ import { Kinds } from '../../common/collections/kinds.js';
 class KindsCheckboxes extends Component {
   renderCheckbox(kind) {
     return (
-      <label className="form-check-inline" key={kind._id}>
+      <label className="form-check-inline m-l-0 m-r-3" key={kind._id}>
         <input className="form-check-input" type="checkbox" id={kind._id} value={kind._id} name="kinds" /> {kind.name}
       </label>
     )
@@ -32,7 +32,7 @@ export default createContainer(() => {
   const kindsHandle = Meteor.subscribe("kinds.all")
 
   if(kindsHandle.ready()) {
-    kinds = Kinds.find().fetch()
+    kinds = Kinds.find({}, {sort: {name: 1}}).fetch()
 
     loading = false;
   }

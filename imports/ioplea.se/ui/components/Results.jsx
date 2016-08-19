@@ -24,7 +24,7 @@ class Results extends Component {
 
   renderStuff(stuff) {
     return (
-      <div key={stuff._id} className='col-lg-4 col-sm-6 col-xs-12 m-t-2'>
+      <div key={stuff._id} className='col-xl-4 col-sm-6 col-xs-12 m-t-2'>
         <div className="card">
           <img className="card-img-top m-x-auto img-fluid ioplease-stuff-img m-t-1" src={stuff.iconUrl} alt={stuff.name} />
           <div className="card-block">

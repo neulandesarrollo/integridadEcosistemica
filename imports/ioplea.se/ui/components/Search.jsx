@@ -101,7 +101,7 @@ class Search extends Component {
   }
 
   renderHelper() {
-    return !this.props.hasQuery ? <small className="form-text ioplease-hint">Device name, manufacturer, etc.</small> : null;
+    return !this.props.hasQuery ? <span className="form-text ioplease-hint">Device name, manufacturer, etc.</span> : null;
   }
 
   renderCount() {
