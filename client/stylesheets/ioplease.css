@@ -1,16 +1,6 @@
-/*Uncomment when standalone
-html, body, #ioplease, #ioplease-index, #react-root, #ioplease-submit {
-  height: 100%;
-  min-height: 100%;
-  width: 100%;
-  font-family: 'Poiret One', cursive;
-  position: relative;
-}*/
-
 #ioplease, #ioplease-index, #ioplease-submit {
   height: 100%;
   min-height: 100%;
-  /*width: 100%;*/
   font-family: 'Poiret One', cursive;
   position: relative;
   background-color: rgb(255, 255, 255)
@@ -46,7 +36,6 @@ html, body, #ioplease, #ioplease-index, #react-root, #ioplease-submit {
 }
 
 div.ioplease-search-box, #iothing-autocomplete {
-  /*gba(150, 132, 115, 0.58);*/
   background-color: rgba(137, 121, 112, 0.4);
 }
 
