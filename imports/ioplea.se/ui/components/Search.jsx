@@ -29,21 +29,16 @@ const styles = {
 class Search extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      value: props.query,
-      things: props.things
-    };
   }
 
   componentWillReceiveProps(newProps) {
     ReactDOM.findDOMNode(this.refs.iopleaseSearchAutocomplete).focus();
 
-    const isThingsDefault = (this.state.things.length > 0) && ("isDefault" in this.state.things[0])
-
-    if(isThingsDefault && newProps.things.length > 0) {
-      this.setState({things: newProps.things})
-    }
+    // const isThingsDefault = (this.state.things.length > 0) && ("isDefault" in this.state.things[0])
+    //
+    // if(isThingsDefault && newProps.things.length > 0) {
+    //   this.setState({things: newProps.things})
+    // }
   }
 
   componentWillUnmount() {
@@ -94,7 +89,8 @@ class Search extends Component {
 
   renderCount() {
     const countLoaded = this.props.hasQuery && (this.props.stuffCount > -1)
-    return this.props.hasQuery ? <h4 className='ioplease-count'>{this.props.stuffCount} {this.renderResultsCount()}</h4> : null;
+    return countLoaded ?  <h4 className='ioplease-count'>{this.props.stuffCount} {this.renderResultsCount()}</h4> :
+                          <h4 className='ioplease-count'>Loading...</h4> ;
   }
 
   handleInput(event) {
@@ -118,12 +114,12 @@ class Search extends Component {
             wrapperStyle={{}}
             wrapperProps={{className: 'ioplease-search-box'}}
             ref="iopleaseSearchAutocomplete"
-            value={this.state.value}
-            items={this.state.things}
+            value={this.props.query}
+            items={this.props.things}
             getItemValue={(item) => item.name}
             onSelect={(value, item) => {
               // set the menu to only the selected item
-              this.handleSearch(undefined, value, item._id)
+              this.handleSearch(undefined, value, item.objectID)
             }}
             onChange={this.handleSearch.bind(this)}
             renderItem={this.renderItem.bind(this)}
@@ -156,7 +152,9 @@ class Search extends Component {
   }
 }
 
-export default createContainer(({setQuery, query, hasQuery, stuffCount, thingId}) => {
+export default createContainer(({setQuery, query, hasQuery, stuffCount, thingId, searchResults}) => {
+  console.log("recreating search container ==========");
+
   Session.setDefault("hits", [{name: "Loading...", isDefault: true}]);
 
   const client = window.algoliasearch(
@@ -164,23 +162,16 @@ export default createContainer(({setQuery, query, hasQuery, stuffCount, thingId}
     Meteor.settings.public.AGOLIA_SEARCH.searchApiKey
   );
 
-  const thingsIndex = client.initIndex('things');
-
-  thingsIndex.search("", (err, content) => {
-    if (err) {
-      // console.error(err);
-      return;
-    }
-    Session.set("hits", content.hits)
-  });
-
-  let things = Session.get("hits")
-  if(things.length === 0) {
-    things = [{name: "No results."}]
+  if(!searchResults) {
+    searchResults = [{name: "No results."}]
   }
 
+  console.log(searchResults);
+  console.log(stuffCount);
+
+
   return {
-    things,
+    things: searchResults,
     setQuery,
     query,
     thingId,

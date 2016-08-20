@@ -31,14 +31,14 @@ class Results extends Component {
             <h3 className="card-title"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h3>
             <p className="card-text m-y-2">{stuff.description}</p>
             {_.has(stuff, "popularity") ? <p>Rating: {stuff.popularity}</p> : null}
-            <DownloadOptions stuffId={stuff._id} />
-            <KindsBadges stuffId={stuff._id} />
+
           </div>
         </div>
       </div>
     )
   }
-
+  // <DownloadOptions stuffId={stuff._id} />
+  // <KindsBadges stuffId={stuff._id} />
   renderStuffRowEvery(stuffs, n) {
     let tStuffs = _.clone(stuffs)
     let rows = []
@@ -99,33 +99,34 @@ class Results extends Component {
     }
   }
 }
-export default createContainer(({query, thingId, setStuffCount, thingName, searchResults}) => {
-  console.log("Start debugging");
+
+export default createContainer(({query, thingId, setStuffCount, searchResults}) => {
+  console.log("recreated results container -------");
   console.log(searchResults);
 
   let loading = true
   let stuffs = []
   let thingIds = []
+  let thingName = ""
 
   if(thingId) {
     thingIds = [thingId]
   } else if(searchResults) {
-    thingIds = _.map(searchResults, (r) => { return r._id })
+    thingIds = _.map(searchResults, (r) => { return r.objectID })
+
+    // If only one matching Thing, show all stuff for that
+    if(searchResults.length === 1)
+      thingName = "Showing results for \"" + searchResults[0].name + "\"."
   }
+
+  console.log(thingIds);
 
   // Only show Stuffs if there are Things matching query
   if(thingIds) {
     const stuffsHandle = Meteor.subscribe("stuffs.forThings", thingIds);
 
-    if((thingName !== undefined) && (thingName !== query)) {
-      thingName = "Showing results for \"" + thingName + "\"."
-    } else {
-      thingName = ""
-    }
-
     if(stuffsHandle.ready()) {
       stuffs = Stuffs.find({}).fetch()
-      setStuffCount(stuffs.length)
       loading = false
     }
   } else {

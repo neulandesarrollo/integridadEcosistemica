@@ -17,7 +17,7 @@ const algoliaThingsIndex = () => {
 Meteor.startup(() => {
   console.log('Setting attributesToIndex');
 
-  algoliaThingsIndex().setSettings({attributesToIndex: ["searchableName"]}, err => {
+  algoliaThingsIndex().setSettings({attributesToIndex: ["searchableName", "description", "company", "name"]}, err => {
     if (err) {
       console.log('Error setting attributesToIndex');
       console.error(err);
@@ -28,10 +28,12 @@ Meteor.startup(() => {
 });
 
 
-Things.after.insert((thingId, doc) => {
+Things.after.insert((error, doc) => {
   console.log('Adding Thing to Algolia index');
 
-  algoliaThingsIndex().addObject(doc, thingId, (err, content) => {
+  const thingId = doc._id
+  console.log(thingId);
+  algoliaThingsIndex().addObject(_.omit(doc, "_id"), thingId, (err, content) => {
     if (err) {
       console.log('Error adding index');
       console.error(err);

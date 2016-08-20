@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
+import { algoliaThingsIndex } from '../../client/algolia.js';
+
 import Footer from '../components/Footer.jsx';
 import Results from '../components/Results.jsx';
 import Search from '../components/Search.jsx';
 import Submit from '../components/Submit.jsx';
-
 
 export default class IndexPage extends Component {
   constructor(props) {
@@ -30,16 +31,44 @@ export default class IndexPage extends Component {
     };
   }
 
+  searchByThingId(thingId) {
+    const thiz = this
+
+    algoliaThingsIndex(window).getObject(thingId, (err, content) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      thiz.setState({query: content.name, thingId, searchResults: []})
+    });
+  }
+
+  searchByQuery(query) {
+    const thiz = this
+
+    algoliaThingsIndex(window).search(query, (err, content) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      thiz.setState({searchResults: content.hits})
+
+      if(content.hits.length === 1) {
+        this.setState({thingId: content.hits[0]._id})
+      }
+    });
+  }
+
   componentDidMount() {
-    if(this.state.thingId) {
-      // search algolia for thing by id
-      // set query name to thing name
-      // search results 1 item array with thing
-      // stuffCount = -1
+    const thingId = this.state.thingId
+
+    if(thingId) {
+      this.searchByThingId(thingId)
     } else {
-      // search algolia for thing by name
-      // set searchResults to array of things
-      // stuffCount = -1
+      if(this.hasQuery())
+        this.searchByQuery(this.state.query)
     }
   }
 
@@ -58,32 +87,20 @@ export default class IndexPage extends Component {
       stuffCount = -1
     }
 
-    this.setState({query, thingId, searchResults})
-
-    algoliaThingsIndex(window).search(query, (err, content) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      thiz.setState({searchResults: content.hits})
-
-      if(content.hits.length === 1) {
-        this.setState({thingId: content.hits[0]._id})
-      }
-    });
-
+    this.setState({query, thingId})
 
     // Update query parameters based on search
     if(thingId) {
       // Use thingId if defined
       FlowRouter.setQueryParams({t: thingId, q: null});
+      this.searchByThingId(thingId)
     } else {
       // Otherwise use the raw text input
-      if(query === "") {
+      if(!this.hasQuery()) {
         FlowRouter.setQueryParams({q: null});
       } else {
         FlowRouter.setQueryParams({q: query, t: null});
+        this.searchByQuery(query)
       }
     }
   }
@@ -133,7 +150,8 @@ export default class IndexPage extends Component {
                   hasQuery={this.hasQuery()}
                   query={this.state.query}
                   thingId={this.state.thingId}
-                  stuffCount={this.state.stuffCount} />
+                  stuffCount={this.state.stuffCount}
+                  searchResults={this.state.searchResults} />
               </div>
             </div>
           </div>
