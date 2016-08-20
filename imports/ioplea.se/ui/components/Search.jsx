@@ -66,7 +66,6 @@ class Search extends Component {
   }
 
   handleSearch(event, value, thingId) {
-    console.log('handleSearch');
     const thiz = this;
     if(event)
       event.preventDefault()
@@ -135,8 +134,6 @@ class Search extends Component {
             items={this.state.things}
             getItemValue={(item) => item.name}
             onSelect={(value, item) => {
-              console.log("onSelect");
-
               // set the menu to only the selected item
               this.handleSearch(undefined, value, item._id)
             }}

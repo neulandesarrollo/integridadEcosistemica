@@ -36,10 +36,8 @@ export default class IndexPage extends Component {
       thingId = undefined
       thingName = undefined
     }
-    console.log('setQuery');
     this.setState({query, thingId, thingName})
-    console.log(query);
-    console.log(thingId);
+    
     // Update query parameters based on search
     if(thingId) {
       // Use thingId if defined
