@@ -153,8 +153,6 @@ class Search extends Component {
 }
 
 export default createContainer(({setQuery, query, hasQuery, stuffCount, thingId, searchResults}) => {
-  console.log("recreating search container ==========");
-
   Session.setDefault("hits", [{name: "Loading...", isDefault: true}]);
 
   const client = window.algoliasearch(
@@ -165,10 +163,6 @@ export default createContainer(({setQuery, query, hasQuery, stuffCount, thingId,
   if(!searchResults) {
     searchResults = [{name: "No results."}]
   }
-
-  console.log(searchResults);
-  console.log(stuffCount);
-
 
   return {
     things: searchResults,

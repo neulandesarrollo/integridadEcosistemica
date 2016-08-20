@@ -88,7 +88,6 @@ export default class IndexPage extends Component {
     }
 
     this.setState({query, thingId})
-
     // Update query parameters based on search
     if(thingId) {
       // Use thingId if defined
@@ -96,10 +95,11 @@ export default class IndexPage extends Component {
       this.searchByThingId(thingId)
     } else {
       // Otherwise use the raw text input
-      if(!this.hasQuery()) {
+      // Do not use this.hasQuery because state has not changed yet
+      if(query === "") {
         FlowRouter.setQueryParams({q: null});
       } else {
-        FlowRouter.setQueryParams({q: query, t: null});
+        FlowRouter.setQueryParams({q: encodeURI(query), t: null});
         this.searchByQuery(query)
       }
     }

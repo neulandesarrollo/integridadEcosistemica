@@ -8,14 +8,16 @@ import Loading from './Loading.jsx';
 import { Stuffs } from '../../common/collections/stuffs.js';
 import { Compatibilities } from '../../common/collections/compatibilities.js';
 
+const STUFF_LIMIT = 'session-stuff-limit'
+
 class Results extends Component {
   renderOptional(stuff, fieldName, title) {
     return _.has(stuff, fieldName) ? <p>{title}: {stuff[fieldName]}</p> : null;
   }
 
   componentWillReceiveProps(newProps) {
-    const currentStuffsL = this.props.stuffs.length
-    const newStuffsL = newProps.stuffs.length
+    const currentStuffsL = this.props.totalStuffCount
+    const newStuffsL = newProps.totalStuffCount
 
     if(currentStuffsL !== newStuffsL) {
       this.props.setStuffCount(newStuffsL)
@@ -26,19 +28,19 @@ class Results extends Component {
     return (
       <div key={stuff._id} className='col-xl-4 col-sm-6 col-xs-12 m-t-2'>
         <div className="card">
-          <img className="card-img-top m-x-auto img-fluid ioplease-stuff-img m-t-1" src={stuff.iconUrl} alt={stuff.name} />
+          <img className="card-img-top m-x-auto img-fluid ioplease-stuff-img m-t-1 p-x-1" src={stuff.iconUrl} alt={stuff.name} />
           <div className="card-block">
             <h3 className="card-title"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h3>
             <p className="card-text m-y-2">{stuff.description}</p>
             {_.has(stuff, "popularity") ? <p>Rating: {stuff.popularity}</p> : null}
-
+            <DownloadOptions stuffId={stuff._id} />
+            <KindsBadges stuffId={stuff._id} />
           </div>
         </div>
       </div>
     )
   }
-  // <DownloadOptions stuffId={stuff._id} />
-  // <KindsBadges stuffId={stuff._id} />
+
   renderStuffRowEvery(stuffs, n) {
     let tStuffs = _.clone(stuffs)
     let rows = []
@@ -70,6 +72,10 @@ class Results extends Component {
     )
   }
 
+  handleLoadMore() {
+    Session.set(STUFF_LIMIT, Session.get(STUFF_LIMIT) + 12)
+  }
+
   renderStuffs() {
     return (
       <div>
@@ -83,6 +89,9 @@ class Results extends Component {
         <div className='hidden-md-down'>
           {this.renderStuffRowEvery(this.props.stuffs, 3)}
         </div>
+
+        { this.props.stuffs.length >= this.props.totalStuffCount ? null :
+            <button onClick={this.handleLoadMore} className="btn btn-outline-primary btn-lg m-t-3">Load more results...</button> }
       </div>
     );
   }
@@ -101,8 +110,7 @@ class Results extends Component {
 }
 
 export default createContainer(({query, thingId, setStuffCount, searchResults}) => {
-  console.log("recreated results container -------");
-  console.log(searchResults);
+  Session.setDefault(STUFF_LIMIT, 12)
 
   let loading = true
   let stuffs = []
@@ -119,11 +127,11 @@ export default createContainer(({query, thingId, setStuffCount, searchResults}) 
       thingName = "Showing results for \"" + searchResults[0].name + "\"."
   }
 
-  console.log(thingIds);
-
   // Only show Stuffs if there are Things matching query
   if(thingIds) {
-    const stuffsHandle = Meteor.subscribe("stuffs.forThings", thingIds);
+    const limit = Session.get(STUFF_LIMIT)
+
+    const stuffsHandle = Meteor.subscribe("stuffs.forThings", thingIds, limit);
 
     if(stuffsHandle.ready()) {
       stuffs = Stuffs.find({}).fetch()
@@ -136,6 +144,7 @@ export default createContainer(({query, thingId, setStuffCount, searchResults}) 
   return {
     stuffs,
     loading,
-    thingName
+    thingName,
+    totalStuffCount: Counts.get(`stuffs.forThings.${thingIds}`)
   };
 }, Results);
