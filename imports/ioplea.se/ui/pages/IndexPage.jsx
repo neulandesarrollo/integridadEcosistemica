@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import Footer from '../components/Footer.jsx';
 import Results from '../components/Results.jsx';
@@ -31,7 +32,26 @@ export default class IndexPage extends Component {
   }
 
   setQuery(query, thingId, thingName) {
+    if(query === "") {
+      thingId = undefined
+      thingName = undefined
+    }
+    console.log('setQuery');
     this.setState({query, thingId, thingName})
+    console.log(query);
+    console.log(thingId);
+    // Update query parameters based on search
+    if(thingId) {
+      // Use thingId if defined
+      FlowRouter.setQueryParams({q: thingId});
+    } else {
+      // Otherwise use the raw text input
+      if(query === "") {
+        FlowRouter.setQueryParams({q: null});
+      } else {
+        FlowRouter.setQueryParams({q: query});
+      }
+    }
   }
 
   setStuffCount(count) {

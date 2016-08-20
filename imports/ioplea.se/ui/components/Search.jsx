@@ -59,7 +59,6 @@ class Search extends Component {
     var tmpStr = input.val();
     input.val('');
     input.val(tmpStr);
-    // ReactDOM.findDOMNode(this.refs.iopleaseSearchAutocomplete).focus();
   }
 
   componentDidUpdate() {
@@ -67,9 +66,12 @@ class Search extends Component {
   }
 
   handleSearch(event, value, thingId) {
+    console.log('handleSearch');
     const thiz = this;
     if(event)
       event.preventDefault()
+
+    this.setState({ value })
 
     algoliaThingsIndex(window).search(value, (err, content) => {
       if (err) {
@@ -79,12 +81,12 @@ class Search extends Component {
 
       thiz.setState({things: content.hits})
 
-      if(content.hits.length > 0)
+      if(content.hits.length > 0) {
         this.props.setQuery(value, content.hits[0]._id, content.hits[0].name);
+      } else {
+        this.props.setQuery(value, thingId);
+      }
     });
-
-    this.setState({ value })
-    this.props.setQuery(value, thingId);
   }
 
 
@@ -133,8 +135,9 @@ class Search extends Component {
             items={this.state.things}
             getItemValue={(item) => item.name}
             onSelect={(value, item) => {
+              console.log("onSelect");
+
               // set the menu to only the selected item
-              this.setState({ value, things: [ item ] })
               this.handleSearch(undefined, value, item._id)
             }}
             onChange={this.handleSearch.bind(this)}
@@ -199,32 +202,3 @@ export default createContainer(({setQuery, query, hasQuery, stuffCount}) => {
     stuffCount
   };
 }, Search);
-
-// <Autocomplete
-//   inputProps={{
-//       className: "form-control form-control-lg",
-//       id: "iothing-autocomplete",
-//       placeholder: "I want to do something with my...",
-//       type: "text",
-//     }}
-//     wrapperStyle={{}}
-//     wrapperProps={{className: 'ioplease-search-box'}}
-//     ref="iopleaseSearchAutocomplete"
-//     value={this.state.value}
-//     items={this.state.things}
-//     getItemValue={(item) => item.name}
-//     onSelect={(value, item) => {
-//       // set the menu to only the selected item
-//       this.setState({ value, things: [ item ] })
-//       this.handleSearch(undefined, value, item._id)
-//     }}
-//     onChange={this.handleSearch.bind(this)}
-//     renderItem={this.renderItem.bind(this)}
-// />
-
-
-
-
-// <div className="ioplease-search-box">
-//   <input className="form-control form-control-lg" id="iothing-autocomplete" ref="iopleaseSearchAutocomplete" />
-// </div>
