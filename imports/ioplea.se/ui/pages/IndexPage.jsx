@@ -10,44 +10,80 @@ import Submit from '../components/Submit.jsx';
 export default class IndexPage extends Component {
   constructor(props) {
     super(props);
+    let query = ""
+    let thingId = undefined
+
+    const t = FlowRouter.getQueryParam("t");
+    if(!t) {
+      const q = FlowRouter.getQueryParam("q");
+      if(q)
+        query = q
+    } else {
+      thingId = t
+    }
 
     this.state = {
-      query: '',
-      thingId: undefined,
-      stuffCount: 0,
-      thingName: ''
+      query,
+      thingId,
+      stuffCount: -1,
+      searchResults: undefined
     };
   }
 
-  searchDivClass() {
-    if(this.hasQuery()) {
-      return "ioplease-banner"
+  componentDidMount() {
+    if(this.state.thingId) {
+      // search algolia for thing by id
+      // set query name to thing name
+      // search results 1 item array with thing
+      // stuffCount = -1
     } else {
-      return "ioplease-banner-full"
+      // search algolia for thing by name
+      // set searchResults to array of things
+      // stuffCount = -1
     }
+  }
+
+  searchDivClass() {
+    return this.hasQuery() ? "ioplease-banner" : "ioplease-banner-full"
   }
 
   hasQuery() {
     return this.state.query !== ""
   }
 
-  setQuery(query, thingId, thingName) {
+  setQuery(query, thingId, searchResults) {
     if(query === "") {
       thingId = undefined
-      thingName = undefined
+      searchResults = undefined
+      stuffCount = -1
     }
-    this.setState({query, thingId, thingName})
-    
+
+    this.setState({query, thingId, searchResults})
+
+    algoliaThingsIndex(window).search(query, (err, content) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      thiz.setState({searchResults: content.hits})
+
+      if(content.hits.length === 1) {
+        this.setState({thingId: content.hits[0]._id})
+      }
+    });
+
+
     // Update query parameters based on search
     if(thingId) {
       // Use thingId if defined
-      FlowRouter.setQueryParams({q: thingId});
+      FlowRouter.setQueryParams({t: thingId, q: null});
     } else {
       // Otherwise use the raw text input
       if(query === "") {
         FlowRouter.setQueryParams({q: null});
       } else {
-        FlowRouter.setQueryParams({q: query});
+        FlowRouter.setQueryParams({q: query, t: null});
       }
     }
   }
@@ -65,7 +101,7 @@ export default class IndexPage extends Component {
               <Results
                 query={this.state.query}
                 thingId={this.state.thingId}
-                thingName={this.state.thingName}
+                searchResults={this.state.searchResults}
                 setStuffCount={this.setStuffCount.bind(this)} />
             </div>
           </div>
@@ -94,7 +130,9 @@ export default class IndexPage extends Component {
               <div className="col-xs-12 col-sm-10 offset-sm-1 col-md-6 offset-md-3">
                 <Search
                   setQuery={this.setQuery.bind(this)}
-                  query={this.state.query} hasQuery={this.hasQuery()}
+                  hasQuery={this.hasQuery()}
+                  query={this.state.query}
+                  thingId={this.state.thingId}
                   stuffCount={this.state.stuffCount} />
               </div>
             </div>

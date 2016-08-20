@@ -34,3 +34,4 @@ http@1.2.9
 random@1.0.10
 shell-server
 marvin:piwik-http-sandstorm
+reywood:publish-composite

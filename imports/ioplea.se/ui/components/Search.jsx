@@ -31,7 +31,7 @@ class Search extends Component {
     super(props);
 
     this.state = {
-      value: props.query ? props.query : '' ,
+      value: props.query,
       things: props.things
     };
   }
@@ -51,6 +51,7 @@ class Search extends Component {
 
   componentDidMount() {
     this.focus()
+    // this.handleSearch(undefined, this.props.query, this.props.thingId)
   }
 
   focus() {
@@ -71,21 +72,7 @@ class Search extends Component {
       event.preventDefault()
 
     this.setState({ value })
-
-    algoliaThingsIndex(window).search(value, (err, content) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      thiz.setState({things: content.hits})
-
-      if(content.hits.length > 0) {
-        this.props.setQuery(value, content.hits[0]._id, content.hits[0].name);
-      } else {
-        this.props.setQuery(value, thingId);
-      }
-    });
+    this.props.setQuery(value, thingId)
   }
 
 
@@ -106,6 +93,7 @@ class Search extends Component {
   }
 
   renderCount() {
+    const countLoaded = this.props.hasQuery && (this.props.stuffCount > -1)
     return this.props.hasQuery ? <h4 className='ioplease-count'>{this.props.stuffCount} {this.renderResultsCount()}</h4> : null;
   }
 
@@ -168,7 +156,7 @@ class Search extends Component {
   }
 }
 
-export default createContainer(({setQuery, query, hasQuery, stuffCount}) => {
+export default createContainer(({setQuery, query, hasQuery, stuffCount, thingId}) => {
   Session.setDefault("hits", [{name: "Loading...", isDefault: true}]);
 
   const client = window.algoliasearch(
@@ -195,6 +183,7 @@ export default createContainer(({setQuery, query, hasQuery, stuffCount}) => {
     things,
     setQuery,
     query,
+    thingId,
     hasQuery,
     stuffCount
   };

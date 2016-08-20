@@ -99,29 +99,37 @@ class Results extends Component {
     }
   }
 }
-export default createContainer(({query, thingId, setStuffCount, thingName}) => {
-  let loading = true;
-  let stuffs = [];
-  const compatsHandle = Meteor.subscribe("compatibilities");
+export default createContainer(({query, thingId, setStuffCount, thingName, searchResults}) => {
+  console.log("Start debugging");
+  console.log(searchResults);
 
-  if(compatsHandle.ready() && thingId) {
-    const compats = Compatibilities.find({thingId}).fetch().map(compat => { return compat.stuffId })
-    const stuffsHandle = Meteor.subscribe("stuffs.list", compats);
+  let loading = true
+  let stuffs = []
+  let thingIds = []
+
+  if(thingId) {
+    thingIds = [thingId]
+  } else if(searchResults) {
+    thingIds = _.map(searchResults, (r) => { return r._id })
+  }
+
+  // Only show Stuffs if there are Things matching query
+  if(thingIds) {
+    const stuffsHandle = Meteor.subscribe("stuffs.forThings", thingIds);
+
+    if((thingName !== undefined) && (thingName !== query)) {
+      thingName = "Showing results for \"" + thingName + "\"."
+    } else {
+      thingName = ""
+    }
 
     if(stuffsHandle.ready()) {
-      loading = false;
-      stuffs = Stuffs.find().fetch()
+      stuffs = Stuffs.find({}).fetch()
+      setStuffCount(stuffs.length)
+      loading = false
     }
-  }
-
-  if((thingName !== undefined) && (thingName !== query)) {
-    thingName = "Showing results for \"" + thingName + "\"."
   } else {
-    thingName = ""
-  }
-
-  if(!thingId) {
-    loading = false;
+    loading = false
   }
 
   return {
