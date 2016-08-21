@@ -40,13 +40,15 @@ export default class GeekyIndexPage extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div id="geeky-rocks-container">
         <div className="p-t-2">
-          <h1 className="geeky-title">Projects</h1>
+          <h1 className="geeky-title text-xs-center">Projects</h1>
         </div>
 
-        <div className="row p-b-3">
-          {this.renderProjects()}
+        <div className="container-fluid">
+          <div className="row p-b-3">
+            {this.renderProjects()}
+          </div>
         </div>
       </div>
     );

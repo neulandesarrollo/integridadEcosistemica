@@ -33,12 +33,6 @@ class Search extends Component {
 
   componentWillReceiveProps(newProps) {
     ReactDOM.findDOMNode(this.refs.iopleaseSearchAutocomplete).focus();
-
-    // const isThingsDefault = (this.state.things.length > 0) && ("isDefault" in this.state.things[0])
-    //
-    // if(isThingsDefault && newProps.things.length > 0) {
-    //   this.setState({things: newProps.things})
-    // }
   }
 
   componentWillUnmount() {
@@ -46,7 +40,6 @@ class Search extends Component {
 
   componentDidMount() {
     this.focus()
-    // this.handleSearch(undefined, this.props.query, this.props.thingId)
   }
 
   focus() {
@@ -70,7 +63,6 @@ class Search extends Component {
     this.props.setQuery(value, thingId)
   }
 
-
   renderItem(item, isHighlighted) {
     return (
       <div
@@ -90,7 +82,7 @@ class Search extends Component {
   renderCount() {
     const countLoaded = this.props.hasQuery && (this.props.stuffCount > -1)
     return countLoaded ?  <h4 className='ioplease-count'>{this.props.stuffCount} {this.renderResultsCount()}</h4> :
-                          <h4 className='ioplease-count'>Loading...</h4> ;
+                          null
   }
 
   handleInput(event) {

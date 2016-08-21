@@ -7,12 +7,12 @@ import { Kinds } from '../../common/collections/kinds.js';
 class KindsBadges extends Component {
 
   renderBadge(classification) {
-    return <button className="btn btn-link p-x-1" key={classification._id}>{classification.kindName}</button>
+    return <span className="text-muted p-x-1" key={classification._id}>{classification.kindName}</span>
   }
 
   render() {
     if(this.props.loading) {
-      return <h1>Loading...</h1>
+      return null
     } else {
       return (
         <div className='m-t-2 m-x-auto'>

@@ -1,6 +1,6 @@
-html, body, #react-root, #geeky-rocks {
-  height: 100%;
+html, body, #react-root, #geeky-rocks, #geeky-rocks-container, #geeky-projects {
   min-height: 100%;
+  height: 100%;
   width: 100%;
   font-family: 'Press Start 2P', cursive;
   background-color: rgba(5, 9, 38, 0.95)

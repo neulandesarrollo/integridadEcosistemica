@@ -83,10 +83,10 @@ class Results extends Component {
         <div className='hidden-sm-up'>
           {this.renderStuffRowEvery(this.props.stuffs, 1)}
         </div>
-        <div className='hidden-lg-up hidden-xs-down'>
+        <div className='hidden-xl-up hidden-xs-down'>
           {this.renderStuffRowEvery(this.props.stuffs, 2)}
         </div>
-        <div className='hidden-md-down'>
+        <div className='hidden-lg-down'>
           {this.renderStuffRowEvery(this.props.stuffs, 3)}
         </div>
 

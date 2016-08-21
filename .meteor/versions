@@ -56,7 +56,6 @@ meteor@1.2.17
 meteor-base@1.0.4
 meteorhacks:kadira@2.30.0
 meteorhacks:meteorx@1.4.1
-minifier-css@1.2.14
 minifier-js@1.2.14
 minimongo@1.0.17
 mobile-experience@1.0.4
@@ -94,8 +93,6 @@ simple:rest@1.1.1
 spacebars@1.0.12
 spacebars-compiler@1.0.12
 srp@1.0.9
-standard-minifier-css@1.2.0
-standard-minifier-js@1.2.0
 static-html@1.1.12
 templating@1.2.14
 templating-tools@1.0.4
