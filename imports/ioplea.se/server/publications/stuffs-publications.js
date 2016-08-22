@@ -4,10 +4,6 @@ import { Stuffs } from '../../common/collections/stuffs.js';
 
 const MAX_STUFFS = 100
 
-Meteor.publish("stuffs.list", (stuffIds) => {
-  return Stuffs.find({_id: {$in: stuffIds}, isVisible: true});
-});
-
 Meteor.publish('stuffs.forThings', function (thingIds, limit) {
   this.autorun(function (computation) {
     new SimpleSchema({

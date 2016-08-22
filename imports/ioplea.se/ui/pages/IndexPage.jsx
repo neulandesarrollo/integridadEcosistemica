@@ -56,7 +56,7 @@ export default class IndexPage extends Component {
       thiz.setState({searchResults: content.hits})
 
       if(content.hits.length === 1) {
-        this.setState({thingId: content.hits[0]._id})
+        thiz.setState({thingId: content.hits[0]._id})
       }
     });
   }
@@ -117,6 +117,7 @@ export default class IndexPage extends Component {
             <div className="col-xs-12 col-xl-10 offset-xl-1">
               <Results
                 query={this.state.query}
+                setQuery={this.setQuery.bind(this)}
                 thingId={this.state.thingId}
                 searchResults={this.state.searchResults}
                 setStuffCount={this.setStuffCount.bind(this)} />

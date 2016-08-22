@@ -14,7 +14,7 @@ class ControllersCheckboxes extends Component {
 
   render() {
     if(this.props.loading) {
-      return <h1>Loading...</h1>
+      return <h4 className='text-xs-center'>Loading...</h4>
     } else {
       return (
         <div>

@@ -4,5 +4,8 @@ export default CompatibilitiesSchema = new SimpleSchema({
   },
   stuffId: {
     type: String
+  },
+  thingName: {
+    type: String
   }
 });

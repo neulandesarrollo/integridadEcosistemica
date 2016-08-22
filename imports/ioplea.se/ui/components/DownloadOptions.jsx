@@ -15,7 +15,7 @@ class DownloadOptions extends Component {
 
   render() {
     if(this.props.loading) {
-      return <h1>Loading...</h1>
+      return <h4 className="text-xs-center">Loading...</h4>
     } else {
       return (
         <div>
@@ -31,7 +31,7 @@ export default createContainer(({stuffId}) => {
   let loading = true;
   let controllings = [];
 
-  const contHandle = Meteor.subscribe("controllings", stuffId)
+  const contHandle = Meteor.subscribe("controllings.forStuff", stuffId)
 
   if(contHandle.ready()) {
     controllings = Controllings.find({stuffId}).fetch()

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import CompatibleWith from './CompatibleWith.jsx';
 import DownloadOptions from './DownloadOptions.jsx';
 import KindsBadges from './KindsBadges.jsx';
 import Loading from './Loading.jsx';
@@ -31,10 +32,11 @@ class Results extends Component {
           <img className="card-img-top m-x-auto img-fluid ioplease-stuff-img m-t-1 p-x-1" src={stuff.iconUrl} alt={stuff.name} />
           <div className="card-block">
             <h3 className="card-title"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h3>
+            <KindsBadges stuffId={stuff._id} />
             <p className="card-text m-y-2">{stuff.description}</p>
             {_.has(stuff, "popularity") ? <p>Rating: {stuff.popularity}</p> : null}
             <DownloadOptions stuffId={stuff._id} />
-            <KindsBadges stuffId={stuff._id} />
+            <CompatibleWith stuffId={stuff._id} setQuery={this.props.setQuery} thingId={this.props.thingId} />
           </div>
         </div>
       </div>
@@ -109,13 +111,14 @@ class Results extends Component {
   }
 }
 
-export default createContainer(({query, thingId, setStuffCount, searchResults}) => {
+export default createContainer(({query, thingId, setStuffCount, searchResults, setQuery}) => {
   Session.setDefault(STUFF_LIMIT, 12)
 
   let loading = true
   let stuffs = []
   let thingIds = []
   let thingName = ""
+  let _thingId = thingId // Necessary for excluding current Thing from list of compatibilities for this stuff
 
   if(thingId) {
     thingIds = [thingId]
@@ -123,8 +126,10 @@ export default createContainer(({query, thingId, setStuffCount, searchResults}) 
     thingIds = _.map(searchResults, (r) => { return r.objectID })
 
     // If only one matching Thing, show all stuff for that
-    if(searchResults.length === 1)
+    if(searchResults.length === 1) {
       thingName = "Showing results for \"" + searchResults[0].name + "\"."
+      _thingId = searchResults[0].objectID
+    }
   }
 
   // Only show Stuffs if there are Things matching query
@@ -145,6 +150,8 @@ export default createContainer(({query, thingId, setStuffCount, searchResults}) 
     stuffs,
     loading,
     thingName,
+    thingId: _thingId,
+    setQuery,
     totalStuffCount: Counts.get(`stuffs.forThings.${thingIds}`)
   };
 }, Results);
