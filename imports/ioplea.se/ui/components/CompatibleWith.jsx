@@ -6,7 +6,7 @@ import { Compatibilities } from '../../common/collections/compatibilities.js';
 class CompatibleWith extends Component {
   renderCompat(compat) {
     const thiz = this;
-    return <button className='btn btn-link' key={compat._id} onClick={(event) => {
+    return <button className='btn btn-link btn-sm' key={compat._id} onClick={(event) => {
         event.preventDefault()
         thiz.props.setQuery(compat.thingName, compat.thingId)
       }}>{compat.thingName}</button>
