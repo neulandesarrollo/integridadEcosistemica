@@ -26,7 +26,7 @@ Meteor.publish('stuffs.forThings', function (thingIds, limit) {
     })
 
     const stuffQuery = {_id: {$in: stuffIds}}
-    const stuffOptions = {sort: {popularity: -1}, limit: Math.min(limit, MAX_STUFFS)}
+    const stuffOptions = {sort: {popularity: -1, name: -1}, limit: Math.min(limit, MAX_STUFFS)}
 
     Counts.publish(this, `stuffs.forThings.${thingIds}`, Stuffs.find(stuffQuery));
     return Stuffs.find(stuffQuery, stuffOptions)

@@ -54,7 +54,6 @@ class Results extends Component {
           {stuffRow.map(this.renderStuff.bind(this))}
         </div>
       )
-
       rows.push(row)
     }
 
@@ -78,6 +77,17 @@ class Results extends Component {
     Session.set(STUFF_LIMIT, Session.get(STUFF_LIMIT) + 12)
   }
 
+  renderLoadMore() {
+    if(this.props.stuffs.length < this.props.totalStuffCount) {
+      if(this.props.loadingMore) {
+        return <button className="btn btn-outline-primary btn-lg m-t-3 disabled">Loading more results...</button>
+      } else {
+        return <button onClick={this.handleLoadMore} className="btn btn-outline-primary btn-lg m-t-3">Load more results.</button>
+      }
+    }
+    return null;
+  }
+
   renderStuffs() {
     return (
       <div>
@@ -92,8 +102,7 @@ class Results extends Component {
           {this.renderStuffRowEvery(this.props.stuffs, 3)}
         </div>
 
-        { this.props.stuffs.length >= this.props.totalStuffCount ? null :
-            <button onClick={this.handleLoadMore} className="btn btn-outline-primary btn-lg m-t-3">Load more results...</button> }
+        {this.renderLoadMore()}
       </div>
     );
   }
@@ -102,7 +111,7 @@ class Results extends Component {
     if(this.props.loading) {
       return <Loading />
     } else {
-      if(this.props.stuffs.length === 0 ) {
+      if((this.props.stuffs.length === 0) && !this.props.loadingMore ) {
         return this.renderNoResults()
       } else {
         return this.renderStuffs()
@@ -112,9 +121,11 @@ class Results extends Component {
 }
 
 export default createContainer(({query, thingId, setStuffCount, searchResults, setQuery}) => {
-  Session.setDefault(STUFF_LIMIT, 12)
+  const defaultLimit = 12
+  Session.setDefault(STUFF_LIMIT, defaultLimit)
 
   let loading = true
+  let loadingMore = false
   let stuffs = []
   let thingIds = []
   let thingName = ""
@@ -141,6 +152,10 @@ export default createContainer(({query, thingId, setStuffCount, searchResults, s
     if(stuffsHandle.ready()) {
       stuffs = Stuffs.find({}).fetch()
       loading = false
+    } else if(limit > defaultLimit) {
+      stuffs = Stuffs.find({}).fetch()
+      loading = false
+      loadingMore = true
     }
   } else {
     loading = false
@@ -152,6 +167,7 @@ export default createContainer(({query, thingId, setStuffCount, searchResults, s
     thingName,
     thingId: _thingId,
     setQuery,
-    totalStuffCount: Counts.get(`stuffs.forThings.${thingIds}`)
+    totalStuffCount: Counts.get(`stuffs.forThings.${thingIds}`),
+    loadingMore
   };
 }, Results);

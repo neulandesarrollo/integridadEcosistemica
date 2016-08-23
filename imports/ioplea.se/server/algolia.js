@@ -15,22 +15,18 @@ const algoliaThingsIndex = () => {
 }
 
 Meteor.startup(() => {
-  console.log('Setting attributesToIndex');
-
-  algoliaThingsIndex().setSettings({attributesToIndex: ["searchableName", "description", "company", "name"]}, err => {
+  const doIndex = ["searchableName", "company", "name"]
+  algoliaThingsIndex().setSettings({attributesToIndex: doIndex}, err => {
     if (err) {
       console.log('Error setting attributesToIndex');
       console.error(err);
     } else {
-      console.log("Success setting attributesToIndex");
+      console.log("Success setting attributesToIndex with Algolia");
     }
   })
 });
 
-
 Things.after.insert((error, doc) => {
-  console.log('Adding Thing to Algolia index');
-
   const thingId = doc._id
   console.log(thingId);
   algoliaThingsIndex().addObject(_.omit(doc, "_id"), thingId, (err, content) => {
@@ -38,20 +34,17 @@ Things.after.insert((error, doc) => {
       console.log('Error adding index');
       console.error(err);
     } else {
-      console.log("Success adding index");
+      // console.log("Success adding index");
     }
   });
 });
 
 export function resetIndices(callback) {
-  console.log('resetting all indices');
-
   algoliaThingsIndex().deleteByQuery('', error => {
     console.log(error);
     if (!error) {
-      console.log('successfully deleted all indices');
+      console.log('Successfully deleted all Algolia indices');
     }
     callback(error)
   });
-
 }
