@@ -6,10 +6,25 @@
   background-color: rgb(255, 255, 255)
 }
 
-.mexEco-navbar {
+#mexEco-navbar {
+  margin-bottom: 0 !important;
   background: rgba(31, 31, 31, 0.8)
 }
 
 ul.nav > li.nav-item > a.nav-link {
   padding-top: 0.9rem
+}
+
+#mexEco-index-title {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-image: url('/mexEco/plants.jpg');
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#mexEco-index-title-img {
+  min-width: 100%;
 }

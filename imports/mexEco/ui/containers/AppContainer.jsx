@@ -2,9 +2,14 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import { Footer } from '../components/Footer.jsx';
+import { Navbar } from '../components/Navbar.jsx';
+
 const App = (props) => (
   <div id="mexEco">
+    <Navbar />
     {props.main}
+    <Footer />
   </div>
 );
 
