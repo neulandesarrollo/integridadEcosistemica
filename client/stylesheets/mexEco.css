@@ -28,3 +28,18 @@ ul.nav > li.nav-item > a.nav-link {
 #mexEco-index-title-img {
   min-width: 100%;
 }
+
+#mexEco-contact-title {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-image: url('/mexEco/contact-plants.jpg');
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#mexEco-contact-contact {
+  background: rgba(95, 170, 0, 1);
+  color: rgb(255, 255, 255);
+}
