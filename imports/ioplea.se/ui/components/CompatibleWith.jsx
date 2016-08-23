@@ -13,9 +13,7 @@ class CompatibleWith extends Component {
   }
 
   render() {
-    if(this.props.loading) {
-      return null
-    } else {
+    if(!this.props.loading && (this.props.compats.length > 0)) {
       return (
         <div>
           <h5 className='m-t-1'><strong>Compatible With</strong></h5>
@@ -23,6 +21,7 @@ class CompatibleWith extends Component {
         </div>
       );
     }
+    return null
   }
 }
 
@@ -39,7 +38,6 @@ export default createContainer(({stuffId, setQuery, thingId}) => {
 
   if(compatsHandle.ready()) {
     compats = Compatibilities.find({stuffId}, {sort: {thingName: 1}}).fetch()
-
     loading = false;
   }
 
