@@ -5,3 +5,11 @@
   font-family: 'Judson', serif;
   background-color: rgb(255, 255, 255)
 }
+
+.mexEco-navbar {
+  background: rgba(31, 31, 31, 0.8)
+}
+
+ul.nav > li.nav-item > a.nav-link {
+  padding-top: 0.9rem
+}

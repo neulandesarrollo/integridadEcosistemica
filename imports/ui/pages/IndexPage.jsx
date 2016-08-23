@@ -17,9 +17,9 @@ export default class GeekyIndexPage extends Component {
       },
       {
         _id: "3",
-        name: "mexEco",
+        name: "Integridad Ecosistémica",
         description: "Investigate envrionmental & ecological integrity in Mexico.",
-        url: "/mexEco"
+        url: "/integridad-ecosistemica"
       }
     ];
   }

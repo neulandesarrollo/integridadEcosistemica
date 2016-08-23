@@ -3,13 +3,13 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { mount } from 'react-mounter';
 
 import AppContainer from '../../ui/containers/AppContainer.jsx';
-import IndexContainter from '../../ui/containers/IndexContainer.jsx';
+import IndexPage from '../../ui/pages/IndexPage.jsx';
 
-FlowRouter.route('/mexEco', {
+FlowRouter.route('/integridad-ecosistemica', {
   name: 'mexEco',
   action() {
     mount(AppContainer, {
-      main: <IndexContainer />,
+      main: <IndexPage />,
     });
   },
 });
