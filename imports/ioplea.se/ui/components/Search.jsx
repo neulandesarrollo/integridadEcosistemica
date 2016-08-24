@@ -1,32 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Session } from 'meteor/session'
-import { createContainer } from 'meteor/react-meteor-data';
-import Autocomplete from 'react-autocomplete';
 
-import { Things } from '../../common/collections/things.js';
-
-import { algoliaThingsIndex } from '../../client/algolia.js';
-
-const styles = {
-  item: {
-    padding: '2px 6px',
-    cursor: 'default'
-  },
-
-  highlightedItem: {
-    color: 'white',
-    background: 'hsl(200, 50%, 50%)',
-    padding: '2px 6px',
-    cursor: 'default'
-  },
-
-  menu: {
-    border: 'solid 1px #ccc'
-  }
-}
-
-class Search extends Component {
+export default class Search extends Component {
   constructor(props) {
     super(props);
   }
@@ -63,14 +38,6 @@ class Search extends Component {
     this.props.setQuery(value, thingId)
   }
 
-  renderItem(item, isHighlighted) {
-    return (
-      <div
-        style={isHighlighted ? styles.highlightedItem : styles.item}
-        key={item._id}>{item.name}</div>
-    )
-  }
-
   renderResultsCount() {
     return this.props.stuffCount == 1 ? "result" : "results"
   }
@@ -93,75 +60,21 @@ class Search extends Component {
     event.preventDefault();
   }
 
-  renderInput() {
-    if(this.props.hasQuery) {
-      return (
-        <Autocomplete
-          inputProps={{
-              className: "form-control form-control-lg",
-              id: "iothing-autocomplete",
-              placeholder: "I want to do something with my...",
-              type: "text"
-            }}
-            wrapperStyle={{}}
-            wrapperProps={{className: 'ioplease-search-box'}}
-            ref="iopleaseSearchAutocomplete"
-            value={this.props.query}
-            items={this.props.things}
-            getItemValue={(item) => item.name}
-            onSelect={(value, item) => {
-              // set the menu to only the selected item
-              this.handleSearch(undefined, value, item.objectID)
-            }}
-            onChange={this.handleSearch.bind(this)}
-            renderItem={this.renderItem.bind(this)}
-        />
-      )
-    } else {
-      return (
-        <div className="ioplease-search-box">
-          <input
-            placeholder="I want to do something with my..."
-            className="form-control form-control-lg"
-            id="iothing-autocomplete"
-            ref="iopleaseSearchAutocomplete"
-            onChange={this.handleInput.bind(this)} />
-        </div>
-      )
-    }
-  }
-
   render() {
     return (
       <form id='ioplease-search' onSubmit={this.handleSubmit.bind(this)}>
-        <div className="form-group">
           {this.renderCount()}
-          {this.renderInput()}
+          <div className="ioplease-search-box">
+            <input
+              placeholder="I want to do something with my..."
+              className="form-control form-control-lg"
+              id="iothing-autocomplete"
+              ref="iopleaseSearchAutocomplete"
+              defaultValue={this.props.query}
+              onChange={this.handleInput.bind(this)} />
+          </div>
           {this.renderHelper()}
-        </div>
       </form>
     );
   }
 }
-
-export default createContainer(({setQuery, query, hasQuery, stuffCount, thingId, searchResults}) => {
-  Session.setDefault("hits", [{name: "Loading...", isDefault: true}]);
-
-  const client = window.algoliasearch(
-    Meteor.settings.public.AGOLIA_SEARCH.applicationID,
-    Meteor.settings.public.AGOLIA_SEARCH.searchApiKey
-  );
-
-  if(!searchResults) {
-    searchResults = [{name: "No results."}]
-  }
-
-  return {
-    things: searchResults,
-    setQuery,
-    query,
-    thingId,
-    hasQuery,
-    stuffCount
-  };
-}, Search);

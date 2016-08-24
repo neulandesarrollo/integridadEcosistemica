@@ -14,7 +14,6 @@
     "node-socrata": "0.0.50",
     "react": "^15.0.1",
     "react-addons-pure-render-mixin": "^15.0.1",
-    "react-autocomplete": "^1.0.1",
     "react-dom": "^15.0.1",
     "react-mounter": "^1.2.0",
     "react-router": "^2.6.1"

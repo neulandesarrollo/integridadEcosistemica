@@ -91,7 +91,7 @@ class Results extends Component {
   renderStuffs() {
     return (
       <div>
-        <h2 className='m-b-2 m-t-3'>{this.props.thingName}</h2>
+        <h2 className='m-b-2 m-t-2'>{this.props.thingName}</h2>
         <div className='hidden-sm-up'>
           {this.renderStuffRowEvery(this.props.stuffs, 1)}
         </div>
@@ -111,7 +111,7 @@ class Results extends Component {
     if(this.props.loading) {
       return <Loading />
     } else {
-      if((this.props.stuffs.length === 0) && !this.props.loadingMore ) {
+      if((this.props.stuffs.length === 0) && !this.props.loadingMore) {
         return this.renderNoResults()
       } else {
         return this.renderStuffs()

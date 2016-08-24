@@ -3,6 +3,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import { algoliaThingsIndex } from '../../client/algolia.js';
 
+import Autocomplete from '../components/Autocomplete.jsx';
 import Footer from '../components/Footer.jsx';
 import Results from '../components/Results.jsx';
 import Search from '../components/Search.jsx';
@@ -27,8 +28,13 @@ export default class IndexPage extends Component {
       query,
       thingId,
       stuffCount: -1,
-      searchResults: undefined
+      searchResults: []
     };
+  }
+
+  resetSearch(val) {
+    const input = $('#iothing-autocomplete')
+    input.val(val)
   }
 
   searchByThingId(thingId) {
@@ -41,6 +47,7 @@ export default class IndexPage extends Component {
       }
 
       thiz.setState({query: content.name, thingId, searchResults: []})
+      thiz.resetSearch(content.name)
     });
   }
 
@@ -83,7 +90,7 @@ export default class IndexPage extends Component {
   setQuery(query, thingId, searchResults) {
     if(query === "") {
       thingId = undefined
-      searchResults = undefined
+      searchResults = []
       stuffCount = -1
     }
 
@@ -113,7 +120,9 @@ export default class IndexPage extends Component {
     if(this.hasQuery()) {
       return (
         <div className="container-fluid text-xs-center" id='content'>
-          <div className="row m-b-3">
+          <Autocomplete things={this.state.searchResults} setQuery={this.setQuery.bind(this)} resetSearch={this.resetSearch.bind(this) }/>
+
+          <div className="row m-b-2">
             <div className="col-xs-12 col-xl-10 offset-xl-1">
               <Results
                 query={this.state.query}
