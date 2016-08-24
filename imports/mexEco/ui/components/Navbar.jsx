@@ -18,7 +18,7 @@ export class Navbar extends Component {
             <a className="nav-link" href="/integridad-ecosistemica">Nosotros</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Mapa</a>
+            <a className="nav-link" href="/mapa">Mapa</a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#">Súmate</a>

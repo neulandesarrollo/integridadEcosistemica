@@ -3,8 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-// import PolygonFormContainer from '../containers/PolygonFormContainer.jsx';
-
 export default class ContactPage extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +45,6 @@ export default class ContactPage extends Component {
                   </div>
                 </form>
               </div>
-
             </div>
           </div>
         </div>

@@ -2,12 +2,12 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import Draw from 'mapbox-gl-draw';
 
-import IndexPage from '../pages/IndexPage.jsx';
+import MapPage from '../pages/MapPage.jsx';
 import { SESSION } from '../../client/constants.js';
 import { Polygons } from '../../common/collections/polygons.js';
 
 let map
-export default IndexContainer = createContainer(() => {
+export default MapContainer = createContainer(() => {
   currentPolygon = Session.get(SESSION.POLYGON);
   insertingPolygon = Session.get(SESSION.INSERTING);
 
@@ -55,9 +55,9 @@ export default IndexContainer = createContainer(() => {
   };
 
   return {
-    map,
+    // map,
     initMap,
-    currentPolygon,
-    insertingPolygon,
+    // currentPolygon,
+    // insertingPolygon,
   };
-}, IndexPage);
+}, MapPage);

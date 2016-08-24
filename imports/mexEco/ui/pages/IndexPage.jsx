@@ -3,8 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-// import PolygonFormContainer from '../containers/PolygonFormContainer.jsx';
-
 export default class IndexPage extends Component {
   constructor(props) {
     super(props);

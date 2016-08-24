@@ -43,3 +43,14 @@ ul.nav > li.nav-item > a.nav-link {
   background: rgba(95, 170, 0, 1);
   color: rgb(255, 255, 255);
 }
+
+
+#map {
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+}
+
+#map-container {
+  background-color: #ffffff;
+}
