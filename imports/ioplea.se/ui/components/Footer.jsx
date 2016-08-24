@@ -174,10 +174,11 @@ class Footer extends Component {
         {this.renderModal()}
         <nav className="navbar navbar-light bg-faded">
           <div className="nav navbar-nav pull-xs-right">
-            <a className="nav-item nav-link" href="ioplease">Search</a>
-            <a className="nav-item nav-link" href="#" onClick={this.handleClick.bind(this)}>Submit</a>
+            <a className="nav-item nav-link" href="/ioplease">Search</a>
+            <a className="nav-item nav-link" href="/submit" onClick={this.handleClick.bind(this)}>Submit</a>
             <a className="nav-item nav-link" href="https://github.com/marvinmarnold/geeky.rocks" target="_blank">Github</a>
             <a className="nav-item nav-link" href="mailto:marvin@unplugged.im">Contact</a>
+            <a className="nav-item nav-link" href="/ioplea.se/marvin_unplugged2_pub.asc" target="_blank">PGP</a>
           </div>
           <div className="nav navbar-nav pull-xs-right pull-sm-left">
             <span className="nav-item nav-link"><img src='ioplea.se/algolia_light.svg' className="img algolia-icon"></img></span>
