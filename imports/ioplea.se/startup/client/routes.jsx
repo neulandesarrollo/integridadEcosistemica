@@ -4,7 +4,7 @@ import { mount } from 'react-mounter';
 
 import AppContainer from '../../ui/containers/AppContainer.jsx';
 import IndexPage from '../../ui/pages/IndexPage.jsx';
-import SubmitPage from '../../ui/pages/SubmitPage.jsx';
+// import SubmitPage from '../../ui/pages/SubmitPage.jsx';
 
 FlowRouter.route('/ioplease', {
   name: 'ioplease',
@@ -15,11 +15,11 @@ FlowRouter.route('/ioplease', {
   },
 });
 
-FlowRouter.route('/ioplease-submit', {
-  name: 'ioplease-submit',
-  action() {
-    mount(AppContainer, {
-      main: <SubmitPage />,
-    });
-  },
-});
+// FlowRouter.route('/submit', {
+//   name: 'ioplease-submit',
+//   action() {
+//     mount(AppContainer, {
+//       main: <SubmitPage />,
+//     });
+//   },
+// });

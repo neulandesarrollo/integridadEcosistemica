@@ -7,7 +7,6 @@ import Autocomplete from '../components/Autocomplete.jsx';
 import Footer from '../components/Footer.jsx';
 import Results from '../components/Results.jsx';
 import Search from '../components/Search.jsx';
-import Submit from '../components/Submit.jsx';
 
 export default class IndexPage extends Component {
   constructor(props) {

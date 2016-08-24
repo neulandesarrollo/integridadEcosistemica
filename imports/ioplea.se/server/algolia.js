@@ -28,7 +28,7 @@ Meteor.startup(() => {
 
 Things.after.insert((error, doc) => {
   const thingId = doc._id
-  console.log(thingId);
+
   algoliaThingsIndex().addObject(_.omit(doc, "_id"), thingId, (err, content) => {
     if (err) {
       console.log('Error adding index');
@@ -41,7 +41,6 @@ Things.after.insert((error, doc) => {
 
 export function resetIndices(callback) {
   algoliaThingsIndex().deleteByQuery('', error => {
-    console.log(error);
     if (!error) {
       console.log('Successfully deleted all Algolia indices');
     }
