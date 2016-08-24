@@ -68,13 +68,17 @@ export default class IndexPage extends Component {
   }
 
   componentDidMount() {
+    console.log("componentDidMount");
     const thingId = this.state.thingId
 
     if(thingId) {
       this.searchByThingId(thingId)
     } else {
-      if(this.hasQuery())
+      if(this.hasQuery()) {
+        console.log("hasQuery");
+        this.resetSearch(this.state.query)
         this.searchByQuery(this.state.query)
+      }
     }
   }
 

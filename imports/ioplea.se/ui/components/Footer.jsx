@@ -6,7 +6,7 @@ export default class Footer extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-light bg-faded">
+        <nav className="navbar navbar-light bg-faded navbar-full">
           <div className="nav navbar-nav pull-xs-right">
             <a className="nav-item nav-link" href="/ioplease">Search</a>
             <a className="nav-item nav-link" href="https://github.com/marvinmarnold/geeky.rocks" target="_blank">Github</a>

@@ -70,7 +70,6 @@ export default class Search extends Component {
               className="form-control form-control-lg"
               id="iothing-autocomplete"
               ref="iopleaseSearchAutocomplete"
-              defaultValue={this.props.query}
               onChange={this.handleInput.bind(this)} />
           </div>
           {this.renderHelper()}

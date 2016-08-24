@@ -10,6 +10,7 @@ import { Stuffs } from '../../common/collections/stuffs.js';
 import { Compatibilities } from '../../common/collections/compatibilities.js';
 
 const STUFF_LIMIT = 'session-stuff-limit'
+const DESCRIPTION_LENGTH = 160
 
 class Results extends Component {
   renderOptional(stuff, fieldName, title) {
@@ -33,7 +34,7 @@ class Results extends Component {
           <div className="card-block">
             <h3 className="card-title"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h3>
             <KindsBadges stuffId={stuff._id} />
-            <p className="card-text m-y-2">{stuff.description}</p>
+            <p className="card-text m-y-2">{stuff.description.substr(0, DESCRIPTION_LENGTH)}</p>
             {_.has(stuff, "popularity") ? <p>Rating: {stuff.popularity}</p> : null}
             <DownloadOptions stuffId={stuff._id} />
             <CompatibleWith stuffId={stuff._id} setQuery={this.props.setQuery} thingId={this.props.thingId} />
