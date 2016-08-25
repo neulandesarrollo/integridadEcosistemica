@@ -32,3 +32,11 @@ Meteor.publish('stuffs.forThings', function (thingIds, limit) {
     return Stuffs.find(stuffQuery, stuffOptions)
   })
 })
+
+Meteor.publish("stuff", function(stuffId) {
+  new SimpleSchema({
+    stuffId: {type: String},
+  }).validate({ stuffId });
+
+  return Stuffs.find(stuffId)
+});

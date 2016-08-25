@@ -6,10 +6,15 @@ import { Compatibilities } from '../../common/collections/compatibilities.js';
 class CompatibleWith extends Component {
   renderCompat(compat) {
     const thiz = this;
-    return <button className='btn btn-link btn-sm' key={compat._id} onClick={(event) => {
-        event.preventDefault()
-        thiz.props.setQuery(compat.thingName, compat.thingId)
-      }}>{compat.thingName}</button>
+    if(this.props.setQuery) {
+      return <button className='btn btn-link btn-sm' key={compat._id} onClick={(event) => {
+          event.preventDefault()
+          thiz.props.setQuery(compat.thingName, compat.thingId)
+        }}>{compat.thingName}</button>
+    } else {
+      return <a href={"/ioplease?t=" + compat.thingId} className='btn btn-link' key={compat._id}>{compat.thingName}</a>
+    }
+
   }
 
   render() {

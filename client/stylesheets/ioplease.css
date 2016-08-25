@@ -1,4 +1,4 @@
-#ioplease, #ioplease-index, #ioplease-submit {
+#ioplease, #ioplease-index, #ioplease-submit, #ioplease-stuff {
   height: 100%;
   min-height: 100%;
   font-family: 'Anonymous Pro', monospace;
@@ -67,4 +67,10 @@ a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
 
 .algolia-icon {
   height: 1.5rem;
+}
+
+#ioplease-stuff {
+  z-index: 100;
+  min-height: 100%;
+  background-color: rgb(255, 255, 255)
 }
