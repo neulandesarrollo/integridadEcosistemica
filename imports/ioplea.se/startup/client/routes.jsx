@@ -4,6 +4,7 @@ import { mount } from 'react-mounter';
 
 import AppContainer from '../../ui/containers/AppContainer.jsx';
 import IndexPage from '../../ui/pages/IndexPage.jsx';
+import StuffPage from '../../ui/pages/StuffPage.jsx';
 // import SubmitPage from '../../ui/pages/SubmitPage.jsx';
 
 FlowRouter.route('/ioplease', {
@@ -11,6 +12,15 @@ FlowRouter.route('/ioplease', {
   action() {
     mount(AppContainer, {
       main: <IndexPage />,
+    });
+  },
+});
+
+FlowRouter.route('/stuff/:stuffId', {
+  name: 'stuff',
+  action({stuffId}) {
+    mount(AppContainer, {
+      main: <StuffPage stuffId={stuffId} />,
     });
   },
 });

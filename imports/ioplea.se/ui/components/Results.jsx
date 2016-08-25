@@ -27,6 +27,27 @@ class Results extends Component {
   }
 
   renderStuff(stuff) {
+    // Shorten description and ensure exactly three trailing periods
+    const description = (stuff.description.substr(0, DESCRIPTION_LENGTH) + "...").replace(/[\.*\s*]*$/, "...")
+
+    return (
+      <div key={stuff._id} className='col-xl-4 col-sm-6 col-xs-12 m-t-2'>
+          <div className="card">
+            <a href={"/stuff/" + stuff._id} className="stuff-card">
+              <img className="card-img-top m-x-auto img-fluid ioplease-stuff-img m-t-1 p-x-1" src={stuff.iconUrl} alt={stuff.name} />
+              <div className="card-block">
+                <h3 className="card-title"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h3>
+                <KindsBadges stuffId={stuff._id} />
+                <p className="card-text m-y-2">{description}</p>
+                <button className="btn btn-outline-info btn-lg">Learn More</button>
+            </div>
+            </a>
+          </div>
+      </div>
+    )
+  }
+
+  renderDetailedStuff() {
     return (
       <div key={stuff._id} className='col-xl-4 col-sm-6 col-xs-12 m-t-2'>
         <div className="card">
@@ -34,7 +55,7 @@ class Results extends Component {
           <div className="card-block">
             <h3 className="card-title"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h3>
             <KindsBadges stuffId={stuff._id} />
-            <p className="card-text m-y-2">{stuff.description.substr(0, DESCRIPTION_LENGTH)}</p>
+            <p className="card-text m-y-2">{stuff.description.substr(0, DESCRIPTION_LENGTH) + "..."}</p>
             {_.has(stuff, "popularity") ? <p>Rating: {stuff.popularity}</p> : null}
             <DownloadOptions stuffId={stuff._id} />
             <CompatibleWith stuffId={stuff._id} setQuery={this.props.setQuery} thingId={this.props.thingId} />

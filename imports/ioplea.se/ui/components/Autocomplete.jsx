@@ -19,7 +19,7 @@ export default class Autocomplete extends Component {
       return (
         <div>
           <h5 className='m-t-1'>
-            Did you mean: {this.props.things.map(this.renderThing.bind(this))}
+            <small><span className="text-muted">Did you mean: </span></small>{this.props.things.map(this.renderThing.bind(this))}
           </h5>
         </div>
       )

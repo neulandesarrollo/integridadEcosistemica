@@ -7,7 +7,7 @@ class DownloadOptions extends Component {
   renderControlling(cont) {
     return (
       <a key={cont._id} className="btn btn-outline-info m-x-1 m-b-1" href={cont.url} target="_blank">
-        <h3><i className={"fa fa-" + cont.controllerIconUrl} title={cont.controllerName}></i></h3>
+        <h4><i className={"fa fa-" + cont.controllerIconUrl} title={cont.controllerName}></i></h4>
         <h6>{cont.controllerName}</h6>
       </a>
     )
@@ -15,7 +15,7 @@ class DownloadOptions extends Component {
 
   render() {
     if(this.props.loading) {
-      return <h4 className="text-xs-center">Loading...</h4>
+      return <h4 className="text-xs-center"><i className="fa fa-cog fa-spin fa-3x fa-fw"></i></h4>
     } else {
       return (
         <div>
