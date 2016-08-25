@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDisqusThread from 'react-disqus-thread';
 
 import CompatibleWith from '../components/CompatibleWith.jsx';
 import DownloadOptions from '../components/DownloadOptions.jsx';
@@ -10,6 +11,7 @@ import { Stuffs } from '../../common/collections/stuffs.js';
 // import Footer from '../components/Footer.jsx';
 
 export default class StuffPage extends Component {
+
   renderTitleRow() {
     const stuff = this.props.stuff
 
@@ -20,10 +22,13 @@ export default class StuffPage extends Component {
         </div>
         <div className="col-sm-8 col-xs-12">
           <h3 className="card-title m-t-1"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h3>
-          <KindsBadges stuffId={stuff._id} />  
+          <KindsBadges stuffId={stuff._id} />
         </div>
       </div>
     )
+  }
+
+  handleNewComment(comment) {
   }
 
   render() {
@@ -31,10 +36,12 @@ export default class StuffPage extends Component {
       return <h2 className="text-xs-center"><i className="fa fa-cog fa-spin fa-3x fa-fw m-t-3"></i></h2>
     } else {
       const stuff = this.props.stuff
+      const path = "http://www.geeky.rocks" + FlowRouter.current().path
 
       return (
         <div id="ioplease-stuff">
           <div className="container">
+            <a className="btn btn-link btn-lg" href={"/ioplease"}>&lt; Back to search</a>
             <div className="row">
               <div className="col-md-8 col-xs-12">
                 {this.renderTitleRow()}
@@ -45,7 +52,12 @@ export default class StuffPage extends Component {
                 </div>
               </div>
               <div className="col-md-4 col-xs-12">
-                <h1>Chat</h1>
+                <ReactDisqusThread
+                  shortname={Meteor.settings.public.DISQUS_SHORTCODE}
+                  identifier={stuff._id}
+                  title={stuff.name}
+                  url={path}
+                  onNewComment={this.handleNewComment} />
               </div>
             </div>
           </div>
