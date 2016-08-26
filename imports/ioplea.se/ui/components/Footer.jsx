@@ -13,9 +13,12 @@ export default class Footer extends Component {
             <a className="nav-item nav-link" href="mailto:marvin@unplugged.im">Contact</a>
             <a className="nav-item nav-link" href="/ioplea.se/marvin_unplugged2_pub.asc" target="_blank">PGP</a>
           </div>
-          <div className="nav navbar-nav pull-xs-right pull-sm-left">
+          <div className="nav navbar-nav pull-xs-right pull-sm-left m-r-1">
             <span className="nav-item nav-link"><img src='/ioplea.se/algolia_light.svg' className="img algolia-icon"></img></span>
             <a className="nav-item nav-link" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>
+          </div>
+          <div className="nav navbar-nav pull-xs-right pull-sm-left">
+            <span className="nav-item nav-link text-xs-right text-muted"><strong>Donate Bitcoin: </strong>1Q1vyevtXL45rg3DFMRMiZAv48rYfJiXJz</span>
           </div>
         </nav>
       </div>
