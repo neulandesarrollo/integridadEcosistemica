@@ -45,12 +45,32 @@ ul.nav > li.nav-item > a.nav-link {
 }
 
 
-#map {
+.mapboxgl-map {
   width: 100%;
   min-width: 100%;
   height: 100%;
 }
 
 #map-container {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0)
+}
+
+#map-container {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/*div.mapboxgl-ctrl-bottom-right, div.mapboxgl-control-container, div.mapboxgl-ctrl-group, div.mapbox-gl-draw_ctrl-draw-btn {
+  z-index: 99999999;
+}
+
+div.mapboxgl-canvas-container.mapboxgl-interactive {
+  z-index: 1;
+}*/
+
+#mexEco-draw {
+  position: absolute;
+  top: 5rem;
+  left: 5rem;
+  z-index: 999;
 }

@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
-
+import ReactMapboxGl, { Layer, Feature, ScaleControl, ZoomControl } from "react-mapbox-gl";
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import MapboxGLDraw from '../components/MapboxGLDraw.jsx';
 import { Navbar } from '../components/Navbar.jsx';
 // import PolygonFormContainer from '../containers/PolygonFormContainer.jsx';
 
@@ -12,10 +13,6 @@ export default class MapPage extends Component {
 
     this.state = {
     };
-  }
-
-  componentDidMount() {
-    this.props.initMap()
   }
   //
   // handleClick() {
@@ -54,9 +51,16 @@ export default class MapPage extends Component {
   // }
   render() {
     return (
-      <div className="container-fluid full-height m-l-0 p-l-0" id="map-container">
+      <div className="container-fluid full-height" id="map-container">
         <div className="col-xs-12 col-md-9 m-l-0 p-l-0 full-height">
-          <div id="map"></div>
+          <ReactMapboxGl
+            style={Meteor.settings.public.MAPBOX.STYLE}
+            accessToken={Meteor.settings.public.MAPBOX.TOKEN}
+            center={[-99.138173, 19.416424]}
+            zoom={[5]} >
+
+            <MapboxGLDraw />
+          </ReactMapboxGl>
         </div>
         <div className="col-xs-12 col-md-3">
           <h1>Likert</h1>
@@ -68,7 +72,7 @@ export default class MapPage extends Component {
 
 MapPage.propTypes = {
   // map: React.PropTypes.object,
-  initMap: React.PropTypes.func,
+  // initMap: React.PropTypes.func,
   // currentPolygon: React.PropTypes.object,
   // insertingPolygon: React.PropTypes.bool
 };

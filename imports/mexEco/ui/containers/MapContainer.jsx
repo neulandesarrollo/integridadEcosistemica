@@ -1,26 +1,26 @@
 import { createContainer } from 'meteor/react-meteor-data';
 
-import Draw from 'mapbox-gl-draw';
+// import Draw from 'mapbox-gl-draw';
 
 import MapPage from '../pages/MapPage.jsx';
 import { SESSION } from '../../client/constants.js';
 import { Polygons } from '../../common/collections/polygons.js';
 
-let map
+// let map
 export default MapContainer = createContainer(() => {
-  currentPolygon = Session.get(SESSION.POLYGON);
-  insertingPolygon = Session.get(SESSION.INSERTING);
-
-  const initMap = () => {
-    if(!map) {
-      mapboxgl.accessToken = Meteor.settings.public.MAPBOX_TOKEN;
-
-      map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/unplugged/ciqzoiuob0008bmm6gxph8irp',
-        center: [-99.138173, 19.416424],
-        zoom: 5
-      });
+  // currentPolygon = Session.get(SESSION.POLYGON);
+  // insertingPolygon = Session.get(SESSION.INSERTING);
+  //
+  // const initMap = () => {
+  //   if(!map) {
+  //     mapboxgl.accessToken = Meteor.settings.public.MAPBOX_TOKEN;
+  //
+  //     map = new mapboxgl.Map({
+  //       container: 'map',
+  //       style: 'mapbox://styles/unplugged/ciqzoiuob0008bmm6gxph8irp',
+  //       center: [-99.138173, 19.416424],
+  //       zoom: 5
+  //     });
 
       // var draw = Draw({
       //   controls: {
@@ -50,13 +50,13 @@ export default MapContainer = createContainer(() => {
       //     Session.set(SESSION.INSERTING, true);
       //   })
       // });
-    }
+    // }
 
-  };
+  // }
 
   return {
     // map,
-    initMap,
+    // initMap,
     // currentPolygon,
     // insertingPolygon,
   };
