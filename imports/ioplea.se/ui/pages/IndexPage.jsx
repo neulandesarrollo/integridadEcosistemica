@@ -40,10 +40,13 @@ export default class IndexPage extends Component {
     const thiz = this
 
     algoliaThingsIndex(window).getObject(thingId, (err, content) => {
+      console.log("thingolia responded");
+
       if (err) {
         console.error(err);
         return;
       }
+      console.log(content);
 
       thiz.setState({query: content.name, thingId, searchResults: []})
       thiz.resetSearch(content.name)
@@ -54,10 +57,14 @@ export default class IndexPage extends Component {
     const thiz = this
 
     algoliaThingsIndex(window).search(query, (err, content) => {
+      console.log("algolia responded");
+
       if (err) {
         console.error(err);
         return;
       }
+      console.log(content);
+
 
       thiz.setState({searchResults: content.hits})
 
@@ -91,11 +98,14 @@ export default class IndexPage extends Component {
   }
 
   setQuery(query, thingId, searchResults) {
+    console.log('setQuery');
     if(query === "") {
       thingId = undefined
       searchResults = []
       stuffCount = -1
     }
+    console.log(query);
+    console.log(thingId);
 
     this.setState({query, thingId})
     // Update query parameters based on search

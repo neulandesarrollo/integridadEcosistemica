@@ -18,15 +18,19 @@ export default class Search extends Component {
   }
 
   focus() {
+    // console.log('onFocus');
     const input = $('#iothing-autocomplete')
     input.focus();
-    var tmpStr = input.val();
-    input.val('');
-    input.val(tmpStr);
+
+    // The hack below is supposed to make sure the cursor always focuses to the end of the line.
+    // Potentially causing trouble inputting/deleting on mobile.
+      // var tmpStr = input.val();
+      // input.val('');
+      // input.val(tmpStr);
   }
 
   componentDidUpdate() {
-    this.focus()
+    // this.focus()
   }
 
   handleSearch(event, value, thingId) {
