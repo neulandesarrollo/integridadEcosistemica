@@ -73,3 +73,7 @@ a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
   min-height: 100%;
   background-color: rgb(255, 255, 255)
 }
+
+#ioplease-shuffle {
+  cursor: pointer;
+}

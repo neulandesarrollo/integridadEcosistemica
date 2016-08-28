@@ -66,15 +66,16 @@ export default class Search extends Component {
 
   render() {
     return (
-      <form id='ioplease-search' onSubmit={this.handleSubmit.bind(this)}>
+      <form id='ioplease-search' className="form-inline" onSubmit={this.handleSubmit.bind(this)}>
           {this.renderCount()}
-          <div className="ioplease-search-box">
+          <div className="input-group ioplease-search-box">
             <input
               placeholder="I want to do something with my..."
               className="form-control form-control-lg"
               id="iothing-autocomplete"
               ref="iopleaseSearchAutocomplete"
               onChange={this.handleInput.bind(this)} />
+            <div className="input-group-addon" id="ioplease-shuffle" onClick={this.props.shuffle.bind(this)}><span className="fa fa-random"></span></div>
           </div>
           {this.renderHelper()}
       </form>

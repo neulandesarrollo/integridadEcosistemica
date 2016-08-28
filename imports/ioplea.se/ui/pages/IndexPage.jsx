@@ -36,17 +36,36 @@ export default class IndexPage extends Component {
     input.val(val)
   }
 
+  shuffle() {
+    // console.log('shuffle');
+    const thiz = this
+    Meteor.call("ioplease.shuffle", (error, result) => {
+      // console.log("shuffled");
+      // console.log(error);
+      // console.log(result);
+
+      if(error){
+        console.log("error", error);
+      }
+      if(result) {
+        thiz.setState({query: result.name, thingId: result._id, searchResults: []})
+        FlowRouter.setQueryParams({t: result._id, q: null});
+        thiz.resetSearch(result.name)
+      }
+    });
+  }
+
   searchByThingId(thingId) {
     const thiz = this
 
     algoliaThingsIndex(window).getObject(thingId, (err, content) => {
-      console.log("thingolia responded");
+      // console.log("thingolia responded");
 
       if (err) {
         console.error(err);
         return;
       }
-      console.log(content);
+      // console.log(content);
 
       thiz.setState({query: content.name, thingId, searchResults: []})
       thiz.resetSearch(content.name)
@@ -57,13 +76,13 @@ export default class IndexPage extends Component {
     const thiz = this
 
     algoliaThingsIndex(window).search(query, (err, content) => {
-      console.log("algolia responded");
+      // console.log("algolia responded");
 
       if (err) {
         console.error(err);
         return;
       }
-      console.log(content);
+      // console.log(content);
 
 
       thiz.setState({searchResults: content.hits})
@@ -75,14 +94,14 @@ export default class IndexPage extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
+    // console.log("componentDidMount");
     const thingId = this.state.thingId
 
     if(thingId) {
       this.searchByThingId(thingId)
     } else {
       if(this.hasQuery()) {
-        console.log("hasQuery");
+        // console.log("hasQuery");
         this.resetSearch(this.state.query)
         this.searchByQuery(this.state.query)
       }
@@ -98,14 +117,14 @@ export default class IndexPage extends Component {
   }
 
   setQuery(query, thingId, searchResults) {
-    console.log('setQuery');
+    // console.log('setQuery');
     if(query === "") {
       thingId = undefined
       searchResults = []
       stuffCount = -1
     }
-    console.log(query);
-    console.log(thingId);
+    // console.log(query);
+    // console.log(thingId);
 
     this.setState({query, thingId})
     // Update query parameters based on search
@@ -170,11 +189,12 @@ export default class IndexPage extends Component {
               <div className="col-xs-12 col-sm-10 offset-sm-1 col-md-6 offset-md-3">
                 <Search
                   setQuery={this.setQuery.bind(this)}
-                  hasQuery={this.hasQuery()}
+                  hasQuery={this.hasQuery.bind(this)}
                   query={this.state.query}
                   thingId={this.state.thingId}
                   stuffCount={this.state.stuffCount}
-                  searchResults={this.state.searchResults} />
+                  searchResults={this.state.searchResults}
+                  shuffle={this.shuffle.bind(this)} />
               </div>
             </div>
           </div>
