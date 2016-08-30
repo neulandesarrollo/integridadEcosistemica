@@ -106,6 +106,23 @@ export default class IndexPage extends Component {
         this.searchByQuery(this.state.query)
       }
     }
+
+    this.resetHead()
+  }
+
+  resetHead() {
+    DocHead.removeDocHeadAddedTags()
+    DocHead.setTitle("Do stuff with IoT");
+    var metaInfo =[
+      {
+        name: "description",
+        content: "Search for IoT products and find out what kind of stuff you can do with them.",
+      },
+    ]
+
+    _.each(metaInfo, m => {
+      DocHead.addMeta(m);
+    })
   }
 
   searchDivClass() {
@@ -133,6 +150,7 @@ export default class IndexPage extends Component {
       FlowRouter.setQueryParams({t: thingId, q: null});
       this.searchByThingId(thingId)
     } else {
+      this.resetHead()
       // Otherwise use the raw text input
       // Do not use this.hasQuery because state has not changed yet
       if(query === "") {

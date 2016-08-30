@@ -123,10 +123,10 @@ class Results extends Component {
     if(this.props.thing && this.state.showThingDetails) {
       return (
         <div className="row">
-          <div className="col-xs-3">
+          <div className="col-xs-12 col-sm-3">
             <img className="img-fluid" src={this.props.thing.iconUrl} />
           </div>
-          <div className="col-xs-9">
+          <div className="col-xs-12 col-sm-9">
             <h4 className="text-muted">{"by " + this.props.thing.company}</h4>
             <p>{this.props.thing.description}</p>
           </div>
@@ -203,6 +203,22 @@ export default createContainer(({query, thingId, setStuffCount, searchResults, s
       onlyThing = true
       thingSelected = true
     }
+  }
+
+  if(thing) {
+    DocHead.removeDocHeadAddedTags()
+
+    DocHead.setTitle("Do stuff with " + thing.name);
+    var metaInfo =[
+      {
+        name: "description",
+        content: "Find out what kind of stuff you can do with your " + thing.name + ". " + thing.description,
+      },
+    ]
+
+    _.each(metaInfo, m => {
+      DocHead.addMeta(m);
+    })
   }
 
   // Only show Stuffs if there are Things matching query
