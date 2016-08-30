@@ -5,12 +5,20 @@ import KindsBadges from './KindsBadges.jsx';
 import Loading from './Loading.jsx';
 
 import { Stuffs } from '../../common/collections/stuffs.js';
+import { Things } from '../../common/collections/things.js';
 import { Compatibilities } from '../../common/collections/compatibilities.js';
 
 const STUFF_LIMIT = 'session-stuff-limit'
 const DESCRIPTION_LENGTH = 160
 
 class Results extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showThingDetails: false
+    }
+  }
   renderOptional(stuff, fieldName, title) {
     return _.has(stuff, fieldName) ? <p>{title}: {stuff[fieldName]}</p> : null;
   }
@@ -90,10 +98,50 @@ class Results extends Component {
     return null;
   }
 
+  renderThingDetailsButton() {
+    if(this.props.thingSelected) {
+      if(this.props.onlyThing) {
+        return (
+          <div>
+            <h4 className='m-b-1 m-t-1'>{"Showing results for " + this.props.thingName}</h4>
+            <button className='btn btn-link m-b-2' onClick={this.toggleDetails.bind(this)}>Thing details</button>
+          </div>
+        )
+      } else {
+        return (
+          <button className='btn btn-link m-t-1 m-b-1' onClick={this.toggleDetails.bind(this)}>{this.props.thingName + " details"}</button>
+        )
+      }
+    }
+  }
+
+  toggleDetails() {
+    this.setState({showThingDetails: !this.state.showThingDetails})
+  }
+
+  renderThingDetails() {
+    if(this.props.thing && this.state.showThingDetails) {
+      return (
+        <div className="row">
+          <div className="col-xs-3">
+            <img className="img-fluid" src={this.props.thing.iconUrl} />
+          </div>
+          <div className="col-xs-9">
+            <h4 className="text-muted">{"by " + this.props.thing.company}</h4>
+            <p>{this.props.thing.description}</p>
+          </div>
+        </div>
+      )
+    }
+    return null;
+  }
+
   renderStuffs() {
+
     return (
       <div>
-        <h2 className='m-b-2 m-t-2'>{this.props.thingName}</h2>
+        {this.renderThingDetailsButton()}
+        {this.renderThingDetails()}
         <div className='hidden-sm-up'>
           {this.renderStuffRowEvery(this.props.stuffs, 1)}
         </div>
@@ -132,16 +180,28 @@ export default createContainer(({query, thingId, setStuffCount, searchResults, s
   let thingIds = []
   let thingName = ""
   let _thingId = thingId // Necessary for excluding current Thing from list of compatibilities for this stuff
+  let onlyThing = false
+  let thingSelected = false
+  let thing = undefined
+  let thingLoading = false
 
   if(thingId) {
+    const thingHandle = Meteor.subscribe('thing', thingId)
+    thingLoading = !thingHandle.ready()
+    thing = Things.findOne(thingId)
     thingIds = [thingId]
+    thingName = query
+    thingSelected = true
   } else if(searchResults) {
     thingIds = _.map(searchResults, (r) => { return r.objectID })
 
     // If only one matching Thing, show all stuff for that
     if(searchResults.length === 1) {
-      thingName = "Showing results for \"" + searchResults[0].name + "\"."
+      thingName = searchResults[0].name
       _thingId = searchResults[0].objectID
+      thing = searchResults[0]
+      onlyThing = true
+      thingSelected = true
     }
   }
 
@@ -163,13 +223,19 @@ export default createContainer(({query, thingId, setStuffCount, searchResults, s
     loading = false
   }
 
+  loading = loading || thingLoading
+
   return {
     stuffs,
     loading,
+    onlyThing,
     thingName,
+    thingSelected,
     thingId: _thingId,
     setQuery,
     totalStuffCount: Counts.get(`stuffs.forThings.${thingIds}`),
-    loadingMore
+    loadingMore,
+    thing,
+    thingLoading
   };
 }, Results);

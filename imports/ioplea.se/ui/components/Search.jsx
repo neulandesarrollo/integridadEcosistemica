@@ -47,11 +47,11 @@ export default class Search extends Component {
   }
 
   renderHelper() {
-    return !this.props.hasQuery ? <span className="form-text ioplease-hint">Device name, manufacturer, etc.</span> : null;
+    return !this.props.hasQuery() ? <span className="form-text ioplease-hint">Device name, manufacturer, etc.</span> : null;
   }
 
   renderCount() {
-    const countLoaded = this.props.hasQuery && (this.props.stuffCount > -1)
+    const countLoaded = this.props.hasQuery() && (this.props.stuffCount > -1)
     return countLoaded ?  <h4 className='ioplease-count'>{this.props.stuffCount} {this.renderResultsCount()}</h4> :
                           null
   }
@@ -70,7 +70,7 @@ export default class Search extends Component {
           {this.renderCount()}
           <div className="input-group ioplease-search-box">
             <input
-              placeholder="I want to do something with my..."
+              placeholder="I own a..."
               className="form-control form-control-lg"
               id="iothing-autocomplete"
               ref="iopleaseSearchAutocomplete"
