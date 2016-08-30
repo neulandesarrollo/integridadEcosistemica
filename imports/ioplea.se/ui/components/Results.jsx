@@ -104,7 +104,7 @@ class Results extends Component {
         return (
           <div>
             <h4 className='m-b-1 m-t-1'>{"Showing results for " + this.props.thingName}</h4>
-            <button className='btn btn-link m-b-2' onClick={this.toggleDetails.bind(this)}>Thing details</button>
+            <button className='btn btn-link m-b-2' onClick={this.toggleDetails.bind(this)}>IoThing details</button>
           </div>
         )
       } else {
@@ -124,11 +124,12 @@ class Results extends Component {
       return (
         <div className="row">
           <div className="col-xs-12 col-sm-3">
-            <img className="img-fluid" src={this.props.thing.iconUrl} />
+            <img className="img-fluid m-b-1 m-x-auto" src={this.props.thing.iconUrl} />
           </div>
           <div className="col-xs-12 col-sm-9">
             <h4 className="text-muted">{"by " + this.props.thing.company}</h4>
             <p>{this.props.thing.description}</p>
+            <a href={this.props.thing.url} target="_blank" className="btn btn-primary btn-small">Learn more</a>
           </div>
         </div>
       )

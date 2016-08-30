@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 export default class GeekyIndexPage extends Component {
   getProjects() {
     return [
-      {
-        _id: "1",
-        name: "NOPD Response Time 2016",
-        description: "Explore how quickly NOPD respond to service calls across New Orelans.",
-        url: "/nopd-response-time-2016"
-      },
+      // {
+      //   _id: "1",
+      //   name: "NOPD Response Time 2016",
+      //   description: "Explore how quickly NOPD respond to service calls across New Orelans.",
+      //   url: "/nopd-response-time-2016"
+      // },
       {
         _id: "2",
         name: "ioPLEA.SE",
