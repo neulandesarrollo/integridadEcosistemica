@@ -1,4 +1,4 @@
-html, body, #react-root, #geeky-rocks, #geeky-rocks-container, #geeky-projects {
+html, body, #react-root, #geeky-rocks {
   min-height: 100%;
   height: 100%;
   width: 100%;
@@ -6,7 +6,10 @@ html, body, #react-root, #geeky-rocks, #geeky-rocks-container, #geeky-projects {
 }
 
 #geeky-rocks-container {
-  background-color: rgba(5, 9, 38, 0.95)  
+  background-color: rgba(5, 9, 38, 0.95);
+  min-height: 100%;
+  /*height: 100%;*/
+  width: 100%;
 }
 
 span.geeky-text, p.geeky-text {
