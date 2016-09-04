@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
+import ReactMarkdown from 'react-markdown'
 
 import KindsBadges from './KindsBadges.jsx';
 import Loading from './Loading.jsx';
@@ -32,9 +33,14 @@ class Results extends Component {
     }
   }
 
+  renderNumCompats(n) {
+    return n === 1 ? n + " compatibility" : n + " compatibilities"
+  }
+
   renderStuff(stuff) {
     // Shorten description and ensure exactly three trailing periods
     const description = (stuff.description.substr(0, DESCRIPTION_LENGTH) + "...").replace(/[\.*\s*]*$/, "...")
+    // const path = Meteor.absoluteUrl("stuff/" + stuff._id + "/#disqus_thread"); // don't include first slash
 
     return (
       <div key={stuff._id} className='col-xl-4 col-sm-6 col-xs-12 m-t-2'>
@@ -43,6 +49,11 @@ class Results extends Component {
               <img className="card-img-top m-x-auto img-fluid ioplease-stuff-img m-t-1 p-x-1" src={stuff.iconUrl} alt={stuff.name} />
               <div className="card-block">
                 <h4 className="card-title"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h4>
+                <div className="row">
+                  <div className="col-xs-12 text-xs-center">
+                    {this.renderNumCompats(stuff.numCompats)}
+                  </div>
+                </div>
                 <KindsBadges stuffId={stuff._id} />
                 <p className="card-text m-y-2">{description}</p>
                 <button className="btn btn-outline-info btn-lg">Learn More</button>
@@ -128,7 +139,7 @@ class Results extends Component {
           </div>
           <div className="col-xs-12 col-sm-9">
             <h4 className="text-muted">{"by " + this.props.thing.company}</h4>
-            <p>{this.props.thing.description}</p>
+            <ReactMarkdown source={this.props.thing.description} />
             <a href={this.props.thing.url} target="_blank" className="btn btn-primary btn-small">Learn more</a>
           </div>
         </div>

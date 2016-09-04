@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDisqusThread from 'react-disqus-thread';
+import ReactMarkdown from 'react-markdown'
 
 import CompatibleWith from '../components/CompatibleWith.jsx';
 import DownloadOptions from '../components/DownloadOptions.jsx';
@@ -36,7 +37,9 @@ export default class StuffPage extends Component {
       return <h2 className="text-xs-center"><i className="fa fa-cog fa-spin fa-3x fa-fw m-t-3"></i></h2>
     } else {
       const stuff = this.props.stuff
-      const path = "http://www.geeky.rocks" + FlowRouter.current().path
+      const path = Meteor.absoluteUrl(FlowRouter.current().path.slice(1)); // don't include first slash
+      console.log('parh ');
+      console.log(path);
 
       return (
         <div id="ioplease-stuff">
@@ -45,7 +48,7 @@ export default class StuffPage extends Component {
             <div className="row">
               <div className="col-md-8 col-xs-12">
                 {this.renderTitleRow()}
-                <p className="card-text m-y-2">{stuff.description}</p>
+                <ReactMarkdown className="card-text m-y-2" source={stuff.description} />
                 <DownloadOptions stuffId={stuff._id} />
                 <div className="m-b-3">
                   <CompatibleWith stuffId={stuff._id} setQuery={this.props.setQuery} />

@@ -1,4 +1,5 @@
 import '../../server/algolia.js';
+import '../../server/compatibilities-counter.js';
 import { seed } from '../../server/fixtures/fixtures.js';
 import '../../server/publications/classifications-publications.js';
 import '../../server/publications/compatibilities-publications.js';
