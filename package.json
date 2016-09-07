@@ -16,7 +16,6 @@
     "react-addons-pure-render-mixin": "^15.0.1",
     "react-disqus-thread": "^0.4.0",
     "react-dom": "^15.0.1",
-    "react-load-script": "0.0.2",
     "react-mapbox-gl": "^0.9.3",
     "react-markdown": "^2.4.2",
     "react-mounter": "^1.2.0",

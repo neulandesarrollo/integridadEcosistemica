@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FlowRouter } from 'meteor/kadira:flow-router';
-import Script from 'react-load-script'
 
 import { algoliaThingsIndex } from '../../client/algolia.js';
 
@@ -232,19 +231,4 @@ export default class IndexPage extends Component {
       </div>
     )
   }
-  handleScriptCreate() {
-    console.log('created');
-    this.setState({ scriptLoaded: false })
-  }
-
-  handleScriptError() {
-    console.log('errored');
-    this.setState({ scriptError: true })
-  }
-
-  handleScriptLoad() {
-    console.log('loaded');
-    this.setState({ scriptLoaded: true })
-  }
-
 }
