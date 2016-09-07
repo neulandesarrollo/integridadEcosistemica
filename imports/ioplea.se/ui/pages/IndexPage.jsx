@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
+import { piwik } from 'meteor/marvin:piwik-http-sandstorm';
+
 import { algoliaThingsIndex } from '../../client/algolia.js';
 
 import Autocomplete from '../components/Autocomplete.jsx';
@@ -51,6 +53,8 @@ export default class IndexPage extends Component {
         thiz.setState({query: result.name, thingId: result._id, searchResults: []})
         FlowRouter.setQueryParams({t: result._id, q: null});
         thiz.resetSearch(result.name)
+
+        piwik.trackAction('ioplease', 'shuffle')
       }
     });
   }
