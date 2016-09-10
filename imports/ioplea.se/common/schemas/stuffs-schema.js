@@ -20,5 +20,8 @@ export default StuffsSchema = new SimpleSchema({
   },
   numCompats: {
     type: Number
+  },
+  updatedAt: {
+    type: Date
   }
 });

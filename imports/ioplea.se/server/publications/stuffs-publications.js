@@ -4,15 +4,15 @@ import { Stuffs } from '../../common/collections/stuffs.js';
 
 const MAX_STUFFS = 100
 
-Meteor.publish('stuffs.forThings', function (thingIds, limit) {
+Meteor.publish('stuffs.forThings', function (thingIds, limit, sort) {
   this.autorun(function (computation) {
     new SimpleSchema({
       thingIds: {type: [String]},
-      limit: {type: Number}
-    }).validate({ thingIds, limit });
+      limit: {type: Number},
+      sort: {type: String}
+    }).validate({ thingIds, limit, sort });
 
     const query = {thingId: {$in: thingIds}}
-
     // We only need the _id field in this query, since it's only
     // used to drive the child queries to get the Stuffs
     const options = {
@@ -26,7 +26,15 @@ Meteor.publish('stuffs.forThings', function (thingIds, limit) {
     })
 
     const stuffQuery = {_id: {$in: stuffIds}}
-    const stuffOptions = {sort: {popularity: -1, name: -1}, limit: Math.min(limit, MAX_STUFFS)}
+    let sortOptions = []
+    const sortables = ["updatedAt", "name", "numCompats"]
+    const defaultSort = [["numCompats", "desc"], ["name", "asc"], ["updatedAt", "desc"]]
+
+    if(_.contains(sortables, sort)) {
+      sortOptions.push([sort, "desc"])
+    }
+    _.each(defaultSort, s => { sortOptions.push(s) })
+    const stuffOptions = {sort: sortOptions, limit: Math.min(limit, MAX_STUFFS)}
 
     Counts.publish(this, `stuffs.forThings.${thingIds}`, Stuffs.find(stuffQuery));
     return Stuffs.find(stuffQuery, stuffOptions)

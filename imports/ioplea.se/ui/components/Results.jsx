@@ -10,6 +10,12 @@ import { Things } from '../../common/collections/things.js';
 import { Compatibilities } from '../../common/collections/compatibilities.js';
 
 const STUFF_LIMIT = 'session-stuff-limit'
+const STUFF_SORT = 'session-stuff-sort'
+const SORTABLES = {
+  "updatedAt": "Date",
+  "name": "Name",
+  "numCompats": "Compatibilities"
+}
 const DESCRIPTION_LENGTH = 160
 
 class Results extends Component {
@@ -148,12 +154,48 @@ class Results extends Component {
     return null;
   }
 
+  currentSort() {
+    const sort = Session.get(STUFF_SORT)
+    return SORTABLES[sort]
+  }
+
+  changeSort(event) {
+    const newSort = event.target.value
+    Session.set(STUFF_SORT, newSort)
+  }
+
+  renderSortOptions() {
+    const thiz = this
+    const sort = Session.get(STUFF_SORT)
+    const sortables = _.clone(SORTABLES)
+    delete sortables[sort]
+
+    return _.map(sortables, (name, key) => {
+      return <button className="dropdown-item" type="button" key={key} value={key} onClick={thiz.changeSort.bind(thiz)}>{name}</button>
+    })
+  }
+
+  renderSortButton() {
+    return (
+      <div className="dropdown pull-right m-r-1">
+        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {this.currentSort()}
+        </button>
+        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          {this.renderSortOptions()}
+        </div>
+      </div>
+    )
+  }
+
   renderStuffs() {
 
     return (
       <div>
         {this.renderThingDetailsButton()}
         {this.renderThingDetails()}
+        {this.renderSortButton()}
+        <div className="clearfix"></div>
         <div className='hidden-sm-up'>
           {this.renderStuffRowEvery(this.props.stuffs, 1)}
         </div>
@@ -184,7 +226,9 @@ class Results extends Component {
 
 export default createContainer(({query, thingId, setStuffCount, searchResults, setQuery}) => {
   const defaultLimit = 12
+  const defaultSort = "numCompats"
   Session.setDefault(STUFF_LIMIT, defaultLimit)
+  Session.setDefault(STUFF_SORT, defaultSort)
 
   let loading = true
   let loadingMore = false
@@ -236,11 +280,11 @@ export default createContainer(({query, thingId, setStuffCount, searchResults, s
   // Only show Stuffs if there are Things matching query
   if(thingIds) {
     const limit = Session.get(STUFF_LIMIT)
-
-    const stuffsHandle = Meteor.subscribe("stuffs.forThings", thingIds, limit);
+    const sort = Session.get(STUFF_SORT)
+    const stuffsHandle = Meteor.subscribe("stuffs.forThings", thingIds, limit, sort);
 
     if(stuffsHandle.ready()) {
-      stuffs = Stuffs.find({}).fetch()
+      stuffs = Stuffs.find({}, {sort: [[sort, "desc"]]}).fetch()
       loading = false
     } else if(limit > defaultLimit) {
       stuffs = Stuffs.find({}).fetch()
