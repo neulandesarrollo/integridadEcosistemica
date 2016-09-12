@@ -16,9 +16,10 @@ export default class IndexPage extends Component {
     let query = ""
     let thingId = undefined
 
-    const t = FlowRouter.getQueryParam("t");
+    const s = FlowRouter.getQueryParam("s"); // sort by field
+    const t = FlowRouter.getQueryParam("t"); // thingId
     if(!t) {
-      const q = FlowRouter.getQueryParam("q");
+      const q = FlowRouter.getQueryParam("q"); // query
       if(q)
         query = q
     } else {
@@ -27,6 +28,7 @@ export default class IndexPage extends Component {
 
     this.state = {
       query,
+      sortBy: s,
       thingId,
       stuffCount: -1,
       searchResults: []
@@ -39,13 +41,8 @@ export default class IndexPage extends Component {
   }
 
   shuffle() {
-    // console.log('shuffle');
     const thiz = this
     Meteor.call("ioplease.shuffle", (error, result) => {
-      // console.log("shuffled");
-      // console.log(error);
-      // console.log(result);
-
       if(error){
         console.log("error", error);
       }
@@ -80,14 +77,10 @@ export default class IndexPage extends Component {
     const thiz = this
 
     algoliaThingsIndex(window).search(query, (err, content) => {
-      // console.log("algolia responded");
-
       if (err) {
         console.error(err);
         return;
       }
-      // console.log(content);
-
 
       thiz.setState({searchResults: content.hits})
 
@@ -98,14 +91,12 @@ export default class IndexPage extends Component {
   }
 
   componentDidMount() {
-    // console.log("componentDidMount");
     const thingId = this.state.thingId
 
     if(thingId) {
       this.searchByThingId(thingId)
     } else {
       if(this.hasQuery()) {
-        // console.log("hasQuery");
         this.resetSearch(this.state.query)
         this.searchByQuery(this.state.query)
       }
@@ -183,7 +174,8 @@ export default class IndexPage extends Component {
                 setQuery={this.setQuery.bind(this)}
                 thingId={this.state.thingId}
                 searchResults={this.state.searchResults}
-                setStuffCount={this.setStuffCount.bind(this)} />
+                setStuffCount={this.setStuffCount.bind(this)}
+                sortBy={this.state.sortBy} />
             </div>
           </div>
         </div>

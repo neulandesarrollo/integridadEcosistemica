@@ -162,6 +162,7 @@ class Results extends Component {
   changeSort(event) {
     const newSort = event.target.value
     Session.set(STUFF_SORT, newSort)
+    FlowRouter.setQueryParams({s: newSort});
   }
 
   renderSortOptions() {
@@ -224,9 +225,9 @@ class Results extends Component {
   }
 }
 
-export default createContainer(({query, thingId, setStuffCount, searchResults, setQuery}) => {
+export default createContainer(({query, thingId, setStuffCount, searchResults, setQuery, sortBy}) => {
   const defaultLimit = 12
-  const defaultSort = "numCompats"
+  const defaultSort = sortBy || "numCompats"
   Session.setDefault(STUFF_LIMIT, defaultLimit)
   Session.setDefault(STUFF_SORT, defaultSort)
 
