@@ -146,7 +146,7 @@ class Results extends Component {
           <div className="col-xs-12 col-sm-9">
             <h4 className="text-muted">{"by " + this.props.thing.company}</h4>
             <ReactMarkdown source={this.props.thing.description} />
-            <a href={this.props.thing.url} target="_blank" className="btn btn-primary btn-small">Learn more</a>
+            <a href={this.props.thing.url} target="_blank" className="btn btn-primary btn-small m-b-1">Learn more</a>
           </div>
         </div>
       )
