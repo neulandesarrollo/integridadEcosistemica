@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactMarkdown from 'react-markdown'
+import { piwik } from 'meteor/marvin:piwik-http-sandstorm';
 
 import KindsBadges from './KindsBadges.jsx';
 import Loading from './Loading.jsx';
@@ -126,7 +127,7 @@ class Results extends Component {
         )
       } else {
         return (
-          <button className='btn btn-link m-t-1 m-b-1' onClick={this.toggleDetails.bind(this)}>{this.props.thingName + " details"}</button>
+          <button className='btn btn-link m-t-1' onClick={this.toggleDetails.bind(this)}>{this.props.thingName + " details"}</button>
         )
       }
     }
@@ -163,6 +164,7 @@ class Results extends Component {
     const newSort = event.target.value
     Session.set(STUFF_SORT, newSort)
     FlowRouter.setQueryParams({s: newSort});
+    piwik.trackAction('ioplease', 'sort')
   }
 
   renderSortOptions() {
@@ -178,7 +180,7 @@ class Results extends Component {
 
   renderSortButton() {
     return (
-      <div className="dropdown pull-right m-r-1">
+      <div className="dropdown pull-right m-r-1 m-t-1">
         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {this.currentSort()}
         </button>
