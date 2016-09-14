@@ -7,31 +7,39 @@ import AppContainer from '../../ui/containers/AppContainer.jsx';
 
 import ContactPage from '../../ui/pages/ContactPage.jsx';
 import IndexPage from '../../ui/pages/IndexPage.jsx';
+import LoginPage from '../../ui/pages/LoginPage.jsx';
 import MapPage from '../../ui/pages/MapPage.jsx';
 
-FlowRouter.route('/integridad-ecosistemica', {
-  name: 'mexEco',
-  action() {
-    mount(AppContainer, {
-      main: <IndexPage />,
-    });
+const routes = [
+  {
+    path: '/integridad-ecosistemica',
+    name: 'mexEco',
+    main: <IndexPage />
   },
-});
+  {
+    path: '/contacto',
+    name: 'contacto',
+    main: <ContactPage />
+  },
+  {
+    path: '/mapa',
+    name: 'mapa',
+    main: <MapPage />
+  },
+  {
+    path: '/login',
+    name: 'login',
+    main: <LoginPage />
+  }
+]
 
-FlowRouter.route('/contacto', {
-  name: 'contacto',
-  action() {
-    mount(AppContainer, {
-      main: <ContactPage />,
-    });
-  },
-});
-
-FlowRouter.route('/mapa', {
-  name: 'mapa',
-  action() {
-    mount(AppContainer, {
-      main: <MapPage />,
-    });
-  },
-});
+_.each(routes, route => {
+  FlowRouter.route(route.path, {
+    name: route.name,
+    action() {
+      mount(AppContainer, {
+        main: route.main,
+      });
+    },
+  });
+})

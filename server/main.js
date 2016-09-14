@@ -8,4 +8,6 @@ Meteor.startup(() => {
   // startupNolaDataServer();
   startupIOPlease();
   // startupMexEco();
+  console.log(Meteor.settings.MAIL_URL);
+  process.env.MAIL_URL = Meteor.settings.MAIL_URL
 });

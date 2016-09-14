@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { FlowRouter } from 'meteor/kadira:flow-router';
 
 export default class IndexPage extends Component {
   componentDidMount() {
     SwellRT.ready(() => {
       console.log("SwellRT is ready to use");
-      
+
     })
   }
 

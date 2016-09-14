@@ -7,7 +7,7 @@ import { Navbar } from '../components/Navbar.jsx';
 
 const App = (props) => (
   <div id="mexEco">
-    <Navbar />
+    <Navbar user={props.user} />
     {props.main}
     <Footer />
   </div>
@@ -17,6 +17,6 @@ export default AppContainer = createContainer(props => {
   // props here will have `main`, passed from the router
   // anything we return from this function will be *added* to it
   return {
-    // user: Meteor.user(),
+    user: Meteor.user(),
   };
 }, App);

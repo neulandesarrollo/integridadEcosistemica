@@ -1,7 +1,6 @@
 import React from 'react';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { mount } from 'react-mounter';
-import { HTTP } from 'meteor/http';
 
 import { piwik } from 'meteor/marvin:piwik-http-sandstorm';
 
