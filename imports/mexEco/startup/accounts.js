@@ -23,9 +23,9 @@ Accounts.ui.config({
   minimumPasswordLength: 6,
 
   loginPath: '/login',
-  signUpPath: '/login',
+  // signUpPath: '/login',
   // resetPasswordPath: '/reset-password',
-  // profilePath: '/profile',
+  profilePath: '/profile',
   onSignedInHook: () => FlowRouter.go('/integridad-ecosistemica'),
   onSignedOutHook: () => FlowRouter.go('/integridad-ecosistemica'),
 

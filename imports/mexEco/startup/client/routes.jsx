@@ -9,6 +9,7 @@ import ContactPage from '../../ui/pages/ContactPage.jsx';
 import IndexPage from '../../ui/pages/IndexPage.jsx';
 import LoginPage from '../../ui/pages/LoginPage.jsx';
 import MapPage from '../../ui/pages/MapPage.jsx';
+import PrivateProfilePage from '../../ui/pages/PrivateProfilePage.jsx';
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/login',
     name: 'login',
     main: <LoginPage />
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    main: <PrivateProfilePage />
   }
 ]
 
