@@ -7,12 +7,27 @@ import MapboxGLDraw from '../components/MapboxGLDraw.jsx';
 import { Navbar } from '../components/Navbar.jsx';
 // import PolygonFormContainer from '../containers/PolygonFormContainer.jsx';
 
+export const STATES = {
+  IDLE: "state-idle",
+  SELECTING_FIRST: "state-selecting-first",
+  SELECTING_SECOND: "state-selecting-second",
+  SELECTING_THIRD: "state-selecting-third",
+  SELECTING_MORE: "state-selecting-more",
+  INSERTING: "state-inserting",
+  UPDATING: "state-updating"
+}
+
 export default class MapPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      state: STATES.IDLE
     };
+  }
+
+  setDrawState(state) {
+    this.setState({state})
   }
   //
   // handleClick() {
@@ -115,7 +130,10 @@ export default class MapPage extends Component {
             center={[-99.138173, 19.416424]}
             zoom={[8]} >
 
-            <MapboxGLDraw />
+            <MapboxGLDraw
+              state={this.state.state}
+              setDrawState={this.setDrawState.bind(this)} />
+
           </ReactMapboxGl>
         </div>
         <div className="col-xs-12 col-md-3">

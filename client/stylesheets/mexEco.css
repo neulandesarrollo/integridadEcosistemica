@@ -68,9 +68,9 @@ div.mapboxgl-canvas-container.mapboxgl-interactive {
   z-index: 1;
 }*/
 
-#mexEco-draw {
+/*.mexEco-map-button {
   position: absolute;
   top: 5rem;
   left: 5rem;
   z-index: 999;
-}
+}*/

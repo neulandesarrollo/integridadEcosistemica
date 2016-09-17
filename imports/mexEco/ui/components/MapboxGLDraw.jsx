@@ -1,10 +1,13 @@
-import { Meteor } from 'meteor/meteor';
-import React, { Component, PropTypes } from 'react';
-import ReactMapboxGl from "react-mapbox-gl";
-import Draw from 'mapbox-gl-draw';
+import { Meteor } from 'meteor/meteor'
+import React, { Component, PropTypes } from 'react'
+import ReactMapboxGl from "react-mapbox-gl"
+import Draw from 'mapbox-gl-draw'
+
+import { STATES } from '../pages/MapPage.jsx'
+import { polygonLineStyles } from '../lib/mapbox.js'
 
 // let index = 0;
-const generateID = () => index++;
+const generateID = () => index++
 
 export default class MapboxGLDraw extends Component {
   constructor(props) {
@@ -15,163 +18,136 @@ export default class MapboxGLDraw extends Component {
     };
   }
 
-  // static contextTypes = {
-  //   map: PropTypes.object
-  // };
-  //
-  // static propTypes = {
-  //   // id: PropTypes.string,
-  //   //
-  //   // type: PropTypes.oneOf([
-  //   //   "symbol",
-  //   //   "line",
-  //   //   "fill",
-  //   //   "circle"
-  //   // ]),
-  //   //
-  //   // layout: PropTypes.object,
-  //   // paint: PropTypes.object,
-  //   // sourceOptions: PropTypes.object,
-  //   // layerOptions: PropTypes.object,
-  //   // sourceId: PropTypes.string,
-  //   // before: PropTypes.string
-  // };
-
-  // id = this.props.id || `draw-${generateID()}`;
-  // draw = undefined;
-  // var draw = Draw({
-  //   controls: {
-  //     point: false,
-  //     line_string: false,
-  //     polygon: true,
-  //     trash: false
-  //   }
-  // });
-  // map.addControl(draw);
-
   componentWillMount() {
     console.log('componentWillMount');
-    // console.log(this);
-    // const { id, source } = this;
-    // const { type, layout, paint, layerOptions, sourceId, before } = this.props;
+    const thiz = this;
     const { map } = this.context;
-    // console.log(map);
 
-    // console.log(Draw);
+    const styles = polygonLineStyles
+
+    const controls = {
+      point: false,
+      line_string: false,
+      polygon: true,
+      trash: false
+    }
+
     const draw = Draw({
-      controls: {
-        point: false,
-        line_string: false,
-        polygon: true,
-        trash: false
-      },
+      controls,
+      styles,
       position: 'bottom-right'
     });
-    //
-    // this.setState({draw})
 
-    // if(!sourceId) {
-    //   map.addSource(id, source);
-    // }
-    map.addControl(draw)
-    console.log('control added');
-    // const thiz = this
-    // map.on('load', () => {
-    //   const draw = Draw({
-    //     // controls: {
-    //     //   point: true,
-    //     //   line_string: false,
-    //     //   polygon: true,
-    //     //   trash: false
-    //     // },
-    //     // position: 'bottom-right'
-    //   });
-    //
-    //   // // thiz.setState({draw})
-    //   // const didAdd = map.addControl(draw)
-    //   // console.log(didAdd);
-    //   //
-    //   // console.log("draw added===");
-    //   // console.log(map.repaint);
-    // });
-    // map.on("click", this.onClick);
-    // map.on("mousemove", this.onMouseMove);
+    map.on('load', function() {
+      map.addControl(draw)
+
+      map.on('draw.create', (feature) => {
+        console.log("draw.create");
+        console.log(feature);
+      })
+
+      map.on('draw.render', () => {
+        console.log("draw.render");
+        let points = 0
+        const features = thiz.state.draw.getAll().features
+        console.log(thiz.state.draw.getAll());
+
+        if(features && (features.length > 0)) {
+          console.log("features");
+          console.log(features);
+
+          points = features[0].geometry.coordinates[0].length - 1
+
+          switch(points) {
+            case 1:
+              thiz.props.setDrawState(STATES.SELECTING_SECOND)
+              break;
+            case 2:
+              thiz.props.setDrawState(STATES.SELECTING_THIRD)
+              break;
+            case 3:
+              thiz.props.setDrawState(STATES.SELECTING_MORE)
+              break;
+          }
+        }
 
 
-    // draw controls
-    // map.on('draw.create', (event) => {
-    //   _.each(event.features, poly => {
-    //     const polygon = {
-    //       name: poly.id,
-    //       geoJSON: {
-    //         type: poly.type,
-    //         geometry: {
-    //           type: poly.geometry.type,
-    //           coordinates: poly.geometry.coordinates[0]
-    //         }
-    //       }
-    //     }
-    //
-    //     Session.set(SESSION.POLYGON, polygon);
-    //     Session.set(SESSION.INSERTING, true);
-    //   })
-    // });
+        console.log(points);
+      })
+    });
+
+    this.setState({draw})
   }
 
   componentWillUnmount() {
     console.log('componentWillUnmount');
-    // const { id } = this;
     const { map } = this.context;
 
     map.remove(this.state.draw);
     this.setState({draw: undefined})
-    // map.removeSource(id);
-
-    // map.off("click", this.onClick);
-    // map.off("mousemove", this.onMouseMove);
   }
 
-  // componentWillReceiveProps(props) {
-  //   const { paint, layout } = this.props;
-  //   const { map } = this.context;
-  //
-  //   if(!isEqual(props.paint, paint)) {
-  //     const paintDiff = diff(paint, props.paint);
-  //
-  //     for (const key in paintDiff) {
-  //       map.setPaintProperty(this.id, key, paintDiff[key]);
-  //     }
-  //   }
-  //
-  //   if(!isEqual(props.layout, layout)) {
-  //     const layoutDiff = diff(layout, props.layout);
-  //
-  //     for (const key in layoutDiff) {
-  //       map.setLayoutProperty(this.id, key, layoutDiff[key]);
-  //     }
-  //   }
-  // }
-  //
-  // shouldComponentUpdate(nextProps) {
-  //   return !isEqual(nextProps.children, this.props.children)
-  //       || !isEqual(nextProps.paint, this.props.paint)
-  //       || !isEqual(nextProps.layout, this.props.layout)
-  // }
-
-  handleClick() {
-    console.log('handleClick');
+  handleDraw() {
+    console.log('handleDraw');
+    this.props.setDrawState(STATES.SELECTING_FIRST)
     const drawBtn = $(".mapbox-gl-draw_ctrl-draw-btn")[0]
     if(drawBtn)
       drawBtn.click()
   }
 
+  handleCancel() {
+    console.log("handleCancel")
+    this.props.setDrawState(STATES.IDLE)
+
+    if(this.state.draw)
+      this.state.draw.trash()
+  }
+
+  handleSave() {
+    console.log("handleSave")
+    // TODO Inserting state should be controlled by state of modal that it launches
+    this.props.setDrawState(STATES.INSERTING)
+
+  }
+
   render() {
-    console.log('rendered MapboxGLDraw');
-    // return null;
-    return <button className="btn btn-primary" id='mexEco-draw' onClick={this.handleClick.bind(this)}>Draw</button>
+    console.log('rendered MapboxGLDraw: ' + this.props.state);
+
+    const drawButton = <button
+      className="btn btn-primary mexEco-map-button btn-block"
+      id='mexEco-draw'
+      onClick={this.handleDraw.bind(this)}>Draw</button>
+
+    const cancelButton = <button
+      className="btn btn-danger mexEco-map-button btn-block"
+      id='mexEco-cancel'
+      onClick={this.handleCancel.bind(this)}>Cancel</button>
+
+    const saveButton = <button
+      className="btn btn-primary mexEco-map-button btn-block"
+      id='mexEco-save'
+      onClick={this.handleSave.bind(this)}>Save</button>
+
+    console.log(this.props.state)
+    switch(this.props.state) {
+      case STATES.IDLE:
+        return drawButton
+      case STATES.SELECTING_FIRST:
+      case STATES.SELECTING_SECOND:
+      case STATES.SELECTING_THIRD:
+        return cancelButton
+      case STATES.SELECTING_MORE:
+      case STATES.INSERTING:
+        return <div>{saveButton}{cancelButton}</div>
+      case STATES.UPDATING:
+        return drawButton
+    }
+    return null;
   }
 }
 
 MapboxGLDraw.contextTypes = {
-  map: PropTypes.object
+  map: PropTypes.object,
+  state: PropTypes.string,
+  setDrawState: PropTypes.func
 };
