@@ -8,7 +8,7 @@ import { Navbar } from '../components/Navbar.jsx';
 const App = (props) => (
   <div id="mexEco">
     <Navbar user={props.user} />
-    {props.main}
+    {React.cloneElement(props.main, {user: props.user})}
     <Footer />
   </div>
 );

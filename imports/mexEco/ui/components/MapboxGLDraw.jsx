@@ -4,7 +4,7 @@ import ReactMapboxGl from "react-mapbox-gl"
 import Draw from 'mapbox-gl-draw'
 
 import { STATES } from '../pages/MapPage.jsx'
-import { polygonLineStyles } from '../lib/mapbox.js'
+import { polygonLineStyles } from '../lib/polygon-line-styles.js'
 
 // let index = 0;
 const generateID = () => index++
@@ -71,7 +71,6 @@ export default class MapboxGLDraw extends Component {
           }
         }
 
-
         console.log(points);
       })
     });
@@ -89,10 +88,19 @@ export default class MapboxGLDraw extends Component {
 
   handleDraw() {
     console.log('handleDraw');
-    this.props.setDrawState(STATES.SELECTING_FIRST)
-    const drawBtn = $(".mapbox-gl-draw_ctrl-draw-btn")[0]
-    if(drawBtn)
-      drawBtn.click()
+
+    if(this.props.user) {
+      console.log('logged in');
+      this.props.setDrawState(STATES.SELECTING_FIRST)
+      const drawBtn = $(".mapbox-gl-draw_ctrl-draw-btn")[0]
+      if(drawBtn) {
+        drawBtn.click()
+      }
+    } else {
+      console.log('logged out');
+      $("#login-modal").modal("show")
+    }
+
   }
 
   handleCancel() {
@@ -138,7 +146,12 @@ export default class MapboxGLDraw extends Component {
         return cancelButton
       case STATES.SELECTING_MORE:
       case STATES.INSERTING:
-        return <div>{saveButton}{cancelButton}</div>
+        return (
+          <div className="row">
+            <div className="col-md-6">{saveButton}</div>
+            <div className="col-md-6">{cancelButton}</div>
+          </div>
+        )
       case STATES.UPDATING:
         return drawButton
     }
@@ -149,5 +162,6 @@ export default class MapboxGLDraw extends Component {
 MapboxGLDraw.contextTypes = {
   map: PropTypes.object,
   state: PropTypes.string,
-  setDrawState: PropTypes.func
+  setDrawState: PropTypes.func,
+  user: React.PropTypes.object
 };

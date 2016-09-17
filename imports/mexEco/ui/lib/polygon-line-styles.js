@@ -1,4 +1,3 @@
-
 export const polygonLineStyles = [
   // ACTIVE (being drawn)
   // line stroke
