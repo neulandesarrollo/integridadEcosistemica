@@ -1,16 +1,21 @@
-import { Meteor } from 'meteor/meteor';
-import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor'
+import { createContainer } from 'meteor/react-meteor-data'
 
-import PolygonForm from '../components/PolygonForm.jsx';
+import { STATES } from '../pages/MapPage.jsx'
+import PolygonForm from '../components/PolygonForm.jsx'
 
-import { Questions } from '../../common/collections/questions.js';
+import { Questions } from '../../common/collections/questions.js'
 
-export default PolygonFormContainer = createContainer(({currentPolygon, insertingPolygon}) => {
-  console.log("rerender PolygonForm");
-  console.log(insertingPolygon);
+export default PolygonFormContainer = createContainer(({state, setDrawState}) => {
+  console.log("PolygonFormContainer");
+  console.log(state);
+  let isLoading = false
+  let questionsHanle = null
 
-  const questionsHandle = Meteor.subscribe('questions.all');
-  const isLoading = !questionsHandle.ready();
+  if(state === STATES.INSERTING) {
+    questionsHandle = Meteor.subscribe('questions.all');
+    isLoading = !questionsHandle.ready();
+  }
 
   console.log("questions loading");
   console.log(isLoading);
@@ -18,9 +23,8 @@ export default PolygonFormContainer = createContainer(({currentPolygon, insertin
   console.log(Questions.find().fetch());
 
   return {
-    currentPolygon,
-    insertingPolygon,
     isLoading,
     questions: isLoading ? [] : Questions.find().fetch(),
+    setDrawState
   };
 }, PolygonForm);

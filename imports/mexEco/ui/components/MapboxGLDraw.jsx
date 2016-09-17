@@ -19,7 +19,6 @@ export default class MapboxGLDraw extends Component {
   }
 
   componentWillMount() {
-    console.log('componentWillMount');
     const thiz = this;
     const { map } = this.context;
 
@@ -42,20 +41,15 @@ export default class MapboxGLDraw extends Component {
       map.addControl(draw)
 
       map.on('draw.create', (feature) => {
-        console.log("draw.create");
-        console.log(feature);
+        thiz.props.setDrawState(STATES.INSERTING)
+        $("#insertModal").modal("show")
       })
 
       map.on('draw.render', () => {
-        console.log("draw.render");
         let points = 0
         const features = thiz.state.draw.getAll().features
-        console.log(thiz.state.draw.getAll());
 
         if(features && (features.length > 0)) {
-          console.log("features");
-          console.log(features);
-
           points = features[0].geometry.coordinates[0].length - 1
 
           switch(points) {
@@ -70,8 +64,6 @@ export default class MapboxGLDraw extends Component {
               break;
           }
         }
-
-        console.log(points);
       })
     });
 
@@ -79,7 +71,6 @@ export default class MapboxGLDraw extends Component {
   }
 
   componentWillUnmount() {
-    console.log('componentWillUnmount');
     const { map } = this.context;
 
     map.remove(this.state.draw);
@@ -87,24 +78,19 @@ export default class MapboxGLDraw extends Component {
   }
 
   handleDraw() {
-    console.log('handleDraw');
-
     if(this.props.user) {
-      console.log('logged in');
       this.props.setDrawState(STATES.SELECTING_FIRST)
       const drawBtn = $(".mapbox-gl-draw_ctrl-draw-btn")[0]
       if(drawBtn) {
         drawBtn.click()
       }
     } else {
-      console.log('logged out');
       $("#login-modal").modal("show")
     }
 
   }
 
   handleCancel() {
-    console.log("handleCancel")
     this.props.setDrawState(STATES.IDLE)
 
     if(this.state.draw)
@@ -112,15 +98,12 @@ export default class MapboxGLDraw extends Component {
   }
 
   handleSave() {
-    console.log("handleSave")
     // TODO Inserting state should be controlled by state of modal that it launches
     this.props.setDrawState(STATES.INSERTING)
-
+    $("#insertModal").modal("show")
   }
 
   render() {
-    console.log('rendered MapboxGLDraw: ' + this.props.state);
-
     const drawButton = <button
       className="btn btn-primary mexEco-map-button btn-block"
       id='mexEco-draw'
@@ -136,7 +119,6 @@ export default class MapboxGLDraw extends Component {
       id='mexEco-save'
       onClick={this.handleSave.bind(this)}>Save</button>
 
-    console.log(this.props.state)
     switch(this.props.state) {
       case STATES.IDLE:
         return drawButton

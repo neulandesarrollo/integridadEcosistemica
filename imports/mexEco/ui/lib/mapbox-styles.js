@@ -5,7 +5,7 @@ export const getMapboxStyles = () => {
     Meteor.settings.public.MAPBOX.TOKEN
 
   const styleUrl = "mapbox://" + Meteor.settings.public.MAPBOX.MAP_ID
-  console.log("rasterTileUrl: " + rasterTileUrl);
+  // console.log("rasterTileUrl: " + rasterTileUrl);
 
   return {
     "version": 8,

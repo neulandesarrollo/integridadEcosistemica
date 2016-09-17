@@ -8,7 +8,7 @@ import { LoginModal } from '../components/LoginModal.jsx'
 import { Navbar } from '../components/Navbar.jsx'
 
 import { getMapboxStyles } from '../lib/mapbox-styles.js'
-// import PolygonFormContainer from '../containers/PolygonFormContainer.jsx';
+import PolygonFormContainer from '../containers/PolygonFormContainer.jsx';
 
 export const STATES = {
   IDLE: "state-idle",
@@ -38,6 +38,7 @@ export default class MapPage extends Component {
     return (
       <div className="container-fluid full-height" id="map-container">
         <LoginModal />
+
         <div className="col-xs-12 col-md-9 m-l-0 p-l-0 full-height">
           <ReactMapboxGl
             style={getMapboxStyles()}
@@ -51,6 +52,11 @@ export default class MapPage extends Component {
               user={this.props.user} />
 
           </ReactMapboxGl>
+
+          <PolygonFormContainer
+            state={this.state.state}
+            setDrawState={this.setDrawState.bind(this)} />
+
         </div>
         <div className="col-xs-12 col-md-3">
           <h1>Likert</h1>

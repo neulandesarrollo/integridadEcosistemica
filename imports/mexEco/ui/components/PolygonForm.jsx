@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import { SESSION, SCORES } from '../../client/constants.js';
+import { STATES } from '../pages/MapPage.jsx'
 
 export default class PolygonForm extends Component {
   constructor(props) {
@@ -15,10 +16,12 @@ export default class PolygonForm extends Component {
   }
 
   componentDidMount() {
+    const thiz = this
     console.log('componentDidMount');
-    const modal = ReactDOM.findDOMNode(this.refs.myModal);
-    $(modal).modal('show');
-    $(modal).on('hidden.bs.modal', () => { console.log("close modal")
+    const modal = ReactDOM.findDOMNode(this.refs.insertModal);
+    $(modal).on('hide.bs.modal', () => {
+      console.log("close modal")
+      thiz.props.setDrawState(STATES.SELECTING_MORE)
     });
   }
 
@@ -125,29 +128,6 @@ export default class PolygonForm extends Component {
     )
   }
 
-  renderInsertingPolygon() {
-    return (
-      <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ref='myModal'>
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 className="modal-title">Complete Region details</h4>
-            </div>
-            <div className="modal-body">
-              {this.renderModalBody()}
-            </div>
-            <div className="modal-footer">
-              {this.renderSubmit()}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   renderSubmit() {
     if(this.props.isLoading) {
       return (
@@ -161,7 +141,27 @@ export default class PolygonForm extends Component {
   }
 
   render() {
-    return this.renderInsertingPolygon()
+    return (
+      <div className="modal fade" id="insertModal" tabIndex="-1" role="dialog" aria-labelledby="insertModal" aria-hidden="true" ref='insertModal'>
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 className="modal-title">Complete Region details</h4>
+            </div>
+            <div className="modal-body">
+              // {this.renderModalBody()}
+            </div>
+            <div className="modal-footer">
+              // {this.renderSubmit()}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+    // return this.renderInsertingPolygon()
 
     // console.log(this.props.insertingPolygon);
     // if(this.props.insertingPolygon) {
@@ -180,8 +180,7 @@ export default class PolygonForm extends Component {
 }
 
 PolygonForm.propTypes = {
-  currentPolygon: React.PropTypes.object,
-  insertingPolygon: React.PropTypes.bool,
   questions: React.PropTypes.array,
-  isLoading: React.PropTypes.bool
+  isLoading: React.PropTypes.bool,
+  setDrawState: React.PropTypes.func
 };

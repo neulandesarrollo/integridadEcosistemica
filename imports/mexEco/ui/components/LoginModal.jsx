@@ -11,7 +11,7 @@ export class LoginModal extends Component {
 
   render() {
     return (
-      <div className="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+      <div className="modal fade" id="login-modal" tabIndex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
