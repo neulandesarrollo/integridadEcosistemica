@@ -26,7 +26,7 @@ Accounts.ui.config({
   // signUpPath: '/login',
   // resetPasswordPath: '/reset-password',
   profilePath: '/profile',
-  onSignedInHook: () => FlowRouter.go('/integridad-ecosistemica'),
+  onSignedInHook: () => FlowRouter.go('/mapa'),
   onSignedOutHook: () => FlowRouter.go('/integridad-ecosistemica'),
 
 });

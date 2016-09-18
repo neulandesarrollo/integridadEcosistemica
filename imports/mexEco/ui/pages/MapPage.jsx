@@ -37,7 +37,7 @@ export default class MapPage extends Component {
 
     return (
       <div className="container-fluid full-height" id="map-container">
-        <LoginModal />
+        <LoginModal user={this.props.user} />
 
         <div className="col-xs-12 col-md-9 m-l-0 p-l-0 full-height">
           <ReactMapboxGl

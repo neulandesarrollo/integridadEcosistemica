@@ -15,7 +15,8 @@ export class Navbar extends Component {
   }
 
   handleLogout(e) {
-    e.preventDefault();
+    // e.preventDefault();
+    Meteor.logout()
   }
 
   renderUser() {
@@ -30,7 +31,7 @@ export class Navbar extends Component {
             </button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a className="dropdown-item" href="/profile">Profile</a>
-              <a className="dropdown-item" href="/" onClick={this.handleLogout.bind(this)}>Logout</a>
+              <button className="dropdown-item" onClick={this.handleLogout.bind(this)}>Logout</button>
             </div>
           </div>
         </li>
