@@ -1,6 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { createContainer } from 'meteor/react-meteor-data';
-
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -61,7 +59,8 @@ export default class PolygonForm extends Component {
       //   Session.set(SESSION.POLYGON, undefined);
       //   // Clear form
         ReactDOM.findDOMNode(thiz.refs.name).value = '';
-        $("#insertModal").modal("show")
+        $("#insertModal").modal("hide")
+        // TODO prevent polygon from being edited by changeMode(static)
     });
   }
 
@@ -70,7 +69,7 @@ export default class PolygonForm extends Component {
     _.map(this.props.questions, q => {
       const questionId = q._id
       const val = $('input[name=likertOption' + questionId + ']:checked', '#polygonForm').val()
-      return { questionId, val}
+      return { questionId, val }
     })
   }
 

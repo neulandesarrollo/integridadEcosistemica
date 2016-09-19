@@ -9,6 +9,7 @@ import { Navbar } from '../components/Navbar.jsx'
 
 import { getMapboxStyles } from '../lib/mapbox-styles.js'
 import PolygonFormContainer from '../containers/PolygonFormContainer.jsx';
+import PolygonsListContainer from '../containers/PolygonsListContainer.jsx';
 
 export const STATES = {
   IDLE: "state-idle",
@@ -66,7 +67,8 @@ export default class MapPage extends Component {
 
         </div>
         <div className="col-xs-12 col-md-3">
-          <h1>Likert</h1>
+          <h4 className='m-t-1'>Browse Regions</h4>
+          <PolygonsListContainer user={this.props.user} />
         </div>
       </div>
     )
