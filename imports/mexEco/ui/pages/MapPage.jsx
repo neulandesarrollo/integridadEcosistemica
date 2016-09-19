@@ -25,8 +25,14 @@ export default class MapPage extends Component {
     super(props)
 
     this.state = {
-      state: STATES.IDLE
+      state: STATES.IDLE,
+      currentPolygon: null
     }
+  }
+
+  setCurrentPolygon(polygon) {
+    console.log('setCurrentPolygon');
+    this.setState({currentPolygon: polygon})
   }
 
   setDrawState(state) {
@@ -34,7 +40,6 @@ export default class MapPage extends Component {
   }
 
   render() {
-
     return (
       <div className="container-fluid full-height" id="map-container">
         <LoginModal user={this.props.user} />
@@ -48,12 +53,14 @@ export default class MapPage extends Component {
 
             <MapboxGLDraw
               state={this.state.state}
+              setCurrentPolygon={this.setCurrentPolygon.bind(this)}
               setDrawState={this.setDrawState.bind(this)}
               user={this.props.user} />
 
           </ReactMapboxGl>
 
           <PolygonFormContainer
+            currentPolygon={this.state.currentPolygon}
             state={this.state.state}
             setDrawState={this.setDrawState.bind(this)} />
 
@@ -68,8 +75,4 @@ export default class MapPage extends Component {
 
 MapPage.propTypes = {
   user: React.PropTypes.object
-  // map: React.PropTypes.object,
-  // initMap: React.PropTypes.func,
-  // currentPolygon: React.PropTypes.object,
-  // insertingPolygon: React.PropTypes.bool
 };

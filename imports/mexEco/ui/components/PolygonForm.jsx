@@ -4,8 +4,11 @@ import { createContainer } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { SESSION, SCORES } from '../../client/constants.js';
+import { SESSION } from '../../client/constants.js';
 import { STATES } from '../pages/MapPage.jsx'
+
+import { LikertInput } from './LikertInput.jsx'
+import { LoadingSpinner } from './LoadingSpinner.jsx'
 
 export default class PolygonForm extends Component {
   constructor(props) {
@@ -22,13 +25,12 @@ export default class PolygonForm extends Component {
     $(modal).on('hide.bs.modal', () => {
       console.log("close modal")
       thiz.props.setDrawState(STATES.SELECTING_MORE)
+
     });
   }
 
   submitForm() {
-    console.log('submit form');
     const form = ReactDOM.findDOMNode(this.refs.polygonForm);
-    console.log(form);
     $(form).submit(this.handleSubmit.bind(this));
     $(form).trigger('submit');
   }
@@ -40,74 +42,48 @@ export default class PolygonForm extends Component {
     event.preventDefault();
     // Find the name field via the React ref
     const name = ReactDOM.findDOMNode(thiz.refs.name).value.trim();
-
-    let polygon = Session.get(SESSION.POLYGON)
+    //
+    let polygon = this.props.currentPolygon
     polygon = _.extend(polygon, {name})
 
-    Meteor.call("polygons.insert", polygon, (error, polygonId) => {
+    console.log(polygon);
+
+    const answers = thiz.getAnswers()
+    console.log('answers');
+    console.log(answers);
+
+    Meteor.call("polygons.insert", polygon, answers, (error, polygonId) => {
       console.log('polygons.insert');
       console.log(polygon);
       if(error) {
         console.log("error", error);
       }
-      if(polygonId) {
-        console.log("success");
-        _.each(thiz.props.questions, (question) => {
-          thiz.answerQuestion(question._id, polygonId)
-        })
-
-        Session.set(SESSION.POLYGON, undefined);
-        // Clear form
+      //   Session.set(SESSION.POLYGON, undefined);
+      //   // Clear form
         ReactDOM.findDOMNode(thiz.refs.name).value = '';
-      }
+        $("#insertModal").modal("show")
     });
   }
 
-  answerQuestion(questionId, polygonId) {
-    console.log('answerQuestion');
-    console.log(questionId);
-
-    const val = $('input[name=inlineRadioOptions' + questionId + ']:checked', '#polygonForm').val()
-
-    console.log(val);
-
-    Meteor.call("polygon.answerQuestion", polygonId, questionId, val,
-      (error, result) => {
-        console.log("question.answer");
-
-        if(error) {
-          console.log("error", error);
-        }
-        if(result) {
-
-        }
-      });
+  // Answers an array of {questionId, val}
+  getAnswers() {
+    _.map(this.props.questions, q => {
+      const questionId = q._id
+      const val = $('input[name=likertOption' + questionId + ']:checked', '#polygonForm').val()
+      return { questionId, val}
+    })
   }
 
-  renderScore(score, question) {
-    return (
-      <label className="form-check-inline" key={score}>
-        <input className="form-check-input" type="radio" name={"inlineRadioOptions" + question._id} id={"inlineRadio" + score} value={score} /> {score}
-      </label>
-    )
-  }
-
-  renderQuestion(question) {
-    return (
-      <fieldset className="form-group" key={question._id}>
-        <label>{question.text}</label><br/>
-        {
-          SCORES.map((score) => { return this.renderScore(score, question) })
-        }
-      </fieldset>
-    )
+  renderQuestion(question, i) {
+    return <LikertInput key={question._id} question={question} i={i} />
   }
 
   renderQuestions() {
-    if(this.props.isLoading) {
-      return <h4>Loading</h4>
+    const questions = this.props.questions
+    if(this.props.isLoading && (questions.length > 0)) {
+      return <LoadingSpinner />
     } else {
-      return this.props.questions.map(this.renderQuestion.bind(this))
+      return questions.map(this.renderQuestion.bind(this))
     }
   }
 
@@ -123,7 +99,6 @@ export default class PolygonForm extends Component {
         </div>
 
         {this.renderQuestions()}
-
       </form>
     )
   }
@@ -131,7 +106,7 @@ export default class PolygonForm extends Component {
   renderSubmit() {
     if(this.props.isLoading) {
       return (
-        <button className="btn btn-primary btn-block" disabled>Loading...</button>
+        <button className="btn btn-secondary btn-block" disabled>Loading...</button>
       )
     } else {
       return (
@@ -152,35 +127,21 @@ export default class PolygonForm extends Component {
               <h4 className="modal-title">Complete Region details</h4>
             </div>
             <div className="modal-body">
-              // {this.renderModalBody()}
+              {this.renderModalBody()}
             </div>
             <div className="modal-footer">
-              // {this.renderSubmit()}
+              {this.renderSubmit()}
             </div>
           </div>
         </div>
       </div>
     )
-    // return this.renderInsertingPolygon()
-
-    // console.log(this.props.insertingPolygon);
-    // if(this.props.insertingPolygon) {
-    //   console.log('PolygonForm#insertingPolygon');
-    //   return this.renderInsertingPolygon()
-    // } else {
-    //   if(currentPolygon) {
-    //     console.log('PolygonForm#currentPolygon');
-    //     // add questions for existing polygon (creted by you or someone else)
-    //     return <div></div>
-    //   }
-    //   console.log('PolygonForm#default');
-    //   return <div></div>
-    // }
   }
 }
 
 PolygonForm.propTypes = {
-  questions: React.PropTypes.array,
+  currentPolygon: React.PropTypes.object,
   isLoading: React.PropTypes.bool,
-  setDrawState: React.PropTypes.func
+  setDrawState: React.PropTypes.func,
+  questions: React.PropTypes.array,
 };

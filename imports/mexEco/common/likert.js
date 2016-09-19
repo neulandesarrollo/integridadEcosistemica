@@ -19,13 +19,13 @@ const QUANT_M_DESC = reverse(QUANT_M_ASC)
 export const LIKERT_ANSWERS = {
   AGREE_DESC, AGREE_ASC,
   QUANT_F_DESC, QUANT_F_ASC,
-  QUANT_M_DESC, QUANT_M_DESC
+  QUANT_M_DESC, QUANT_M_ASC
 }
 
 export const LIKERT_CATEGORIES = {
-  "VEG":  "Vegetación"
-  "FAUNA":  "Fauna"
-  "LAND":  "Suelos"
+  "VEG":  "Vegetación",
+  "FAUNA":  "Fauna",
+  "LAND":  "Suelos",
   "WATER":  "Agua",
   "CONTAM": "Contamination"
 }

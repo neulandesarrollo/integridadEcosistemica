@@ -6,25 +6,19 @@ import PolygonForm from '../components/PolygonForm.jsx'
 
 import { Questions } from '../../common/collections/questions.js'
 
-export default PolygonFormContainer = createContainer(({state, setDrawState}) => {
-  console.log("PolygonFormContainer");
-  console.log(state);
+export default PolygonFormContainer = createContainer(({ currentPolygon, setDrawState, state }) => {
   let isLoading = false
-  let questionsHanle = null
+  let questionsHandle = null
 
   if(state === STATES.INSERTING) {
     questionsHandle = Meteor.subscribe('questions.all');
     isLoading = !questionsHandle.ready();
   }
 
-  console.log("questions loading");
-  console.log(isLoading);
-
-  console.log(Questions.find().fetch());
-
   return {
+    currentPolygon,
     isLoading,
+    setDrawState,
     questions: isLoading ? [] : Questions.find().fetch(),
-    setDrawState
   };
 }, PolygonForm);

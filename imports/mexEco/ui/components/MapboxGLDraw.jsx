@@ -7,7 +7,7 @@ import { STATES } from '../pages/MapPage.jsx'
 import { polygonLineStyles } from '../lib/polygon-line-styles.js'
 
 // let index = 0;
-const generateID = () => index++
+// const generateID = () => index++
 
 export default class MapboxGLDraw extends Component {
   constructor(props) {
@@ -16,6 +16,27 @@ export default class MapboxGLDraw extends Component {
     this.state = {
       draw: undefined
     };
+  }
+
+  // TODO there should only be one feature when this is called but checks should be added
+  setCurrentPolygon(features) {
+    let polygon = null
+    _.each(features, f => {
+      polygon = {
+        // name: f.id,
+        geoJSON: {
+          type: f.type,
+          geometry: {
+            type: f.geometry.type,
+            coordinates: f.geometry.coordinates[0]
+          }
+        }
+      }
+    })
+
+    console.log('setCurrentPolygon');
+    console.log(polygon);
+    this.props.setCurrentPolygon(polygon)
   }
 
   componentWillMount() {
@@ -39,33 +60,35 @@ export default class MapboxGLDraw extends Component {
 
     map.on('load', function() {
       map.addControl(draw)
-
-      map.on('draw.create', (feature) => {
-        thiz.props.setDrawState(STATES.INSERTING)
-        $("#insertModal").modal("show")
-      })
-
-      map.on('draw.render', () => {
-        let points = 0
-        const features = thiz.state.draw.getAll().features
-
-        if(features && (features.length > 0)) {
-          points = features[0].geometry.coordinates[0].length - 1
-
-          switch(points) {
-            case 1:
-              thiz.props.setDrawState(STATES.SELECTING_SECOND)
-              break;
-            case 2:
-              thiz.props.setDrawState(STATES.SELECTING_THIRD)
-              break;
-            case 3:
-              thiz.props.setDrawState(STATES.SELECTING_MORE)
-              break;
-          }
-        }
-      })
     });
+
+    map.on('draw.create', (event) => {
+      thiz.props.setDrawState(STATES.INSERTING)
+      $("#insertModal").modal("show")
+      console.log("draw.create");
+      thiz.setCurrentPolygon(event.features)
+    })
+
+    map.on('draw.render', () => {
+      let points = 0
+      const features = thiz.state.draw.getAll().features
+
+      if(features && (features.length > 0)) {
+        points = features[0].geometry.coordinates[0].length - 1
+
+        switch(points) {
+          case 1:
+            thiz.props.setDrawState(STATES.SELECTING_SECOND)
+            break;
+          case 2:
+            thiz.props.setDrawState(STATES.SELECTING_THIRD)
+            break;
+          case 3:
+            thiz.props.setDrawState(STATES.SELECTING_MORE)
+            break;
+        }
+      }
+    })
 
     this.setState({draw})
   }
@@ -143,7 +166,8 @@ export default class MapboxGLDraw extends Component {
 
 MapboxGLDraw.contextTypes = {
   map: PropTypes.object,
-  state: PropTypes.string,
+  setCurrentPolygon: PropTypes.func,
   setDrawState: PropTypes.func,
-  user: React.PropTypes.object
+  state: PropTypes.string,
+  user: PropTypes.object,
 };
