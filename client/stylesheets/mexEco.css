@@ -60,6 +60,10 @@ ul.nav > li.nav-item > a.nav-link {
   padding-left: 0;
 }
 
+.polygon {
+  border-radius: 25px;
+    border: 2px solid #73AD21;}
+
 /*div.mapboxgl-ctrl-bottom-right, div.mapboxgl-control-container, div.mapboxgl-ctrl-group, div.mapbox-gl-draw_ctrl-draw-btn {
   z-index: 99999999;
 }

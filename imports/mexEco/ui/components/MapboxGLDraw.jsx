@@ -6,9 +6,6 @@ import Draw from 'mapbox-gl-draw'
 import { STATES } from '../pages/MapPage.jsx'
 import { polygonLineStyles } from '../lib/polygon-line-styles.js'
 
-// let index = 0;
-// const generateID = () => index++
-
 export default class MapboxGLDraw extends Component {
   constructor(props) {
     super(props);
@@ -34,8 +31,6 @@ export default class MapboxGLDraw extends Component {
       }
     })
 
-    console.log('setCurrentPolygon');
-    console.log(polygon);
     this.props.setCurrentPolygon(polygon)
   }
 
@@ -58,14 +53,13 @@ export default class MapboxGLDraw extends Component {
       position: 'bottom-right'
     });
 
-    map.on('load', function() {
+    map.on('load', () => {
       map.addControl(draw)
     });
 
     map.on('draw.create', (event) => {
       thiz.props.setDrawState(STATES.INSERTING)
       $("#insertModal").modal("show")
-      console.log("draw.create");
       thiz.setCurrentPolygon(event.features)
     })
 

@@ -4,6 +4,11 @@ export const getMapboxStyles = () => {
     "/tiles/{x}/{y}/{z}?access_token=" +
     Meteor.settings.public.MAPBOX.TOKEN
 
+  // const rasterTileUrl = "https://api.mapbox.com/v4/" +
+  //   Meteor.settings.public.MAPBOX.MAP_ID +
+  //   "/{x},{y},{z}/256x256@2x.png/?access_token=" +
+  //   Meteor.settings.public.MAPBOX.TOKEN
+
   const styleUrl = "mapbox://" + Meteor.settings.public.MAPBOX.MAP_ID
   // console.log("rasterTileUrl: " + rasterTileUrl);
 
@@ -17,14 +22,14 @@ export const getMapboxStyles = () => {
         "url": "mapbox://mapbox.mapbox-streets-v7",
         "type": "vector"
       },
-      "mexEco": {
-        "type": "raster",
-        // "tiles": [
-        //   rasterTileUrl
-        // ],
-        "url": styleUrl,
-        "tileSize": 512
-      }
+      // "mexEco": {
+      //   "type": "raster",
+      //   // "tiles": [
+      //   //   rasterTileUrl
+      //   // ],
+      //   "url": styleUrl,
+      //   "tileSize": 512
+      // }
     },
     "layers": [
       {
@@ -45,13 +50,13 @@ export const getMapboxStyles = () => {
         },
         "interactive": true
       },
-      {
-        "id": "mexEco",
-        "type": "raster",
-        "source": "mexEco",
-        "minzoom": 0,
-        "maxzoom": 22
-      }
+      // {
+      //   "id": "mexEco",
+      //   "type": "raster",
+      //   "source": "mexEco",
+      //   "minzoom": 0,
+      //   "maxzoom": 22
+      // }
     ],
   }
 }

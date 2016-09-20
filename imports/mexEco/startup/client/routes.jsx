@@ -1,14 +1,15 @@
-import React from 'react';
-import { FlowRouter } from 'meteor/kadira:flow-router';
-import { mount } from 'react-mounter';
+import React from 'react'
+import { FlowRouter } from 'meteor/kadira:flow-router'
+import { mount } from 'react-mounter'
 
-import AppContainer from '../../ui/containers/AppContainer.jsx';
+import AppContainer from '../../ui/containers/AppContainer.jsx'
+import RegionContainer from '../../ui/containers/RegionContainer.jsx'
 
-import ContactPage from '../../ui/pages/ContactPage.jsx';
-import IndexPage from '../../ui/pages/IndexPage.jsx';
-import LoginPage from '../../ui/pages/LoginPage.jsx';
-import MapPage from '../../ui/pages/MapPage.jsx';
-import PrivateProfilePage from '../../ui/pages/PrivateProfilePage.jsx';
+import ContactPage from '../../ui/pages/ContactPage.jsx'
+import IndexPage from '../../ui/pages/IndexPage.jsx'
+import LoginPage from '../../ui/pages/LoginPage.jsx'
+import MapPage from '../../ui/pages/MapPage.jsx'
+import PrivateProfilePage from '../../ui/pages/PrivateProfilePage.jsx'
 
 const routes = [
   {
@@ -35,6 +36,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     main: <PrivateProfilePage />
+  },
+  {
+    path: '/regions/:polygonId',
+    name: 'region',
+    main: <RegionContainer />
   }
 ]
 
