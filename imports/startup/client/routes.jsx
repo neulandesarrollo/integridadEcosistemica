@@ -6,7 +6,6 @@ import { piwik } from 'meteor/marvin:piwik-http-sandstorm';
 
 import '../../ioplea.se/startup/client/routes.jsx';
 import '../../mexEco/startup/client/routes.jsx';
-import '../../swell/startup/client/routes.jsx';
 
 import AppContainer from '../../ui/containers/AppContainer.jsx';
 import IndexPage from '../../ui/pages/IndexPage.jsx';
