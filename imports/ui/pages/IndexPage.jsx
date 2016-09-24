@@ -21,12 +21,7 @@ export default class GeekyIndexPage extends Component {
         description: "Investigate envrionmental & ecological integrity in Mexico.",
         url: "/integridad-ecosistemica"
       },
-      {
-        _id: "4",
-        name: "SwellRT Demo",
-        description: "Testing out SwellRT",
-        url: "/swell"
-      }
+
     ];
   }
 

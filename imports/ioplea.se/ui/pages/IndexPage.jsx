@@ -9,6 +9,7 @@ import Autocomplete from '../components/Autocomplete.jsx';
 import Footer from '../components/Footer.jsx';
 import Results from '../components/Results.jsx';
 import Search from '../components/Search.jsx';
+import Browse from '../components/Browse.jsx';
 
 export default class IndexPage extends Component {
   constructor(props) {
@@ -181,7 +182,7 @@ export default class IndexPage extends Component {
         </div>
       )
     } else {
-      return <div id='content'></div>
+      return <Browse />
     }
   }
 

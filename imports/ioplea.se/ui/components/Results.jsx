@@ -27,6 +27,7 @@ class Results extends Component {
       showThingDetails: false
     }
   }
+
   renderOptional(stuff, fieldName, title) {
     return _.has(stuff, fieldName) ? <p>{title}: {stuff[fieldName]}</p> : null;
   }
