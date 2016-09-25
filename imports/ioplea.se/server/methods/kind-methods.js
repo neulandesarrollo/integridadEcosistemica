@@ -8,12 +8,11 @@ import { Kinds } from '../../common/collections/kinds.js';
 
 Meteor.methods({
   'kinds.get': () => {
-    console.log('kinds.get');
     const kinds = Kinds.find().fetch()
 
     return _.map(kinds, k => {
-      console.log(k);
-      return { kind: k, stuffsCount: Classifications.find({kindId: k._id}).count()}
+      const stuffsCount = Classifications.find({kindId: k._id}).count()
+      return { kind: k, stuffsCount }
     })
   }
 })

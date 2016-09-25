@@ -22,7 +22,7 @@
   position: fixed;
   background-image: url('/hands.jpg');
   width: 100%;
-  height: 8rem;
+  height: 10rem;
   padding-top: 0.8rem;
   background-size: cover;
   background-repeat: no-repeat;
@@ -43,7 +43,7 @@ div.ioplease-search-box, #iothing-autocomplete {
 }
 
 #content {
-  padding-top: 8rem;
+  padding-top: 10rem;
   z-index: 100;
   min-height: 100%;
   overflow: hidden;
@@ -76,4 +76,8 @@ a.stuff-card, a.stuff-card:hover, a.stuff-card:visited, a.stuff-card:active {
 
 #ioplease-shuffle {
   cursor: pointer;
+}
+
+.kind-thumbnail {
+  height: 4rem;
 }

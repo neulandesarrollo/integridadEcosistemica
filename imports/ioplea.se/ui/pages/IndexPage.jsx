@@ -1,39 +1,46 @@
-import React, { Component } from 'react';
-import { FlowRouter } from 'meteor/kadira:flow-router';
+import React, { Component } from 'react'
+import { FlowRouter } from 'meteor/kadira:flow-router'
 
-import { piwik } from 'meteor/marvin:piwik-http-sandstorm';
+import { piwik } from 'meteor/marvin:piwik-http-sandstorm'
 
-import { algoliaThingsIndex } from '../../client/algolia.js';
+import { algoliaThingsIndex } from '../../client/algolia.js'
 
-import Autocomplete from '../components/Autocomplete.jsx';
-import Footer from '../components/Footer.jsx';
-import Results from '../components/Results.jsx';
-import Search from '../components/Search.jsx';
-import Browse from '../components/Browse.jsx';
+import Autocomplete from '../components/Autocomplete.jsx'
+import Footer from '../components/Footer.jsx'
+import Search from '../components/Search.jsx'
+import Browse from '../components/Browse.jsx'
+
+import ResultsContainer from '../containers/ResultsContainer.jsx'
 
 export default class IndexPage extends Component {
   constructor(props) {
     super(props);
     let query = ""
-    let thingId = undefined
+    let thingId = null
+    let kindId = null
 
-    const s = FlowRouter.getQueryParam("s"); // sort by field
-    const t = FlowRouter.getQueryParam("t"); // thingId
+    const s = FlowRouter.getQueryParam("s") // sort by field
+    const t = FlowRouter.getQueryParam("t") // thingId
     if(!t) {
-      const q = FlowRouter.getQueryParam("q"); // query
-      if(q)
+      const k = FlowRouter.getQueryParam("k") // kindId
+      const q = FlowRouter.getQueryParam("q") // query
+      if(q) {
         query = q
+      } else if(k) {
+        kindId = k
+      }
     } else {
       thingId = t
     }
 
     this.state = {
       query,
+      kindId,
+      searchResults: [],
       sortBy: s,
-      thingId,
       stuffCount: -1,
-      searchResults: []
-    };
+      thingId,
+    }
   }
 
   resetSearch(val) {
@@ -44,12 +51,13 @@ export default class IndexPage extends Component {
   shuffle() {
     const thiz = this
     Meteor.call("ioplease.shuffle", (error, result) => {
-      if(error){
-        console.log("error", error);
+      if(error) {
+        console.log("error", error)
       }
+
       if(result) {
         thiz.setState({query: result.name, thingId: result._id, searchResults: []})
-        FlowRouter.setQueryParams({t: result._id, q: null});
+        FlowRouter.setQueryParams({t: result._id, q: null, k: null})
         thiz.resetSearch(result.name)
 
         piwik.trackAction('ioplease', 'shuffle')
@@ -61,13 +69,10 @@ export default class IndexPage extends Component {
     const thiz = this
 
     algoliaThingsIndex(window).getObject(thingId, (err, content) => {
-      // console.log("thingolia responded");
-
       if (err) {
-        console.error(err);
-        return;
+        console.error(err)
+        return
       }
-      // console.log(content);
 
       thiz.setState({query: content.name, thingId, searchResults: []})
       thiz.resetSearch(content.name)
@@ -79,8 +84,8 @@ export default class IndexPage extends Component {
 
     algoliaThingsIndex(window).search(query, (err, content) => {
       if (err) {
-        console.error(err);
-        return;
+        console.error(err)
+        return
       }
 
       thiz.setState({searchResults: content.hits})
@@ -97,7 +102,7 @@ export default class IndexPage extends Component {
     if(thingId) {
       this.searchByThingId(thingId)
     } else {
-      if(this.hasQuery()) {
+      if(this.hasQuery(true)) {
         this.resetSearch(this.state.query)
         this.searchByQuery(this.state.query)
       }
@@ -108,7 +113,7 @@ export default class IndexPage extends Component {
 
   resetHead() {
     DocHead.removeDocHeadAddedTags()
-    DocHead.setTitle("Do stuff with IoT");
+    DocHead.setTitle("Do stuff with IoT")
     var metaInfo =[
       {
         name: "description",
@@ -117,7 +122,7 @@ export default class IndexPage extends Component {
     ]
 
     _.each(metaInfo, m => {
-      DocHead.addMeta(m);
+      DocHead.addMeta(m)
     })
   }
 
@@ -125,34 +130,35 @@ export default class IndexPage extends Component {
     return this.hasQuery() ? "ioplease-banner" : "ioplease-banner-full"
   }
 
-  hasQuery() {
-    return this.state.query !== ""
+  hasQuery(ignoreKindId) {
+    let _ignoreKind = false
+    if(ignoreKindId)
+      _ignoreKind = ignoreKindId
+
+    return (this.state.query !== "") || (!ignoreKindId && this.state.kindId)
   }
 
   setQuery(query, thingId, searchResults) {
-    // console.log('setQuery');
     if(query === "") {
       thingId = undefined
       searchResults = []
       stuffCount = -1
     }
-    // console.log(query);
-    // console.log(thingId);
 
     this.setState({query, thingId})
     // Update query parameters based on search
     if(thingId) {
       // Use thingId if defined
-      FlowRouter.setQueryParams({t: thingId, q: null});
+      FlowRouter.setQueryParams({t: thingId, q: null, k: null})
       this.searchByThingId(thingId)
     } else {
       this.resetHead()
       // Otherwise use the raw text input
       // Do not use this.hasQuery because state has not changed yet
       if(query === "") {
-        FlowRouter.setQueryParams({q: null});
+        FlowRouter.setQueryParams({q: null})
       } else {
-        FlowRouter.setQueryParams({q: encodeURI(query), t: null});
+        FlowRouter.setQueryParams({q: encodeURI(query), t: null, k: null})
         this.searchByQuery(query)
       }
     }
@@ -162,17 +168,25 @@ export default class IndexPage extends Component {
     this.setState({stuffCount: count})
   }
 
+  setKindId(kindId) {
+    this.setState({ kindId })
+  }
+
   renderResults() {
     if(this.hasQuery()) {
       return (
         <div className="container-fluid text-xs-center" id='content'>
-          <Autocomplete things={this.state.searchResults} setQuery={this.setQuery.bind(this)} resetSearch={this.resetSearch.bind(this) }/>
+          <Autocomplete
+            things={this.state.searchResults}
+            setQuery={this.setQuery.bind(this)}
+            resetSearch={this.resetSearch.bind(this)} />
 
           <div className="row m-b-2">
             <div className="col-xs-12 col-xl-10 offset-xl-1">
-              <Results
+              <ResultsContainer
                 query={this.state.query}
                 setQuery={this.setQuery.bind(this)}
+                kindId={this.state.kindId}
                 thingId={this.state.thingId}
                 searchResults={this.state.searchResults}
                 setStuffCount={this.setStuffCount.bind(this)}
@@ -182,7 +196,7 @@ export default class IndexPage extends Component {
         </div>
       )
     } else {
-      return <Browse />
+      return <Browse setKindId={this.setKindId.bind(this)} />
     }
   }
 

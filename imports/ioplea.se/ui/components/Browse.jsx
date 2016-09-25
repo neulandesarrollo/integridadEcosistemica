@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 
+import { piwik } from 'meteor/marvin:piwik-http-sandstorm';
+
 export default class Browse extends Component {
   constructor(props) {
     super(props);
@@ -18,19 +20,27 @@ export default class Browse extends Component {
       }
 
       if(kinds) {
-        console.log(kinds);
-
         // Browse list should appear different on every visit
         thiz.setState({ kinds: _.shuffle(kinds) })
       }
     });
   }
 
+  handleClick(kind, e) {
+    console.log('handleClick');
+    console.log(e.button);
+    piwik.trackAction('ioplease', 'browse')
+
+    if(e.button !== 1) {
+      this.props.setKindId(kind._id)
+    }
+  }
+
   renderKind(_kind) {
     const kind = _kind.kind
     return (
       <div key={kind._id} className="col-xs-6 col-sm-4 col-lg-3 m-b-2">
-        <a href={"/ioplease?k=" + kind._id} >
+        <a href={"/ioplease?k=" + kind._id} onClick={ this.handleClick.bind(this, kind) }>
           <img src={"/ioplea.se/kinds/" + kind.iconUrl} className="img-fluid img-circle" />
           <h5 className='m-t-1'>{kind.name}</h5>
           <h6 className="text-muted">{_kind.stuffsCount} stuff to do</h6>

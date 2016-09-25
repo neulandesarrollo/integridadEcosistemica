@@ -5,9 +5,24 @@ import { Classifications } from '../../common/collections/classifications.js';
 import { Kinds } from '../../common/collections/kinds.js';
 
 class KindsBadges extends Component {
-
   renderBadge(classification) {
-    return <li className="text-muted list-inline-item p-x-1" key={classification._id}>{classification.kindName}</li>
+    if(this.props.linksEnabled) {
+      return (
+        <li className="text-muted list-inline-item p-x-1" key={classification._id}>
+          <a href={"/ioplease?k=" + classification.kindId}>
+            <img className="img-fluid kind-thumbnail img-circle m-x-auto" src={"/ioplea.se/kinds/" + classification.kindIconUrl} />
+            <span className='m-x-auto'>{classification.kindName}</span>
+          </a>
+        </li>
+      )
+    } else {
+      return (
+        <li className="text-muted list-inline-item p-x-1" key={classification._id}>
+          <img className="img-fluid kind-thumbnail img-circle m-x-auto" src={"/ioplea.se/kinds/" + classification.kindIconUrl} />
+          <span className='m-x-auto'>{classification.kindName}</span>
+        </li>
+      )
+    }
   }
 
   render() {
@@ -23,19 +38,24 @@ class KindsBadges extends Component {
   }
 }
 
-export default createContainer(({stuffId}) => {
+export default createContainer(({stuffId, linksEnabled}) => {
   let loading = true;
   let classifications = [];
+  let _linksEnabled = false
+
+  if(linksEnabled)
+    _linksEnabled = true
 
   const classHandle = Meteor.subscribe("classifications", stuffId)
 
   if(classHandle.ready()) {
-    classifications = Classifications.find({stuffId}).fetch()
+    classifications = _.shuffle(Classifications.find({stuffId}).fetch())
     loading = false
   }
 
   return {
     classifications,
+    linksEnabled: _linksEnabled,
     loading
   };
 }, KindsBadges);

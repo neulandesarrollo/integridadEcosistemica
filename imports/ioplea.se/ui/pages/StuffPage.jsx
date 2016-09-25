@@ -23,7 +23,7 @@ export default class StuffPage extends Component {
         </div>
         <div className="col-sm-8 col-xs-12">
           <h3 className="card-title m-t-1"><strong>{stuff.name}</strong> <small className='text-muted'>by {stuff.company}</small></h3>
-          <KindsBadges stuffId={stuff._id} />
+          <KindsBadges stuffId={stuff._id} linksEnabled={true} />
         </div>
       </div>
     )
@@ -37,9 +37,7 @@ export default class StuffPage extends Component {
       return <h2 className="text-xs-center"><i className="fa fa-cog fa-spin fa-3x fa-fw m-t-3"></i></h2>
     } else {
       const stuff = this.props.stuff
-      const path = Meteor.absoluteUrl(FlowRouter.current().path.slice(1)); // don't include first slash
-      console.log('parh ');
-      console.log(path);
+      const path = Meteor.absoluteUrl(FlowRouter.current().path.slice(1)) // don't include first slash
 
       return (
         <div id="ioplease-stuff">

@@ -64,6 +64,22 @@ export default class Search extends Component {
     event.preventDefault();
   }
 
+  shuffleText() {
+    return _.sample([
+      "Shuffle",
+      "Roll the dice",
+      "Mix it up",
+      "IoT sucks",
+      "Click bait",
+      "Shuffle", // statistically normal
+      "Try it out",
+      "Something random",
+      "Shake it",
+      "Surprise me",
+      "Whatever",
+    ])
+  }
+
   render() {
     return (
       <form id='ioplease-search' className="form-inline" onSubmit={this.handleSubmit.bind(this)}>
@@ -75,7 +91,7 @@ export default class Search extends Component {
               id="iothing-autocomplete"
               ref="iopleaseSearchAutocomplete"
               onChange={this.handleInput.bind(this)} />
-            <div className="input-group-addon" id="ioplease-shuffle" onClick={this.props.shuffle.bind(this)}><span className="fa fa-random"></span></div>
+            <div className="input-group-addon" id="ioplease-shuffle" onClick={this.props.shuffle.bind(this)}>{this.shuffleText()} <span className="fa fa-random"></span></div>
           </div>
           {this.renderHelper()}
       </form>
