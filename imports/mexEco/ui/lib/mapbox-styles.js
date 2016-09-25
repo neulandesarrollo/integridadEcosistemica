@@ -1,16 +1,16 @@
 export const getMapboxStyles = () => {
-  const rasterTileUrl = "https://api.mapbox.com/styles/v1/" +
-    Meteor.settings.public.MAPBOX.STYLE_ID +
-    "/tiles/{x}/{y}/{z}?access_token=" +
-    Meteor.settings.public.MAPBOX.TOKEN
-
-  // const rasterTileUrl = "https://api.mapbox.com/v4/" +
-  //   Meteor.settings.public.MAPBOX.MAP_ID +
-  //   "/{x},{y},{z}/256x256@2x.png/?access_token=" +
+  // const rasterTileUrl = "https://api.mapbox.com/styles/v1/" +
+  //   Meteor.settings.public.MAPBOX.STYLE_ID +
+  //   "/tiles/{x}/{y}/{z}?access_token=" +
   //   Meteor.settings.public.MAPBOX.TOKEN
 
-  const styleUrl = "mapbox://" + Meteor.settings.public.MAPBOX.MAP_ID
-  // console.log("rasterTileUrl: " + rasterTileUrl);
+  const rasterTileUrl = "https://api.mapbox.com/v4/" +
+    Meteor.settings.public.MAPBOX.MAP_ID +
+    "/{z}/{x}/{y}@2x.png/?access_token=" +
+    Meteor.settings.public.MAPBOX.TOKEN
+
+  // const styleUrl = "mapbox://" + Meteor.settings.public.MAPBOX.MAP_ID
+  console.log("rasterTileUrl: " + rasterTileUrl);
 
   return {
     "version": 8,
@@ -22,14 +22,14 @@ export const getMapboxStyles = () => {
         "url": "mapbox://mapbox.mapbox-streets-v7",
         "type": "vector"
       },
-      // "mexEco": {
-      //   "type": "raster",
-      //   // "tiles": [
-      //   //   rasterTileUrl
-      //   // ],
-      //   "url": styleUrl,
-      //   "tileSize": 512
-      // }
+      "mexEco": {
+        "type": "raster",
+        "tiles": [
+          rasterTileUrl
+        ],
+        // "url": styleUrl,
+        "tileSize": 256
+      }
     },
     "layers": [
       {
@@ -50,13 +50,13 @@ export const getMapboxStyles = () => {
         },
         "interactive": true
       },
-      // {
-      //   "id": "mexEco",
-      //   "type": "raster",
-      //   "source": "mexEco",
-      //   "minzoom": 0,
-      //   "maxzoom": 22
-      // }
+      {
+        "id": "mexEco",
+        "type": "raster",
+        "source": "mexEco",
+        "minzoom": 0,
+        "maxzoom": 22
+      }
     ],
   }
 }

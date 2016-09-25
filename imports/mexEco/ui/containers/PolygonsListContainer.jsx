@@ -6,9 +6,6 @@ import { Polygons } from '../../common/collections/polygons.js'
 import { PolygonsList } from '../components/PolygonsList.jsx'
 
 export default PolygonsListContainer = createContainer(props => {
-  console.log("PolygonsListContainer");
-  console.log(props);
-
   // get polygons
   const polygonHandle = Meteor.subscribe("polygons.all");
   const isLoading = !polygonHandle.ready()

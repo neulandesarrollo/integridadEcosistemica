@@ -57,6 +57,30 @@ export default class MapboxGLDraw extends Component {
       map.addControl(draw)
     });
 
+    map.on('load', () => {
+      const rasterTileUrl = "https://api.mapbox.com/v4/" +
+        Meteor.settings.public.MAPBOX.MAP_ID +
+        "/{z}/{x}/{y}@2x.png/?access_token=" +
+        Meteor.settings.public.MAPBOX.TOKEN
+
+      // const styleUrl = "mapbox://" + Meteor.settings.public.MAPBOX.MAP_ID
+      console.log("rasterTileUrl: " + rasterTileUrl);
+
+      map.addSource('raster-tiles', {
+        type: "raster",
+        tiles: [
+          rasterTileUrl
+        ],
+        tileSize: 256
+      })
+
+      map.addLayer({
+        'id': 'mexEco',
+        'type': 'raster',
+        'source': 'raster-tiles'
+      })
+    })
+
     map.on('draw.create', (event) => {
       thiz.props.setDrawState(STATES.INSERTING)
       $("#insertModal").modal("show")

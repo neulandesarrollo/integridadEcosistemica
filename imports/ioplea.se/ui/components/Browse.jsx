@@ -31,6 +31,8 @@ export default class Browse extends Component {
     console.log(e.button);
     piwik.trackAction('ioplease', 'browse')
 
+    // Prevent a middle click which opens in new tab
+    // from having an effect on current tab
     if(e.button !== 1) {
       this.props.setKindId(kind._id)
     }
