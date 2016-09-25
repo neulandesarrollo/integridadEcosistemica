@@ -1,4 +1,7 @@
 # Install
+## Settings
+Copy `settings-example.json` and fill in corresponding values.
+
 ## Ubuntu 16.04 x64
 ### GDAL
 Add PPA https://wiki.ubuntu.com/UbuntuGIS

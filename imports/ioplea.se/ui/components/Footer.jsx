@@ -9,7 +9,7 @@ export default class Footer extends Component {
         <nav className="navbar navbar-light bg-faded navbar-full">
           <div className="nav navbar-nav pull-xs-right">
             <a className="nav-item nav-link" href="/ioplease">Search</a>
-            <a className="nav-item nav-link" href="https://github.com/marvinmarnold/geeky.rocks" target="_blank">Github</a>
+            <a className="nav-item nav-link" href="https://github.com/marvinmarnold/geeky.rocks/tree/master/imports/ioplea.se" target="_blank">Github</a>
             <a className="nav-item nav-link" href="mailto:marvin@unplugged.im">Contact</a>
             <a className="nav-item nav-link" href="/ioplea.se/marvin_unplugged2_pub.asc" target="_blank">PGP</a>
           </div>
