@@ -45,7 +45,7 @@ export default class Browse extends Component {
         <a href={"/ioplease?k=" + kind._id} onClick={ this.handleClick.bind(this, kind) }>
           <img src={"/ioplea.se/kinds/" + kind.iconUrl} className="img-fluid img-circle" />
           <h5 className='m-t-1'>{kind.name}</h5>
-          <h6 className="text-muted">{_kind.stuffsCount} stuff to do</h6>
+          <h6 className="text-muted">{_kind.stuffsCount} kinds of stuff</h6>
         </a>
       </div>
     )

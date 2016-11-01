@@ -1,9 +1,10 @@
-import { Meteor } from 'meteor/meteor';
-import React from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor'
+import React from 'react'
+import { createContainer } from 'meteor/react-meteor-data'
+// import Navbar from '../components/Navbar.jsx'
 
 const App = (props) => (
-  <div id="ioplease">
+  <div id="robofy-it">
     {props.main}
   </div>
 );

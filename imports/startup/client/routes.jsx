@@ -4,8 +4,8 @@ import { mount } from 'react-mounter';
 
 import { piwik } from 'meteor/marvin:piwik-http-sandstorm';
 
-import '../../ioplea.se/startup/client/routes.jsx';
-import '../../mexEco/startup/client/routes.jsx';
+import '../../robofy.it/startup/client/routes.jsx';
+// import '../../mexEco/startup/client/routes.jsx';
 
 import AppContainer from '../../ui/containers/AppContainer.jsx';
 import IndexPage from '../../ui/pages/IndexPage.jsx';

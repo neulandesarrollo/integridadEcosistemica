@@ -18,7 +18,6 @@ class KindsBadges extends Component {
     } else {
       return (
         <li className="text-muted list-inline-item p-x-1" key={classification._id}>
-          <img className="img-fluid kind-thumbnail img-circle m-x-auto" src={"/ioplea.se/kinds/" + classification.kindIconUrl} />
           <span className='m-x-auto'>{classification.kindName}</span>
         </li>
       )

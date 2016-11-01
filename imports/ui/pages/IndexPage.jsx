@@ -11,15 +11,21 @@ export default class GeekyIndexPage extends Component {
       // },
       {
         _id: "2",
-        name: "ioPLEA.SE",
-        description: "Do stuff with your IoT",
-        url: "/ioplease"
+        name: "robofy.it",
+        description: "Get more from your smart things.",
+        url: "/robofy.it"
       },
+      // {
+      //   _id: "3",
+      //   name: "Integridad Ecosistémica",
+      //   description: "Investigate envrionmental & ecological integrity in Mexico.",
+      //   url: "/integridad-ecosistemica"
+      // },
       {
-        _id: "3",
-        name: "Integridad Ecosistémica",
-        description: "Investigate envrionmental & ecological integrity in Mexico.",
-        url: "/integridad-ecosistemica"
+        _id: "4",
+        name: "Ubuntu Village",
+        description: "I am because we are.",
+        url: "https://ubuntuvillagenola.org"
       },
 
     ];
@@ -28,7 +34,7 @@ export default class GeekyIndexPage extends Component {
   renderProjects() {
     return this.getProjects().map((project) => (
       <div key={project._id} className="m-t-1 col-xs-12 col-md-6 col-lg-4 col-xl-6">
-        <a href={project.url} className="geeky-card">
+        <a href={project.url} className="geeky-card" target="_blank">
           <div className="card card-block project-card geeky-card">
             <h4 className="card-title">{project.name}</h4>
             <p className="card-text geeky-text m-t-1">{project.description}</p>

@@ -15,6 +15,7 @@ import ResultsContainer from '../containers/ResultsContainer.jsx'
 export default class IndexPage extends Component {
   constructor(props) {
     super(props);
+    console.log('indexConstructed');
     let query = ""
     let thingId = null
     let kindId = null
@@ -97,6 +98,7 @@ export default class IndexPage extends Component {
   }
 
   componentDidMount() {
+    console.log('indexDidMount');
     const thingId = this.state.thingId
 
     if(thingId) {
