@@ -1,9 +1,0 @@
-{
-  "MAIL_URL": "smtp://user@example.com:PASSWORD@smtp.example.com:PORT",
-  "public": {
-    "MAPBOX": {
-      "TOKEN": "TOKEN",
-      "MAP_ID": "MAP_ID"
-    },
-  }
-}

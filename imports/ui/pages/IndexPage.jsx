@@ -3,31 +3,12 @@ import React, { Component } from 'react';
 export default class GeekyIndexPage extends Component {
   getProjects() {
     return [
-      // {
-      //   _id: "1",
-      //   name: "NOPD Response Time 2016",
-      //   description: "Explore how quickly NOPD respond to service calls across New Orelans.",
-      //   url: "/nopd-response-time-2016"
-      // },
       {
-        _id: "2",
+        _id: "1",
         name: "robofy.it",
-        description: "Get more from your smart things.",
+        description: "Explore and share the potential of your connected devices.",
         url: "/robofy.it"
       },
-      // {
-      //   _id: "3",
-      //   name: "Integridad Ecosistémica",
-      //   description: "Investigate envrionmental & ecological integrity in Mexico.",
-      //   url: "/integridad-ecosistemica"
-      // },
-      {
-        _id: "4",
-        name: "Ubuntu Village",
-        description: "I am because we are.",
-        url: "https://ubuntuvillagenola.org"
-      },
-
     ];
   }
 

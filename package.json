@@ -1,24 +1,14 @@
 {
-  "name": "nola-data",
+  "name": "geeky.rocks",
   "private": true,
   "scripts": {
     "start": "meteor run"
   },
   "dependencies": {
-    "algoliasearch": "^3.19.0",
-    "bcrypt": "^0.8.7",
-    "mapbox": "^1.0.0-beta3",
-    "mapbox-gl": "^0.21.0",
-    "mapbox-gl-draw": "^0.11.13",
-    "meteor-node-stubs": "^0.2.3",
-    "node-socrata": "0.0.50",
+    "meteor-node-stubs": "~0.2.0",
     "react": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.2",
-    "react-disqus-thread": "^0.4.0",
     "react-dom": "^15.3.2",
-    "react-mapbox-gl": "^0.9.3",
-    "react-markdown": "^2.4.2",
-    "react-mounter": "^1.2.0",
-    "react-router": "^2.6.1"
+    "react-mounter": "^1.2.0"
   }
 }
