@@ -6,7 +6,7 @@ export default class GeekyIndexPage extends Component {
       {
         _id: "1",
         name: "robofy.it",
-        description: "Explore and share the potential of your connected devices.",
+        description: "Share and explore ",
         url: "/robofy.it"
       },
     ];

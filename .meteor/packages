@@ -16,9 +16,16 @@ standard-minifier-js@1.2.1    # JS minifier run for production mode
 es5-shim@4.6.15                # ECMAScript 5 compatibility for older browsers.
 ecmascript@0.5.9              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.1            # Server-side component of the `meteor shell` command
+aldeed:simple-schema
+aldeed:collection2
 
 static-html
 react-meteor-data
 mdg:seo
 kadira:flow-router
 twbs:bootstrap@4.0.0-geeky
+dispatch:mocha-phantomjs
+practicalmeteor:mocha
+dburles:factory
+practicalmeteor:chai
+practicalmeteor:sinon
