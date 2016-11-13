@@ -4,7 +4,6 @@ import faker from 'faker';
 
 import Machinations from '../../common/collections/machinations.js';
 
-
 Factory.define('machination', Machinations, {
   userId: Factory.get('user'),
   name: faker.lorem.sentence(),

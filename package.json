@@ -13,9 +13,11 @@
     "react": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.2",
     "react-addons-test-utils": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "react-mounter": "^1.2.0"
   },
   "devDependencies": {
+    "chai-enzyme": "^0.6.0",
     "enzyme": "^2.5.1",
     "meteor-node-stubs": "^0.2.3",
     "react-addons-test-utils": "^15.3.2"
