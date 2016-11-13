@@ -15,7 +15,6 @@ export default class MachinationsCarousel extends Component {
   render() {
     return (
       <div className="featured-machinations">
-        <h1>Robofy</h1>
         <div id="carousel-example-generic" className="carousel slide" data-ride="carousel">
           <div className="carousel-inner" role="listbox">
             {this.props.machinas.map(this.renderMachina.bind(this))}
