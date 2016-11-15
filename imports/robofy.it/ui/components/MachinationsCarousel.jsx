@@ -14,19 +14,22 @@ export default class MachinationsCarousel extends Component {
 
   render() {
     return (
-      <div className="featured-machinations">
-        <div id="carousel-example-generic" className="carousel slide" data-ride="carousel">
-          <div className="carousel-inner" role="listbox">
-            {this.props.machinas.map(this.renderMachina.bind(this))}
+      <div className="featured-machinations container">
+        <div className="col-lg-10 offset-lg-1">
+
+          <div id="carousel-example-generic" className="carousel slide" data-ride="carousel">
+            <div className="carousel-inner" role="listbox">
+              {this.props.machinas.map(this.renderMachina.bind(this))}
+            </div>
+            <a className="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+              <span className="icon-prev" aria-hidden="true"></span>
+              <span className="sr-only">Previous</span>
+            </a>
+            <a className="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+              <span className="icon-next" aria-hidden="true"></span>
+              <span className="sr-only">Next</span>
+            </a>
           </div>
-          <a className="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-            <span className="icon-prev" aria-hidden="true"></span>
-            <span className="sr-only">Previous</span>
-          </a>
-          <a className="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-            <span className="icon-next" aria-hidden="true"></span>
-            <span className="sr-only">Next</span>
-          </a>
         </div>
       </div>
     );

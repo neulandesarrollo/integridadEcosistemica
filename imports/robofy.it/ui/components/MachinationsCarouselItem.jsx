@@ -9,7 +9,10 @@ export default class MachinationsCarouselItem extends Component {
     console.log('render carousel-item');
     return (
       <div className={"carousel-item" + this.activeClass()}>
-        <h2>{this.props.machina.name}</h2>
+        <img
+          className="w-100"
+          src={this.props.machina.src}
+          alt={this.props.machina.name} />
       </div>
     )
   }

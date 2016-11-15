@@ -30,6 +30,5 @@ describe('Machinations Carousel', function() {
     );
 
     chai.expect(item).to.contain.exactly(2).descendants(MachinationsCarouselItem);
-    chai.assert.equal(item.contains("Robofy"), true);
   });
 });
