@@ -5,31 +5,24 @@ import MachinationsCarouselItem from './MachinationsCarouselItem.jsx';
 export default class MachinationsCarousel extends Component {
   renderMachina(machina, i) {
     return (
-      <MachinationsCarouselItem
-        key={machina._id}
-        machina={machina}
-        isActive={i === 0} />
+      <div className="col-xl-3 col-lg-4 col-sm-6 col-xs-12" key={i}>
+        <div className="card">
+          <img className="card-img-top img-fluid" src={machina.src} alt={machina.name} />
+          <div className="card-block">
+            <h4 className="card-title">{machina.name}</h4>
+            <p className="card-text">{machina.description}</p>
+            <a href="#" className="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
     )
   }
 
   render() {
     return (
       <div className="featured-machinations container">
-        <div className="col-lg-10 offset-lg-1">
-
-          <div id="carousel-example-generic" className="carousel slide" data-ride="carousel">
-            <div className="carousel-inner" role="listbox">
-              {this.props.machinas.map(this.renderMachina.bind(this))}
-            </div>
-            <a className="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-              <span className="icon-prev" aria-hidden="true"></span>
-              <span className="sr-only">Previous</span>
-            </a>
-            <a className="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-              <span className="icon-next" aria-hidden="true"></span>
-              <span className="sr-only">Next</span>
-            </a>
-          </div>
+        <div className="row">
+          {this.props.machinas.map(this.renderMachina.bind(this))}
         </div>
       </div>
     );

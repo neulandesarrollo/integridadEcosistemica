@@ -11,7 +11,12 @@ export default MachinationsCarouselContainer = createContainer(props => {
   return {
     // user: Meteor.user(),
     machinas: [
-      {_id:1, name: "test", src: "/robofy.it/img/bebop-wide.jpg"},
+      {
+        _id:1,
+        name: "test",
+        src: "/robofy.it/img/bebop-wide.jpg",
+        description: "Want better music recommendations? Just press the button to 'like' whatever is currently playing on Spotify, 8tracks, or your favority music app."
+      },
       {_id:2, name: "A better alternative"}
     ]
   };
