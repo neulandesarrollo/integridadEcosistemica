@@ -7,11 +7,11 @@ export default class MachinationsCarousel extends Component {
     return (
       <div className="col-xl-3 col-lg-4 col-sm-6 col-xs-12" key={i}>
         <div className="card">
-          <img className="card-img-top img-fluid" src={machina.src} alt={machina.name} />
+          <img className="card-img-top img-fluid" src={machina.iconUrl} alt={machina.name} />
           <div className="card-block">
             <h4 className="card-title">{machina.name}</h4>
             <p className="card-text">{machina.description}</p>
-            <a href="#" className="btn btn-primary">Go somewhere</a>
+            <a href={"/machinations/" + machina._id} className="btn btn-primary">Go somewhere</a>
           </div>
         </div>
       </div>

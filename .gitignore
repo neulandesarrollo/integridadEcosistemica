@@ -2,3 +2,4 @@ node_modules/
 settings
 scripts
 .venv
+/imports/robofy.it/lib/fixtures

@@ -10,6 +10,8 @@ import { mount } from 'react-mounter';
 import AppContainer from '../../ui/containers/AppContainer.jsx';
 import IndexPage from '../../ui/pages/IndexPage.jsx';
 
+import MachinationContainer from '../../ui/containers/MachinationContainer.jsx';
+
 // FlowRouter.triggers.enter([piwik.flowTrackEnter]);
 
 FlowRouter.route('/robofy.it', {
@@ -17,6 +19,15 @@ FlowRouter.route('/robofy.it', {
   action() {
     mount(AppContainer, {
       main: <IndexPage />,
+    });
+  },
+});
+
+FlowRouter.route('/machinations/:machinationId', {
+  name: 'machination',
+  action() {
+    mount(AppContainer, {
+      main: <MachinationContainer />,
     });
   },
 });

@@ -1,10 +1,6 @@
 import Machinations from '../../common/collections/machinations.js';
 
-const machinations = [
-  {
-    name: "TODO"
-  }
-]
+import { machinations } from '../../lib/fixtures/machinations.js';
 
 const seedMachinas = () => {
   if(Machinations.find().count() === 0) {
