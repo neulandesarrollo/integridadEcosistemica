@@ -1,17 +1,19 @@
 import { Meteor } from 'meteor/meteor'
 import React from 'react'
 import { createContainer } from 'meteor/react-meteor-data'
-// import Navbar from '../components/Navbar.jsx'
 
+import Machinations from '../../common/collections/machinations.js';
 import MachinationsCarousel from '../components/MachinationsCarousel.jsx';
 
-import machinas from '../../lib/fixtures/machinations.js';
+export default MachinationsCarouselContainer = createContainer(params => {
+  const machinationsHandle = Meteor.subscribe('machinations.list');
+  const loading = !machinationsHandle.ready();
+  const machinations = Machinations.find().fetch();
+  const machinationsExists = !loading && !!machinations;
 
-export default MachinationsCarouselContainer = createContainer(props => {
-  // props here will have `main`, passed from the router
-  // anything we return from this function will be *added* to it
   return {
-    // user: Meteor.user(),
-    machinas
+    loading,
+    machinations,
+    machinationsExists
   };
 }, MachinationsCarousel);

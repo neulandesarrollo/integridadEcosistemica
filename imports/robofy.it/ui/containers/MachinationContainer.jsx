@@ -2,12 +2,19 @@ import { Meteor } from 'meteor/meteor'
 import React from 'react'
 import { createContainer } from 'meteor/react-meteor-data'
 
-import MachinationPage from '../pages/MachinationPage.jsx'
+import Machinations from '../../common/collections/machinations.js';
+import MachinationPage from '../pages/MachinationPage.jsx';
 
-export default MachinationContainer = createContainer(props => {
-  // props here will have `main`, passed from the router
-  // anything we return from this function will be *added* to it
+export default MachinationContainer = createContainer(params => {
+  const machinationId = FlowRouter.getParam("machinationId");
+  const machinationHandle = Meteor.subscribe('machinations.get', machinationId);
+  const loading = !machinationHandle.ready();
+  const machination = Machinations.findOne(machinationId);
+  const machinationExists = !loading && !!machination;
+
   return {
-    // user: Meteor.user(),
+    loading,
+    machination,
+    machinationExists
   };
 }, MachinationPage);

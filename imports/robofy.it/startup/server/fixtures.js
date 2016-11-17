@@ -1,12 +1,13 @@
 import Machinations from '../../common/collections/machinations.js';
 
-import { machinations } from '../../lib/fixtures/machinations.js';
+import machinations from '../../lib/fixtures/machinations.js';
 
 const seedMachinas = () => {
   if(Machinations.find().count() === 0) {
-    console.log("no machinations");
+    console.log("Seeding machinations.");
     _.each(machinations, m => {
-      console.log(m.name);
+      console.log("Inserting " + m.name);
+      Machinations.insert(m)
     })
   } else {
     console.log("Machinations already seeded.");

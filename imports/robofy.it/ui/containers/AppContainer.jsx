@@ -14,7 +14,7 @@ const App = (props) => (
   </div>
 );
 
-export default AppContainer = createContainer(props => {
+export default AppContainer = createContainer(params => {
   // props here will have `main`, passed from the router
   // anything we return from this function will be *added* to it
   return {

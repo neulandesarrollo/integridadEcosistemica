@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import MachinationsCarouselItem from './MachinationsCarouselItem.jsx';
-
 export default class MachinationsCarousel extends Component {
   renderMachina(machina, i) {
     return (
@@ -22,7 +20,7 @@ export default class MachinationsCarousel extends Component {
     return (
       <div className="featured-machinations container">
         <div className="row">
-          {this.props.machinas.map(this.renderMachina.bind(this))}
+          {this.props.machinations.map(this.renderMachina.bind(this))}
         </div>
       </div>
     );
@@ -30,6 +28,6 @@ export default class MachinationsCarousel extends Component {
 }
 
 MachinationsCarousel.propTypes = {
-  machinas: React.PropTypes.array,
+  machinations: React.PropTypes.array,
   isLoading: React.PropTypes.bool
 };
