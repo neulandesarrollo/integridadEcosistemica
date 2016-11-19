@@ -8,16 +8,21 @@ import Footer from '../components/sections/FooterSection.jsx';
 
 const App = (props) => (
   <div id="robofy-it">
-    <Navbar />
-    {props.main}
+    <Navbar routeName={props.routeName} />
+    {React.cloneElement(props.main, {routeName: props.routeName})}
     <Footer />
   </div>
 );
 
 export default AppContainer = createContainer(params => {
-  // props here will have `main`, passed from the router
-  // anything we return from this function will be *added* to it
+  let routeName = null;
+
+  Tracker.autorun(function() {
+    FlowRouter.watchPathChange();
+    routeName = FlowRouter.current().route.name;
+  });
+
   return {
-    // user: Meteor.user(),
+    routeName
   };
 }, App);
