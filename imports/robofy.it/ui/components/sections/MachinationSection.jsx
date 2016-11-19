@@ -11,5 +11,5 @@ export default class MachinationSection extends Component {
 }
 
 MachinationSection.propTypes = {
-  name: React.PropTypes.string
+  machination: React.PropTypes.object
 };

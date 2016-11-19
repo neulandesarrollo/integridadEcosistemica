@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import MachinationSection from '../sections/MachinationSection.jsx';
+import MachinationSection from '../components/sections/MachinationSection.jsx';
 
 export default class MachinationPage extends Component {
   renderPage() {
@@ -12,7 +12,7 @@ export default class MachinationPage extends Component {
       return (
         <div>
           <h1>Machination exists</h1>
-          <MachinationSection />
+          <MachinationSection machination={this.props.machination} />
         </div>
       );
     } else {

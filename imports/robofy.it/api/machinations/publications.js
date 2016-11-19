@@ -8,6 +8,7 @@ Meteor.publish("machinations.get", function(machinationId) {
   }).validate({ machinationId });
 
   console.log('padded validation');
+  console.log(machinationId);
   return Machinations.find({_id: machinationId});
 });
 
