@@ -8,7 +8,7 @@ import Footer from '../components/sections/FooterSection.jsx';
 
 const App = (props) => (
   <div id="robofy-it">
-    <Navbar routeName={props.routeName} />
+    <Navbar routeName={props.routeName} user={props.user} />
     {React.cloneElement(props.main, {routeName: props.routeName})}
     <Footer />
   </div>
@@ -23,6 +23,7 @@ export default AppContainer = createContainer(params => {
   });
 
   return {
-    routeName
+    routeName,
+    user: Meteor.user()
   };
 }, App);

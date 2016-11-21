@@ -8,12 +8,16 @@
     "test-app-watch": "meteor test --full-app --driver-package practicalmeteor:mocha"
   },
   "dependencies": {
+    "bcrypt": "^0.8.7",
+    "chai": "^3.5.0",
+    "chai-enzyme": "^0.6.1",
+    "enzyme": "^2.6.0",
     "faker": "^3.1.0",
-    "meteor-node-stubs": "~0.2.0",
-    "react": "^15.3.2",
-    "react-addons-pure-render-mixin": "^15.3.2",
-    "react-addons-test-utils": "^15.3.2",
-    "react-dom": "^15.3.2",
+    "meteor-node-stubs": "^0.2.4",
+    "react": "^15.4.0",
+    "react-addons-pure-render-mixin": "^15.4.0",
+    "react-addons-test-utils": "^15.4.0",
+    "react-dom": "^15.4.0",
     "react-mounter": "^1.2.0"
   },
   "devDependencies": {
