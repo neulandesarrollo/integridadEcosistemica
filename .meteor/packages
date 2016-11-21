@@ -33,3 +33,4 @@ std:accounts-bootstrap
 std:accounts-ui
 accounts-password@1.3.3
 kadira:flow-router-ssr
+xinranxiao:spotify

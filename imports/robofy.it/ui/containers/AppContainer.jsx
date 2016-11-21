@@ -27,7 +27,7 @@ export default AppContainer = createContainer(params => {
 
   if(token && machinationId) {
     const config = {
-      name: "token",
+      name: "lastfmToken",
       value: token,
       machinationId
     }
