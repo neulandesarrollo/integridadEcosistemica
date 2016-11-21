@@ -1,4 +1,5 @@
-import '../../api/machinations/publications.js';
+import '../../api/configs/configs-methods.js';
+import '../../api/machinations/machinations-publications.js';
 import '../accounts.js';
 import '../lastfm.js';
 

@@ -10,8 +10,7 @@ import LoadingPage from '../ui/pages/LoadingPage.jsx';
 //   api_key: Meteor.settings.public.lastFM.apiKey,
 //   secret: Meteor.settings.lastFM.sharedSecret
 // });
-
-FlowRouter.route("/callbacks/lastfm/authorize", {
+FlowRouter.route("/callbacks/lastfm/authorize/:machinationId", {
   action(params) {
     mount(AppContainer, {
       main: <LoadingPage />

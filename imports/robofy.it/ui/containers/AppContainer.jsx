@@ -22,9 +22,32 @@ export default AppContainer = createContainer(params => {
     routeName = FlowRouter.current().route.name;
   });
 
+  const token = FlowRouter.getQueryParam("token");
+  const machinationId = FlowRouter.getParam("machinationId");
+
+  if(token && machinationId) {
+    const config = {
+      name: "token",
+      value: token,
+      machinationId
+    }
+
+    Meteor.call("configs.insert", config, (error, result) => {
+      if(error) {
+        console.log("error", error);
+      }
+      if(result) {
+        FlowRouter.go("/machinations/" + machinationId);
+        console.log("inserted a new config");
+        console.log(result);
+
+      }
+    });
+  }
+
   return {
     routeName,
     user: Meteor.user(),
-    token: FlowRouter.getQueryParam("token")
+    token
   };
 }, App);
