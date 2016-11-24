@@ -47,13 +47,47 @@ export default class MachinationSection extends Component {
       machinationId
   }
 
+  setDSN(event) {
+    console.log("setDSN");
+    event.preventDefault();
+    const dsn = event.target.dsn.value;
+
+    const config = {
+      name: "dsn",
+      value: dsn,
+      machinationId
+    }
+
+    Meteor.call("configs.insert", config, (error, result) => {
+      if(error) {
+        console.log("error", error);
+      }
+      if(result) {
+        console.log("inserted a new config");
+        console.log(result);
+        event.target.dsn.value("");
+      }
+    });
+  }
+
   render() {
+    const machinationId = this.props.machination._id;
+
     return (
       <div className="machination-section">
         <h1>{this.props.machination.name}</h1>
-        <button className="btn btn-primary" onClick={() => { this.authSpotify(this.props.machination._id) }}>Link your Spotify</button>
-        <a className="btn btn-primary" href={this.lastFMPath(this.props.machination._id)}>Link your Last.FM</a>
-        <input name="dsn"></input>
+        <button className="btn btn-primary mx-1" onClick={() => {
+            this.authSpotify(machinationId)
+          }}>Link your Spotify</button>
+
+        <a className="btn btn-primary mx-1" href={this.lastFMPath(machinationId)}>Link your Last.FM</a>
+
+      <form onSubmit={event => {
+            this.setDSN(event, machinationId);
+          }}>
+          <input name="dsn"></input>
+          <button type="submit" className="btn btn-success">Set DSN</button>
+        </form>
       </div>
     );
   }

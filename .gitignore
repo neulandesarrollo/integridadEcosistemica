@@ -3,3 +3,5 @@ settings
 scripts
 .venv
 /imports/robofy.it/lib/fixtures
+packages/piwik-http-sandstorm
+dist

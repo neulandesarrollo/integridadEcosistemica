@@ -34,3 +34,5 @@ std:accounts-ui
 accounts-password@1.3.3
 kadira:flow-router-ssr
 xinranxiao:spotify
+marvin:piwik-http-sandstorm
+simple:json-routes
