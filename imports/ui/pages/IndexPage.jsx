@@ -6,8 +6,14 @@ export default class GeekyIndexPage extends Component {
       {
         _id: "1",
         name: "robofy.it",
-        description: "Share and explore ",
+        description: "Share and explore",
         url: "/robofy.it"
+      },
+      {
+        _id: "2",
+        name: "Integridad Ecosistema",
+        description: "How about the environment?",
+        url: "/integridad-ecosistema"
       },
     ];
   }
