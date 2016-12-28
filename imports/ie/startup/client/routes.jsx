@@ -14,8 +14,8 @@ import MapPage from '../../ui/pages/MapPage.jsx';
 
 // FlowRouter.triggers.enter([piwik.flowTrackEnter]);
 
-FlowRouter.route('/integridad-ecosistema', {
-  name: 'index',
+FlowRouter.route('/ie', {
+  name: 'ie-index',
   action() {
     mount(AppContainer, {
       main: <IndexPage />,
@@ -25,7 +25,7 @@ FlowRouter.route('/integridad-ecosistema', {
 
 
 FlowRouter.route('/ie/mapa', {
-  name: 'map',
+  name: 'ie-map',
   action() {
     mount(AppContainer, {
       main: <MapPage />,

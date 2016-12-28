@@ -8,7 +8,6 @@
     "test-app-watch": "meteor test --full-app --driver-package practicalmeteor:mocha"
   },
   "dependencies": {
-    "babel-plugin-transform-class-properties": "^6.19.0",
     "bcrypt": "^0.8.7",
     "chai": "^3.5.0",
     "chai-enzyme": "^0.6.1",
@@ -24,7 +23,6 @@
     "react-mounter": "^1.2.0"
   },
   "devDependencies": {
-    "babel-plugin-transform-class-properties": "^6.19.0",
     "chai-enzyme": "^0.6.0",
     "enzyme": "^2.5.1",
     "meteor-node-stubs": "^0.2.3",

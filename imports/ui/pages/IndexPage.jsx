@@ -13,7 +13,7 @@ export default class GeekyIndexPage extends Component {
         _id: "2",
         name: "Integridad Ecosistema",
         description: "How about the environment?",
-        url: "/integridad-ecosistema"
+        url: "/ie"
       },
     ];
   }
