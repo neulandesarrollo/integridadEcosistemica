@@ -9,6 +9,8 @@ const maxBounds = [
   [-73.887292, 36.041600], // North East
 ];
 
+const mapHeight = "85vh";
+const mapWidth = "100%";
 
 export default class MapPage extends Component {
 
@@ -46,7 +48,7 @@ export default class MapPage extends Component {
             maxBounds={maxBounds}
             accessToken={mapboxAccessToken}
             onClick={this._onClick.bind(this)}
-            containerStyle={{height: "90vh", width: "100%"}} >
+            containerStyle={{height: mapHeight, width: mapWidth}} >
 
             <ZoomControl
               zoomDiff={1}
