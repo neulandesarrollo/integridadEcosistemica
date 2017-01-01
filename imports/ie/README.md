@@ -12,4 +12,5 @@ $ pip install rasterio
 $ rio calc "(asarray (take a 1) (take a 2) (take a 3))" --co compress=lzw --co tiled=true --co blockxsize=256 --co blockysize=256 --name a=INPUT.tif OUTPUT.tif
 
 $ rio edit-info --nodata 255 --crs EPSG:4326 OUTPUT.tif
+EPSG:3857
 ````
