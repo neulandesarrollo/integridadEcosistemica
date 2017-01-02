@@ -8,19 +8,25 @@
     "test-app-watch": "meteor test --full-app --driver-package practicalmeteor:mocha"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-draw": "^0.16.0",
     "bcrypt": "^0.8.7",
+    "canvas": "^1.6.2",
     "chai": "^3.5.0",
     "chai-enzyme": "^0.6.1",
     "enzyme": "^2.6.0",
     "faker": "^3.1.0",
+    "gl": "^4.0.2",
+    "jsdom": "^9.9.1",
     "lastfm": "^0.9.2",
+    "mapbox-gl": "^0.28.0",
     "meteor-node-stubs": "^0.2.4",
     "react": "^15.4.0",
     "react-addons-pure-render-mixin": "^15.4.0",
     "react-addons-test-utils": "^15.4.0",
     "react-dom": "^15.4.0",
     "react-mapbox-gl": "^0.22.0",
-    "react-mounter": "^1.2.0"
+    "react-mounter": "^1.2.0",
+    "sinon": "^1.17.7"
   },
   "devDependencies": {
     "chai-enzyme": "^0.6.0",
