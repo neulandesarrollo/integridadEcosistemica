@@ -50,6 +50,8 @@ export default class MapPage extends Component {
             onClick={this._onClick.bind(this)}
             containerStyle={{height: mapHeight, width: mapWidth}} >
 
+						<MapboxGLDraw />
+
             <ZoomControl
               zoomDiff={1}
               onControlClick={this._onZoomClick.bind(this)} />

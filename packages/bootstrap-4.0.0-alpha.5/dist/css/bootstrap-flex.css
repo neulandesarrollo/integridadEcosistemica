@@ -7397,7 +7397,13 @@ html {
 
 @media (min-width: 992px) {
   html {
-    font-size: 28px;
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 1200px) {
+  html {
+    font-size: 22px;
   }
 }
 /*# sourceMappingURL=bootstrap-flex.css.map */
