@@ -11,6 +11,9 @@ export default QuestionsSchema = new SimpleSchema({
   isActive: {
     type: Boolean
   },
+	isMandatory: {
+    type: Boolean
+  },
   createdAt : {
     type: Date,
     autoValue: function() {

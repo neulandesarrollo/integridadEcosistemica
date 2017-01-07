@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import ReactMapboxGl, { Layer, Feature, Popup, ZoomControl } from "react-mapbox-gl";
+import ReactMapboxGl, {
+	ScaleControl,
+	ZoomControl
+} from "react-mapbox-gl";
 
 import { mapboxAccessToken, style } from '../../common/mapbox.js';
 import MapboxGLDraw from '../components/widgets/MapboxGLDraw.jsx';
+import MapboxGLCoords from '../components/widgets/MapboxGLCoords.jsx';
 
 const maxBounds = [
   [-131.109225, 6.866320], // South West
@@ -56,7 +60,12 @@ export default class MapPage extends Component {
               zoomDiff={1}
               onControlClick={this._onZoomClick.bind(this)} />
 
+						<ScaleControl position="bottomLeft" />
+
+						<MapboxGLCoords />
+
           </ReactMapboxGl>
+					<pre className="py-1" id='ie-mapa-info'></pre>
         </div>
       </div>
     )

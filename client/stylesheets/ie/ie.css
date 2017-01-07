@@ -1,3 +1,18 @@
 #ieNavbar ul.nav li.nav-item {
   font-family: 'Alegreya', serif;
 }
+
+#ie-mapa-info {
+		display: block;
+		position: relative;
+		margin: 0px auto;
+		width: 50%;
+		border: none;
+		/*border-radius: 3px;*/
+		font-size: 12px;
+		text-align: center;
+		/*color: #222;
+		background: #fff;*/
+		opacity: 0.5;
+    filter: alpha(opacity=50);
+}

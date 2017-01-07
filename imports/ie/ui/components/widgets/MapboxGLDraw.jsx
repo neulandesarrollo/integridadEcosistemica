@@ -15,7 +15,7 @@ export default class MapboxGLDraw extends Component {
   }
 
   render() {
-    return <div></div>
+    return null;
   }
 
   componentWillMount() {
