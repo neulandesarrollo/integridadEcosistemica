@@ -6,7 +6,11 @@ import ReactMapboxGl, {
 
 import { mapboxAccessToken, style } from '../../common/mapbox.js';
 import MapboxGLDraw from '../components/widgets/MapboxGLDraw.jsx';
-import MapboxGLCoords from '../components/widgets/MapboxGLCoords.jsx';
+import MapControlPanel from '../components/widgets/MapControlPanel.jsx';
+import MapControlPanelUI from '../components/widgets/MapControlPanelUI.jsx';
+import PolygonCreateModal from '../components/widgets/PolygonCreateModal.jsx';
+
+import { DRAWING_STATES } from '../../lib/drawing-states.js';
 
 const maxBounds = [
   [-131.109225, 6.866320], // South West
@@ -25,7 +29,9 @@ export default class MapPage extends Component {
       center: [-99.138173, 19.416424],
       zoom: [3],
       skip: 0,
-      popupShowLabel: true
+      popupShowLabel: true,
+			drawingState: DRAWING_STATES.EMPTY,
+			currentPolygon: null
     }
   }
 
@@ -34,10 +40,15 @@ export default class MapPage extends Component {
     this.setState({ zoom: [zoom] });
   }
 
-  _onClick(map, event) {
-    console.log("click");
-    console.log(event);
-  }
+	_setDrawingState(drawingState) {
+		this.setState({ drawingState });
+	}
+
+	_setCurrentPolygon(currentPolygon) {
+		console.log("Setting current polygon");
+		console.log(currentPolygon);
+		this.setState({ currentPolygon })
+	}
 
   render() {
     return (
@@ -51,10 +62,9 @@ export default class MapPage extends Component {
             maxZoom={15}
             maxBounds={maxBounds}
             accessToken={mapboxAccessToken}
-            onClick={this._onClick.bind(this)}
             containerStyle={{height: mapHeight, width: mapWidth}} >
 
-						<MapboxGLDraw />
+						<MapboxGLDraw setCurrentPolygon={this._setCurrentPolygon.bind(this)} />
 
             <ZoomControl
               zoomDiff={1}
@@ -62,10 +72,12 @@ export default class MapPage extends Component {
 
 						<ScaleControl position="bottomLeft" />
 
-						<MapboxGLCoords />
+						<MapControlPanel setDrawingState={this._setDrawingState.bind(this)} />
 
           </ReactMapboxGl>
-					<pre className="py-1" id='ie-mapa-info'></pre>
+
+					<MapControlPanelUI drawingState={this.state.drawingState} />
+					<PolygonCreateModal />
         </div>
       </div>
     )

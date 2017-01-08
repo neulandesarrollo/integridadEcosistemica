@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Accounts, STATES } from 'meteor/std:accounts-ui';
 
 export default class NavbarSection extends Component {
@@ -25,6 +25,6 @@ export default class NavbarSection extends Component {
 }
 
 NavbarSection.propTypes = {
-  currentPath: React.PropTypes.string,
-  user: React.PropTypes.object
+  currentPath: PropTypes.string,
+  user: PropTypes.object
 };
