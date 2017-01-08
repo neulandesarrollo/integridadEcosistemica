@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
+import LikertQuestionInput from './LikertQuestionInput.jsx';
+
 export default class PolygonCreateModal extends Component {
 	renderForm() {
 		return (
@@ -35,13 +37,15 @@ export default class PolygonCreateModal extends Component {
 		if(this.props.isLoading) {
 			return <h3>Loading...</h3>;
 		} else {
-			return (
-				<div className="modal-footer">
-					<button type="button" className="btn btn-primary" onClick={this.submitForm.bind(this)}>Create</button>
-					<button type="button" className="btn btn-secondary ml-1" data-dismiss="modal">Cancel</button>
-				</div>
-			);
+			return this.props.questions.map(this.renderQuestion.bind(this));
 		}
+	}
+
+	renderQuestion(question, i) {
+		return <LikertQuestionInput
+							key={question._id}
+							question={question}
+							i={i} />;
 	}
 
 	renderModalFooter() {

@@ -1,4 +1,6 @@
 import PolygonsSchema from '../schemas/polygons-schema.js';
 
-export const Polygons = new Mongo.Collection("Polygons");
-// Polygons.attachSchema(PolygonsSchema);
+const Polygons = new Mongo.Collection("Polygons");
+Polygons.attachSchema(PolygonsSchema);
+
+export default Polygons;

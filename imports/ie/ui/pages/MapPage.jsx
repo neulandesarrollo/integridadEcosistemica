@@ -8,7 +8,7 @@ import { mapboxAccessToken, style } from '../../common/mapbox.js';
 import MapboxGLDraw from '../components/widgets/MapboxGLDraw.jsx';
 import MapControlPanel from '../components/widgets/MapControlPanel.jsx';
 import MapControlPanelUI from '../components/widgets/MapControlPanelUI.jsx';
-import PolygonCreateModal from '../components/widgets/PolygonCreateModal.jsx';
+import PolygonCreateModalContainer from '../containers/PolygonCreateModalContainer.jsx';
 
 import { DRAWING_STATES } from '../../lib/drawing-states.js';
 
@@ -77,7 +77,7 @@ export default class MapPage extends Component {
           </ReactMapboxGl>
 
 					<MapControlPanelUI drawingState={this.state.drawingState} />
-					<PolygonCreateModal isLoading={true} />
+					<PolygonCreateModalContainer />
         </div>
       </div>
     )

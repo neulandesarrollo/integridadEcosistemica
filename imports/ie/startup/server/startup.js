@@ -1,10 +1,12 @@
 // import '../../server/methods/polygon-methods.js';
 // import '../../server/publications/answer-publications.js';
 // import '../../server/publications/polygon-publications.js';
-// import '../../server/publications/question-publications.js';
+import '../../server/publications/question-publications.js';
 
-import { seedQuestions } from '../../server/fixtures/fixtures.js'
+import { seedQuestions } from './fixtures.js'
 
-export function startupIE() {
+const startupIE = () => {
   seedQuestions();
 }
+
+export default startupIE;

@@ -51,4 +51,5 @@ export default PolygonsSchema = new SimpleSchema({
         return new Date();
       }
     }
+	}
 });

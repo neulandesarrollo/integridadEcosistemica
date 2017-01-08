@@ -2,7 +2,6 @@ export const DRAWING_STATES = {
 	EMPTY: "state-empty", // Nothing on map
 	DRAFTING: "state-drafting", // Fewer than 3 points
 	DRAWING: "state-drawing", // 3 or more points
-	SAVING: "state-saving", // Giving name, answering questions
 	VIEWING: "state-viewing" // Observing polygon
 }
 

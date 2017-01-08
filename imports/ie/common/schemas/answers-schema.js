@@ -1,4 +1,4 @@
-export default PolygonsSchema = new SimpleSchema({
+export default AnswersSchema = new SimpleSchema({
   questionId: {
     type: String
   },
@@ -29,5 +29,6 @@ export default PolygonsSchema = new SimpleSchema({
       if (this.isUpdate) {
         return new Date();
       }
-    },
+    }
+	}
 });

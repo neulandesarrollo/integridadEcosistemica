@@ -33,4 +33,5 @@ export default QuestionsSchema = new SimpleSchema({
         return new Date();
       }
     }
+	}
 });

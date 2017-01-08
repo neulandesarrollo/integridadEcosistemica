@@ -9,7 +9,7 @@ export default class MapControlPanelUI extends Component {
 		switch(this.props.drawingState) {
 			case DRAWING_STATES.DRAWING:
 				return <button
-								className="btn btn-primary mx-auto my-1 btn-block"
+								className="btn btn-primary mx-auto ml-1 my-1 btn-block"
 								data-toggle="modal"
 								data-target="#polygonCreateModal">Save</button>;
 			default:
