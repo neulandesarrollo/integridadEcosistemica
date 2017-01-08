@@ -4,15 +4,14 @@ import React, { Component, PropTypes } from 'react';
 import { DRAWING_STATES } from '../../../lib/drawing-states.js';
 
 export default class MapControlPanelUI extends Component {
-	handleSave() {
-		console.log('handle save');
-		$('#polygon-create-modal').modal('show');
-	}
 
 	renderButton() {
 		switch(this.props.drawingState) {
 			case DRAWING_STATES.DRAWING:
-				return <button className="btn btn-primary mx-auto my-1 btn-block" onClick={this.handleSave.bind(this)}>Save</button>;
+				return <button
+								className="btn btn-primary mx-auto my-1 btn-block"
+								data-toggle="modal"
+								data-target="#polygonCreateModal">Save</button>;
 			default:
 				return <h1>{this.props.drawingState}</h1>
 		}
