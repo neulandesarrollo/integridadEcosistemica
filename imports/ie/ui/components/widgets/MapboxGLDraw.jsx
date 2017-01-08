@@ -13,19 +13,25 @@ export default class MapboxGLDraw extends Component {
     };
   }
 
+	// Does not need to render any HTML
+	// All interaction through Mapbox GL JS API
   render() {
     return null;
   }
 
+	// Add MapboxDraw control to map.
+	// Adds listeners to update the parent component's currentPolygon
   componentWillMount() {
     const thiz = this;
     const { map } = this.context;
 
+		// What type of drawing is permitted.
+		// We only want to let users draw polygons.
     const controls = {
       point: false,
 			line_string: false,
 			polygon: true,
-			trash: true,
+			trash: false,
 			combine_features: false,
 			uncombine_features: false
     };
@@ -36,12 +42,12 @@ export default class MapboxGLDraw extends Component {
       map.addControl(draw, 'bottom-right');
     });
 
-		// After first point clicked
-		map.on('draw.create', e => {
-			console.log("on create");
-			console.log(e);
-			// draw.changeMode("direct_select");
-		});
+		// // After first point clicked
+		// map.on('draw.create', e => {
+		// 	console.log("on create");
+		// 	console.log(e);
+		// 	// draw.changeMode("direct_select");
+		// });
 
 		// Polygon updated
 		map.on('draw.update', e => {
@@ -75,6 +81,7 @@ export default class MapboxGLDraw extends Component {
     this.setState({draw: undefined});
   }
 
+	// Transfrom a Feature from Mapbox to internal representation for a Polygon
 	setFeatureAsPolygon(feature) {
 		this.props.setCurrentPolygon({
 			geoJSON: {
@@ -94,4 +101,4 @@ MapboxGLDraw.contextTypes = {
 
 MapboxGLDraw.propTypes = {
 	setCurrentPolygon: PropTypes.func
-}
+};

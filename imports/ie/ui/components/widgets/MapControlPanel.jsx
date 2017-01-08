@@ -6,6 +6,8 @@ import {
 	MAPBOX_MODES
 } from '../../../lib/drawing-states.js';
 
+// Add coordinate labels to #ie-mapa-info
+// Set drawingState of parent
 export default class MapControlPanel extends Component {
 
   render() {
