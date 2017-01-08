@@ -22,8 +22,38 @@ export default class PolygonCreateModal extends Component {
 	}
 
 	handleSubmit(event) {
+		const thiz = this;
 		event.preventDefault();
 		console.log("handleSubmit");
+
+		let polygon = this.props.currentPolygon;
+		polygon.name = ReactDOM.findDOMNode(thiz.refs.name).value.trim();
+
+		console.log(polygon)
+
+		const answers = thiz.getAnswers();
+		console.log('asnwers');
+		console.log(answers);
+
+		Meteor.call("polygons.insert", polygon, answers, (error, polygonId) => {
+			console.log('polygons.insert');
+			console.log(polygonId);
+
+			if(error) {
+				console.log("error", error);
+			}
+
+			ReactDOM.findDOMNode(thiz.refs.name).value = '';
+			$("#polygonCreateModal").modal("hide");
+		})
+	}
+
+	getAnswers() {
+		return _.map(this.props.questions, q => {
+			const qId = q._id;
+			const val = $('input[name=likertOption' + qId + ']:checked', "#polygonForm").val();
+			return { qId, val }
+		})
 	}
 
 	submitForm() {
@@ -85,5 +115,7 @@ export default class PolygonCreateModal extends Component {
 }
 
 PolygonCreateModal.propTypes = {
-	isLoading: PropTypes.bool
+	isLoading: PropTypes.bool,
+	currentPolygon: PropTypes.object,
+	questions: PropTypes.array
 };

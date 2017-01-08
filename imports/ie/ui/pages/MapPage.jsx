@@ -77,7 +77,8 @@ export default class MapPage extends Component {
           </ReactMapboxGl>
 
 					<MapControlPanelUI drawingState={this.state.drawingState} />
-					<PolygonCreateModalContainer />
+
+					<PolygonCreateModalContainer currentPolygon={this.state.currentPolygon} />
         </div>
       </div>
     )

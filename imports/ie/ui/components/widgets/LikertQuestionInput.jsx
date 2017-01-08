@@ -15,12 +15,16 @@ export default class LikertQuestionInput extends Component {
 		);
 	}
 
+	renderTitle(question, i) {
+		return <label><strong>{i}: {question.text + (question.isMandatory ? "*" : "")}</strong></label>;
+	}
+
   render() {
 		const question = this.props.question;
 		const i = this.props.i + 1;
     return (
 			<fieldset className="form-group mt-1">
-				<label><strong>{i}: {question.text}</strong></label><br />
+				{this.renderTitle(question, i)}<br />
 				{
 					question.answers.map((score, i) => {
 						return this.renderLabel(score, i, question);
