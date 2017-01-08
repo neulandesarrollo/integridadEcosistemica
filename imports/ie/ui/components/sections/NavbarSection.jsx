@@ -2,6 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import { Accounts, STATES } from 'meteor/std:accounts-ui';
 
 export default class NavbarSection extends Component {
+	handleLogOut(e) {
+		e.preventDefault();
+		Meteor.logout();
+	}
+
+	renderAccountLink() {
+		if(!!this.props.user) {
+			return <a className="nav-link" href="#" onClick={this.handleLogOut.bind(this)}>Sign out</a>
+		} else {
+			return <a className="nav-link" href="/login">Login</a>
+		}
+	}
+
   render() {
     return (
       <nav className="navbar navbar-dark bg-inverse navbar-full">
@@ -14,8 +27,11 @@ export default class NavbarSection extends Component {
             <li className="nav-item active">
               <a className="nav-link" href="/ie">Nosotros <span className="sr-only">(current)</span></a>
             </li>
-            <li className="nav-item">
+						<li className="nav-item">
               <a className="nav-link" href="/ie/mapa">Mapa</a>
+            </li>
+						<li className="nav-item">
+							{this.renderAccountLink()}
             </li>
           </ul>
         </div>

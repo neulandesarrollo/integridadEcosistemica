@@ -1,4 +1,5 @@
 import './routes.jsx';
+import './accounts.jsx';
 
 const startupIE = () => {
 

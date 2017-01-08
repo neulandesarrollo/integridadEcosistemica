@@ -1,5 +1,5 @@
 import './routes.jsx';
-import '../accounts.js';
+// import '../accounts.js';
 import '../lastfm.js';
 
 const startupRobofy = () => {
