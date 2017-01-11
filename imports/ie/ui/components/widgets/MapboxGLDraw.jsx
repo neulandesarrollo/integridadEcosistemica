@@ -53,20 +53,16 @@ export default class MapboxGLDraw extends Component {
 		// Polygon updated
 		map.on('draw.update', e => {
 			const feature = e.features[0];
-			console.log('draw.update');
-			console.log(feature);
 			thiz.setFeatureAsPolygon(feature);
 		});
 
 		// MapboxGLDraw mode change
 		map.on('draw.modechange', e => {
+
 			const feature = draw.getAll().features[0];
-			console.log('draw.modechange');
-			console.log(feature);
 
 			switch (e.mode) {
 				case MAPBOX_MODES.SIMPLE_SELECT:
-					console.log('will set current feature');
 					thiz.setFeatureAsPolygon(feature);
 					break;
 			}

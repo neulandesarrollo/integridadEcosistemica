@@ -67,8 +67,20 @@ export default class PolygonCreateModal extends Component {
 		if(this.props.isLoading) {
 			return <h3>Loading...</h3>;
 		} else {
-			return this.props.questions.map(this.renderQuestion.bind(this));
+			const categories = _.groupBy(this.props.questions, 'category');
+			// categories.map((x, y) => {console.log(x); console.log(y);})
+			return _.map(categories, this.renderCategory.bind(this));
+			// return this.props.questions.map(this.renderQuestion.bind(this));
 		}
+	}
+
+	renderCategory(questions, category) {
+		return (
+			<div key={category}>
+				<h5>{category}</h5>
+				{questions.map(this.renderQuestion.bind(this))}
+			</div>
+		)
 	}
 
 	renderQuestion(question, i) {

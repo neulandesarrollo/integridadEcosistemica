@@ -20,15 +20,11 @@ export default class MapControlPanel extends Component {
     const { map } = this.context;
 
 		map.on('draw.create', e => {
-			console.log("on create");
-			console.log(e);
 
 			thiz.props.setDrawingState(DRAWING_STATES.DRAWING)
 		});
 
 		map.on('draw.modechange', e => {
-			console.log('draw.modechange');
-			console.log(e);
 
 			let newState = null;
 
@@ -45,8 +41,6 @@ export default class MapControlPanel extends Component {
 
 		// Add coordinates to control panel
 		map.on('mousemove', function (e) {
-			console.log(e.lngLat);
-			console.log(e.point);
 			document.getElementById('ie-mapa-info').innerHTML =
 				// e.lngLat is the longitude, latitude geographical position of the event
 				'<strong>' + thiz.round(e.lngLat.lng) + ", " + thiz.round(e.lngLat.lat) + ' (lng, lat)</strong>' +
