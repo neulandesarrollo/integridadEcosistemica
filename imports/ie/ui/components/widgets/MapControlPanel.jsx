@@ -45,18 +45,25 @@ export default class MapControlPanel extends Component {
 
 		// Add coordinates to control panel
 		map.on('mousemove', function (e) {
+			console.log(e.lngLat);
+			console.log(e.point);
 			document.getElementById('ie-mapa-info').innerHTML =
 				// e.lngLat is the longitude, latitude geographical position of the event
-				'<strong>' + JSON.stringify(e.lngLat) + '</strong>'
+				'<strong>' + thiz.round(e.lngLat.lng) + ", " + thiz.round(e.lngLat.lat) + ' (lng, lat)</strong>' +
 
-				+ '<br />' +
+				'<br />' +
 
 				// e.point is the x, y coordinates of the mousemove event relative
 				// to the top-left corner of the map
-				JSON.stringify(e.point);
+				'<small> ' + e.point.x + ", " + e.point.y + ' (x, y) </small>';
 		});
 
   }
+
+	round(n) {
+		const decimalPrecision = 1000
+		return Math.round(n * decimalPrecision) / decimalPrecision
+	}
 }
 
 MapControlPanel.contextTypes = {

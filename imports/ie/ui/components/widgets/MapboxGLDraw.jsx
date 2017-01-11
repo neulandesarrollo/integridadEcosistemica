@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 
 import { MAPBOX_MODES } from '../../../lib/drawing-states.js';
+import { polygonStyles } from '../../../lib/mapbox.js';
 
 export default class MapboxGLDraw extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ export default class MapboxGLDraw extends Component {
 			uncombine_features: false
     };
 
-    const draw = new MapboxDraw({ controls });
+    const draw = new MapboxDraw({ controls, styles: polygonStyles });
 
     map.on('load', () => {
       map.addControl(draw, 'bottom-right');
