@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
 import LikertQuestionInput from './LikertQuestionInput.jsx';
+import { MAPBOX_EVENTS } from '../../../lib/mapbox-events.js';
 
 export default class PolygonCreateModal extends Component {
 	renderForm() {
@@ -22,27 +23,20 @@ export default class PolygonCreateModal extends Component {
 	}
 
 	handleSubmit(event) {
+
 		const thiz = this;
 		event.preventDefault();
-		console.log("handleSubmit");
-
 		let polygon = this.props.currentPolygon;
 		polygon.name = ReactDOM.findDOMNode(thiz.refs.name).value.trim();
-
-		console.log(polygon)
-
 		const answers = thiz.getAnswers();
-		console.log('asnwers');
-		console.log(answers);
 
 		Meteor.call("polygons.insert", polygon, answers, (error, polygonId) => {
-			console.log('polygons.insert');
-			console.log(polygonId);
 
 			if(error) {
 				console.log("error", error);
 			}
 
+			this.props.consumeMapboxEvent(MAPBOX_EVENTS.DRAW.SAVED)
 			ReactDOM.findDOMNode(thiz.refs.name).value = '';
 			$("#polygonCreateModal").modal("hide");
 		})
@@ -57,7 +51,6 @@ export default class PolygonCreateModal extends Component {
 	}
 
 	submitForm() {
-		console.log('submitFOrm');
 		const form = ReactDOM.findDOMNode(this.refs.polygonForm);
 		$(form).submit(this.handleSubmit.bind(this));
 		$(form).trigger('submit');
@@ -129,5 +122,6 @@ export default class PolygonCreateModal extends Component {
 PolygonCreateModal.propTypes = {
 	isLoading: PropTypes.bool,
 	currentPolygon: PropTypes.object,
-	questions: PropTypes.array
+	questions: PropTypes.array,
+	consumeMapboxEvent: PropTypes.func
 };

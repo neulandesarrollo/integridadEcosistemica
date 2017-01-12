@@ -29,6 +29,9 @@ export default PolygonsSchema = new SimpleSchema({
   username: {
     type: String
   },
+	isActive: {
+		type: Boolean
+	},
   geoJSON: {
     type: geoJSONSchema
   },

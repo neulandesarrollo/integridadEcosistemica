@@ -1,9 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
+import { ReactiveVar } from 'meteor/reactive-var';
 
-import { MAPBOX_MODES } from '../../../lib/drawing-states.js';
-import { polygonStyles } from '../../../lib/mapbox.js';
+import { polygonStyles } from '../../../lib/mapbox-styles.js';
+import { MAPBOX_EVENTS, MAPBOX_MODES } from '../../../lib/mapbox-events.js';
+import { DRAWING_STATES } from '../../../lib/drawing-states.js';
 
 export default class MapboxGLDraw extends Component {
   constructor(props) {
@@ -13,6 +15,13 @@ export default class MapboxGLDraw extends Component {
       draw: undefined
     };
   }
+
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.drawingState === DRAWING_STATES.VIEWING) {
+			this.state.draw.changeMode(MAPBOX_MODES.STATIC)
+		}
+	}
+
 
 	// Does not need to render any HTML
 	// All interaction through Mapbox GL JS API
@@ -39,7 +48,7 @@ export default class MapboxGLDraw extends Component {
 
     const draw = new MapboxDraw({ controls, styles: polygonStyles });
 
-    map.on('load', () => {
+    map.on(MAPBOX_EVENTS.LOAD, () => {
       map.addControl(draw, 'bottom-right');
     });
 
@@ -51,13 +60,13 @@ export default class MapboxGLDraw extends Component {
 		// });
 
 		// Polygon updated
-		map.on('draw.update', e => {
+		map.on(MAPBOX_EVENTS.DRAW.UPDATE, e => {
 			const feature = e.features[0];
 			thiz.setFeatureAsPolygon(feature);
 		});
 
 		// MapboxGLDraw mode change
-		map.on('draw.modechange', e => {
+		map.on(MAPBOX_EVENTS.DRAW.MODECHANGE, e => {
 
 			const feature = draw.getAll().features[0];
 
@@ -97,5 +106,6 @@ MapboxGLDraw.contextTypes = {
 };
 
 MapboxGLDraw.propTypes = {
-	setCurrentPolygon: PropTypes.func
+	setCurrentPolygon: PropTypes.func,
+	drawingState: PropTypes.string
 };

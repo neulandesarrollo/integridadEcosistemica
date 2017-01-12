@@ -1,10 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
 
-import {
-	DRAWING_STATES,
-	MAPBOX_MODES
-} from '../../../lib/drawing-states.js';
+import { DRAWING_STATES } from '../../../lib/drawing-states.js';
+import { MAPBOX_EVENTS } from '../../../lib/mapbox-events.js';
 
 // Add coordinate labels to #ie-mapa-info
 // Set drawingState of parent
@@ -19,24 +17,13 @@ export default class MapControlPanel extends Component {
     const thiz = this;
     const { map } = this.context;
 
-		map.on('draw.create', e => {
+		map.on(MAPBOX_EVENTS.DRAW.CREATE, e => {
 
-			thiz.props.setDrawingState(DRAWING_STATES.DRAWING)
+			thiz.props.consumeMapboxEvent(MAPBOX_EVENTS.DRAW.CREATE)
 		});
 
-		map.on('draw.modechange', e => {
-
-			let newState = null;
-
-			switch (e.mode) {
-				case MAPBOX_MODES.DRAW_POLYGON:
-					newState = DRAWING_STATES.DRAFTING;
-					break;
-			}
-
-			if(newState) {
-				thiz.props.setDrawingState(newState);
-			}
+		map.on(MAPBOX_EVENTS.DRAW.MODECHANGE, e => {
+			this.props.consumeMapboxEvent(e.mode)
 		})
 
 		// Add coordinates to control panel
@@ -65,5 +52,5 @@ MapControlPanel.contextTypes = {
 };
 
 MapControlPanel.propTypes = {
-  setDrawingState: PropTypes.func
+  consumeMapboxEvent: PropTypes.func
 };
