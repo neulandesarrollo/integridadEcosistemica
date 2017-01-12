@@ -1,21 +1,22 @@
-// const lnglatsSchema = new SimpleSchema({
-//   lnglats: {
-//     type: [Number]
-//   },
-// });
-//
-// const geometrySchema = new SimpleSchema({
-//   coordinates: {
-//     type: [lnglatsSchema]
-//   },
-//   type: {
-//     type: String
-//   }
-// });
+const lnglatsSchema = new SimpleSchema({
+  lnglats: {
+    type: [Number]
+  },
+});
+
+const geometrySchema = new SimpleSchema({
+  coordinates: {
+    type: [lnglatsSchema]
+  },
+  type: {
+    type: String
+  },
+});
 
 const geoJSONSchema = new SimpleSchema({
   geometry: {
-    type: Object
+    type: geometrySchema,
+		blackbox: true
   },
   type: {
     type: String

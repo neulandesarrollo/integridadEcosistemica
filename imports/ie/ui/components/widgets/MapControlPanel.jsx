@@ -7,6 +7,13 @@ import { MAPBOX_EVENTS } from '../../../lib/mapbox-events.js';
 // Add coordinate labels to #ie-mapa-info
 // Set drawingState of parent
 export default class MapControlPanel extends Component {
+	constructor(props) {
+    super(props);
+
+    this.state = {
+      map: undefined
+    };
+  }
 
   render() {
     return null;

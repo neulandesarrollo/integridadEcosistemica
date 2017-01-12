@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
 
+import { DRAWING_STATES } from '../../../lib/drawing-states.js';
+
 export default class PolygonsList extends Component {
 	render() {
 		return (
@@ -13,11 +15,20 @@ export default class PolygonsList extends Component {
 	}
 
 	renderPolygon(polygon) {
-		return <h6 key={polygon._id}><button>{polygon.name}</button></h6>;
+		return <h6 key={polygon._id}><button onClick={e => {this.handleClick(e, polygon)}}>{polygon.name}</button></h6>;
+	}
+
+	handleClick(event, polygon) {
+		event.preventDefault();
+		console.log('handleClick');
+		console.log(polygon);
+		this.props.setCurrentPolygon(polygon, polygon._id);
+		this.props.consumeMapboxEvent(DRAWING_STATES.SWITCHING)
 	}
 }
 
-
 PolygonsList.propTypes = {
-	polygons: PropTypes.array
+	polygons: PropTypes.array,
+	setCurrentPolygon: PropTypes.func,
+	consumeMapboxEvent: PropTypes.func
 }

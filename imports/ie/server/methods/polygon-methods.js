@@ -3,7 +3,7 @@ import Answers from '../../common/collections/answers.js';
 
 Meteor.methods({
 	'polygons.insert': (polygon, answers) => {
-
+		console.log(polygon.geoJSON.geometry);
 		if(Meteor.userId()) {
 			const user = Accounts.users.findOne(Meteor.userId());
 			const email = user.emails[0].address

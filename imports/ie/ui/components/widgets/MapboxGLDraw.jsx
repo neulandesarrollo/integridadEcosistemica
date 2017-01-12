@@ -17,11 +17,15 @@ export default class MapboxGLDraw extends Component {
   }
 
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.drawingState === DRAWING_STATES.VIEWING) {
-			this.state.draw.changeMode(MAPBOX_MODES.STATIC)
+		switch(nextProps.drawingState) {
+			case DRAWING_STATES.VIEWING:
+				this.state.draw.changeMode(MAPBOX_MODES.STATIC);
+				break;
+			case DRAWING_STATES.SWITCHING:
+				this.state.draw.deleteAll();
+				break;
 		}
 	}
-
 
 	// Does not need to render any HTML
 	// All interaction through Mapbox GL JS API
@@ -52,12 +56,13 @@ export default class MapboxGLDraw extends Component {
       map.addControl(draw, 'bottom-right');
     });
 
-		// // After first point clicked
-		// map.on('draw.create', e => {
-		// 	console.log("on create");
-		// 	console.log(e);
-		// 	// draw.changeMode("direct_select");
-		// });
+		// After first point clicked
+		map.on(MAPBOX_EVENTS.CREATE, e => {
+			console.log("on create");
+			console.log(e);
+			// this.props.consumeMapboxEvent(MAPBOX_EVENTS.CREATE)
+			// draw.changeMode("direct_select");
+		});
 
 		// Polygon updated
 		map.on(MAPBOX_EVENTS.DRAW.UPDATE, e => {
@@ -107,5 +112,6 @@ MapboxGLDraw.contextTypes = {
 
 MapboxGLDraw.propTypes = {
 	setCurrentPolygon: PropTypes.func,
-	drawingState: PropTypes.string
+	drawingState: PropTypes.string,
+	consumeMapboxEvent: PropTypes.func
 };

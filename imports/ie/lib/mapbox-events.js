@@ -5,6 +5,7 @@ export const MAPBOX_EVENTS = {
 		MODECHANGE: 'draw.modechange',
 		UPDATE: 'draw.update',
 		SAVED: 'draw.saved', // This is not actually a mapbox event. Custom for when polygon is saved.
+		SWITCHED: 'draw.switched' // Also not actuall a mapbox event. Custom for when switch to a different existing polygon.
 	}
 }
 

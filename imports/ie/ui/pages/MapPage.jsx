@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import ReactMapboxGl, {
 	ScaleControl,
-	ZoomControl
+	ZoomControl,
+	Layer,
+	Feature
 } from "react-mapbox-gl";
 
 import { mapboxAccessToken, style } from '../../common/mapbox.js';
 import MapboxGLDraw from '../components/widgets/MapboxGLDraw.jsx';
 import MapControlPanel from '../components/widgets/MapControlPanel.jsx';
+import MapboxPolygonSwitcher from '../components/widgets/MapboxPolygonSwitcher.jsx';
 import MapControlPanelUI from '../components/widgets/MapControlPanelUI.jsx';
 import PolygonCreateModalContainer from '../containers/PolygonCreateModalContainer.jsx';
 import PolygonsListContainer from '../containers/PolygonsListContainer.jsx';
@@ -43,8 +46,10 @@ export default class MapPage extends Component {
     this.setState({ zoom: [zoom] });
   }
 
-	_setCurrentPolygon(currentPolygon) {
-		this.setState({ currentPolygon, currentPolygonId: null });
+	_setCurrentPolygon(currentPolygon, currentPolygonId) {
+		console.log('_setCurrentPolygon');
+		console.log(currentPolygon);
+		this.setState({ currentPolygon, currentPolygonId });
 	}
 
 	_consumeMapboxEvent(mapboxEvent) {
@@ -54,18 +59,48 @@ export default class MapPage extends Component {
 
 		switch(mapboxEvent) {
 			case MAPBOX_EVENTS.DRAW.CREATE:
-				newState = DRAWING_STATES.DRAWING
+				newState = DRAWING_STATES.DRAWING;
 				break;
 			case MAPBOX_MODES.DRAW_POLYGON:
 				newState = DRAWING_STATES.DRAFTING;
 				break;
 			case MAPBOX_EVENTS.DRAW.SAVED:
-				newState = DRAWING_STATES.VIEWING
+				newState = DRAWING_STATES.VIEWING;
+				break;
+			case DRAWING_STATES.SWITCHING:
+				newState = DRAWING_STATES.SWITCHING;
+				break;
+			case MAPBOX_EVENTS.DRAW.SWITCHED:
+				newState = DRAWING_STATES.VIEWING;
 				break;
 		}
 
 		if(newState)
 			this.setState({ drawingState: newState })
+	}
+
+	geoJSONCoords() {
+		const cs = this.state.currentPolygon.geoJSON.geometry.coordinates
+		return [cs];
+		// return _.map(cs, c => { console.log(c); return c; })
+	}
+
+	renderPolygon() {
+		console.log('renderPolygon');
+		console.log(this.state.currentPolygon);
+		if(this.state.currentPolygon) {
+			return (
+				<Layer
+					type="fill"
+					paint={{ "fill-color": "#3bd04a", "fill-opacity": .5 }}>
+
+					<Feature
+						coordinates={this.geoJSONCoords()}/>
+				</Layer>
+			)
+		} else {
+			return null;
+		}
 	}
 
   render() {
@@ -89,10 +124,13 @@ export default class MapPage extends Component {
 
 						<MapboxGLDraw
 							setCurrentPolygon={this._setCurrentPolygon.bind(this)}
-							drawingState={this.state.drawingState} />
+							drawingState={this.state.drawingState}
+							consumeMapboxEvent={this._consumeMapboxEvent.bind(this)} />
 
 						<ScaleControl position="bottomLeft" />
 						<MapControlPanel consumeMapboxEvent={this._consumeMapboxEvent.bind(this)} />
+
+						{this.renderPolygon()}
           </ReactMapboxGl>
 
 					<MapControlPanelUI drawingState={this.state.drawingState} />
@@ -103,7 +141,10 @@ export default class MapPage extends Component {
 
 				<div className="col-lg-3 col-md-4">
 
-					<PolygonsListContainer currentPolygonId={this.state.currentPolygonId} />
+					<PolygonsListContainer
+						consumeMapboxEvent={this._consumeMapboxEvent.bind(this)}
+						currentPolygonId={this.state.currentPolygonId}
+						setCurrentPolygon={this._setCurrentPolygon.bind(this)} />
 				</div>
       </div>
     )
