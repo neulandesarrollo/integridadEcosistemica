@@ -9,7 +9,6 @@ import ReactMapboxGl, {
 import { mapboxAccessToken, style } from '../../common/mapbox.js';
 import MapboxGLDraw from '../components/widgets/MapboxGLDraw.jsx';
 import MapControlPanel from '../components/widgets/MapControlPanel.jsx';
-import MapboxPolygonSwitcher from '../components/widgets/MapboxPolygonSwitcher.jsx';
 import MapControlPanelUI from '../components/widgets/MapControlPanelUI.jsx';
 import PolygonCreateModalContainer from '../containers/PolygonCreateModalContainer.jsx';
 import PolygonsListContainer from '../containers/PolygonsListContainer.jsx';
@@ -47,14 +46,14 @@ export default class MapPage extends Component {
   }
 
 	_setCurrentPolygon(currentPolygon, currentPolygonId) {
-		console.log('_setCurrentPolygon');
-		console.log(currentPolygon);
+		// console.log('_setCurrentPolygon');
+		// console.log(currentPolygon);
 		this.setState({ currentPolygon, currentPolygonId });
 	}
 
 	_consumeMapboxEvent(mapboxEvent) {
-		console.log('_consumeMapboxEvent');
-		console.log(mapboxEvent);
+		// console.log('_consumeMapboxEvent');
+		// console.log(mapboxEvent);
 		let newState = null;
 
 		switch(mapboxEvent) {
@@ -82,17 +81,14 @@ export default class MapPage extends Component {
 	geoJSONCoords() {
 		const cs = this.state.currentPolygon.geoJSON.geometry.coordinates
 		return [cs];
-		// return _.map(cs, c => { console.log(c); return c; })
 	}
 
 	renderPolygon() {
-		console.log('renderPolygon');
-		console.log(this.state.currentPolygon);
 		if(this.state.currentPolygon) {
 			return (
 				<Layer
 					type="fill"
-					paint={{ "fill-color": "#3bd04a", "fill-opacity": .5 }}>
+					paint={{ "fill-color": "#3bd04a", "fill-opacity": .3 }}>
 
 					<Feature
 						coordinates={this.geoJSONCoords()}/>

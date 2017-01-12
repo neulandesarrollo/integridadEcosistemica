@@ -15,6 +15,14 @@ export default class MapControlPanel extends Component {
     };
   }
 
+	// componentWillReceiveProps(nextProps) {
+	// 	switch(nextProps.drawingState) {
+	// 		case DRAWING_STATES.DRAFTING:
+	// 			this.state.map.;
+	// 			break;
+	// 	}
+	// }
+
   render() {
     return null;
   }

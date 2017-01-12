@@ -20,8 +20,6 @@ export default class PolygonsList extends Component {
 
 	handleClick(event, polygon) {
 		event.preventDefault();
-		console.log('handleClick');
-		console.log(polygon);
 		this.props.setCurrentPolygon(polygon, polygon._id);
 		this.props.consumeMapboxEvent(DRAWING_STATES.SWITCHING)
 	}
