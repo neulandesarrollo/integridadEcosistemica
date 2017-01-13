@@ -36,6 +36,12 @@ export default PolygonsSchema = new SimpleSchema({
   geoJSON: {
     type: geoJSONSchema
   },
+	lastRespondedAt: {
+		type: Date
+	},
+	numResponses: {
+		type: Number
+	},
   createdAt : {
     type: Date,
     autoValue: function() {

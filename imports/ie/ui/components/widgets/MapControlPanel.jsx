@@ -51,7 +51,7 @@ export default class MapControlPanel extends Component {
 
 				// e.point is the x, y coordinates of the mousemove event relative
 				// to the top-left corner of the map
-				'<small> ' + e.point.x + ", " + e.point.y + ' (x, y) </small>';
+				'<small> ' + Math.round(e.point.x) + ", " + Math.round(e.point.y) + ' (x, y) </small>';
 		});
 
   }

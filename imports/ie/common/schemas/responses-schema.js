@@ -1,18 +1,11 @@
-export default AnswersSchema = new SimpleSchema({
-  questionId: {
-    type: String
-  },
-	questionText: {
-		type: String
-	},
+// When a user responds to a group of questions
+// immutable
+export default ResponsesSchema = new SimpleSchema({
   userId: {
     type: String
   },
   polygonId: {
     type: String
-  },
-  value: {
-    type: Number
   },
   createdAt : {
     type: Date,
@@ -25,13 +18,5 @@ export default AnswersSchema = new SimpleSchema({
         this.unset();
       }
     }
-  },
-  updatedAt : {
-    type: Date,
-    autoValue: function() {
-      if (this.isUpdate) {
-        return new Date();
-      }
-    }
-	}
+  }
 });

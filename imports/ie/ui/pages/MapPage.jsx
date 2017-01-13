@@ -12,6 +12,7 @@ import MapControlPanel from '../components/widgets/MapControlPanel.jsx';
 import MapControlPanelUI from '../components/widgets/MapControlPanelUI.jsx';
 import PolygonCreateModalContainer from '../containers/PolygonCreateModalContainer.jsx';
 import PolygonsListContainer from '../containers/PolygonsListContainer.jsx';
+import ResponsesSection from '../components/sections/ResponsesSection.jsx';
 
 import { DRAWING_STATES } from '../../lib/drawing-states.js';
 import { MAPBOX_EVENTS, MAPBOX_MODES } from '../../lib/mapbox-events.js';
@@ -101,47 +102,55 @@ export default class MapPage extends Component {
 
   render() {
     return (
-      <div id="ie-map" className="container-fluid pl-0">
-        <div className="col-lg-9 col-md-8 col-xs-12 pl-0">
+      <div id="ie-map" className="container-fluid pl-0 mb-2">
+				<div className="row">
+					<div className="col-md-8 col-xs-12 pl-0">
 
-          <ReactMapboxGl
-            style={style}
-            center={this.state.center}
-            zoom={this.state.zoom}
-            minZoom={1}
-            maxZoom={15}
-            maxBounds={maxBounds}
-            accessToken={mapboxAccessToken}
-            containerStyle={{height: mapHeight, width: mapWidth}} >
+						<ReactMapboxGl
+							style={style}
+							center={this.state.center}
+							zoom={this.state.zoom}
+							minZoom={1}
+							maxZoom={15}
+							maxBounds={maxBounds}
+							accessToken={mapboxAccessToken}
+							containerStyle={{height: mapHeight, width: mapWidth}} >
 
-            <ZoomControl
-              zoomDiff={1}
-              onControlClick={this._onZoomClick.bind(this)} />
+							<ZoomControl
+								zoomDiff={1}
+								onControlClick={this._onZoomClick.bind(this)} />
 
-						<MapboxGLDraw
-							setCurrentPolygon={this._setCurrentPolygon.bind(this)}
-							drawingState={this.state.drawingState}
+							<MapboxGLDraw
+								setCurrentPolygon={this._setCurrentPolygon.bind(this)}
+								drawingState={this.state.drawingState}
+								consumeMapboxEvent={this._consumeMapboxEvent.bind(this)} />
+
+							<ScaleControl position="bottomLeft" />
+							<MapControlPanel consumeMapboxEvent={this._consumeMapboxEvent.bind(this)} />
+
+							{this.renderPolygon()}
+						</ReactMapboxGl>
+
+						<MapControlPanelUI drawingState={this.state.drawingState} />
+						<PolygonCreateModalContainer
+							currentPolygon={this.state.currentPolygon}
 							consumeMapboxEvent={this._consumeMapboxEvent.bind(this)} />
+					</div>
 
-						<ScaleControl position="bottomLeft" />
-						<MapControlPanel consumeMapboxEvent={this._consumeMapboxEvent.bind(this)} />
+					<div className="col-xs-12 col-md-4">
 
-						{this.renderPolygon()}
-          </ReactMapboxGl>
-
-					<MapControlPanelUI drawingState={this.state.drawingState} />
-					<PolygonCreateModalContainer
-						currentPolygon={this.state.currentPolygon}
-						consumeMapboxEvent={this._consumeMapboxEvent.bind(this)} />
-        </div>
-
-				<div className="col-lg-3 col-md-4">
-
-					<PolygonsListContainer
-						consumeMapboxEvent={this._consumeMapboxEvent.bind(this)}
-						currentPolygonId={this.state.currentPolygonId}
-						setCurrentPolygon={this._setCurrentPolygon.bind(this)} />
+						<PolygonsListContainer
+							consumeMapboxEvent={this._consumeMapboxEvent.bind(this)}
+							currentPolygonId={this.state.currentPolygonId}
+							setCurrentPolygon={this._setCurrentPolygon.bind(this)} />
+					</div>
 				</div>
+
+				<hr />
+
+				<h3 className="text-xs-center">Browse responses</h3>
+				<ResponsesSection currentPolygonId={this.state.currentPolygonId} />
+
       </div>
     )
   }

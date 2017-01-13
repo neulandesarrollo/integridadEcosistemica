@@ -78,8 +78,7 @@ export default class MapboxGLDraw extends Component {
 			switch (e.mode) {
 				case MAPBOX_MODES.SIMPLE_SELECT:
 					thiz.setFeatureAsPolygon(feature);
-					this.state.draw.deleteAll();
-					this.consumeMapboxEvent(MAPBOX_EVENTS.DRAW.SWITCHED)
+					thiz.state.draw.deleteAll();
 					break;
 			}
 		});

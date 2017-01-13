@@ -13,7 +13,7 @@ export default class MapControlPanelUI extends Component {
 								data-toggle="modal"
 								data-target="#polygonCreateModal">Save</button>;
 			default:
-				return <h1>{this.props.drawingState}</h1>
+				return <h4 className="ml-1 text-xs-center">{this.props.drawingState}</h4>
 		}
 	}
 

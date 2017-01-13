@@ -10,6 +10,8 @@ Meteor.methods({
 			const polygonId = Polygons.insert(_.extend(polygon, {
 					username: email,
 					isActive: true,
+					lastRespondedAt: new Date(),
+					numResponses: 0,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}));
