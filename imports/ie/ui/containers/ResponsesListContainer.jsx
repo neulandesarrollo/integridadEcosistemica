@@ -11,6 +11,8 @@ export default ResponsesListContainer = createContainer(({currentPolygonId, curr
 
   return {
     isLoading,
-    responses: !isLoading ? Responses.find().fetch() : []
+    responses: !isLoading ? Responses.find().fetch() : [],
+		currentUserId,
+		setCurrentUserId
   };
 }, ResponsesList);

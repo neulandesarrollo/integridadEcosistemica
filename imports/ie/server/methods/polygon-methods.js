@@ -1,9 +1,13 @@
-import Polygons from '../../common/collections/polygons.js';
 import Answers from '../../common/collections/answers.js';
+import Polygons from '../../common/collections/polygons.js';
+import Responses from '../../common/collections/responses.js';
+import Questions from '../../common/collections/questions.js';
 
 Meteor.methods({
 	'polygons.insert': (polygon, answers) => {
-		console.log(polygon.geoJSON.geometry);
+		console.log('polygons.insert');
+		console.log(answers);
+
 		if(Meteor.userId()) {
 			const user = Accounts.users.findOne(Meteor.userId());
 			const email = user.emails[0].address
@@ -16,15 +20,28 @@ Meteor.methods({
 					updatedAt: new Date()
 				}));
 
-			// _.each(answers, a => {
-			// 	Answers.insert({
-			// 		polygonId,
-			// 		questionId: a.questionId,
-			// 		userId: Meteor.userId(),
-			// 		val: a.val,
-			// 		username: email
-			// 	});
-			// });
+			const responseId = Responses.insert({
+				userId: Meteor.userId(),
+				username: email,
+				polygonId,
+				createdAt: new Date()
+			});
+
+			_.each(answers, a => {
+				if(a.value) {
+					Answers.insert({
+						username: email,
+						questionId: a.questionId,
+						questionText: Questions.findOne(a.questionId).text,
+						userId: Meteor.userId(),
+						responseId,
+						polygonId,
+						value: a.value,
+						createdAt: new Date(),
+						updatedAt: new Date()
+					});
+				}
+			});
 
 			return polygonId;
 		} else {

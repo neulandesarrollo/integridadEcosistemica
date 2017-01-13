@@ -44,9 +44,9 @@ export default class PolygonCreateModal extends Component {
 
 	getAnswers() {
 		return _.map(this.props.questions, q => {
-			const qId = q._id;
-			const val = $('input[name=likertOption' + qId + ']:checked', "#polygonForm").val();
-			return { qId, val }
+			const questionId = q._id;
+			const value = $('input[name=likertOption' + questionId + ']:checked', "#polygonForm").val();
+			return { questionId, value }
 		})
 	}
 
@@ -61,9 +61,7 @@ export default class PolygonCreateModal extends Component {
 			return <h3>Loading...</h3>;
 		} else {
 			const categories = _.groupBy(this.props.questions, 'category');
-			// categories.map((x, y) => {console.log(x); console.log(y);})
 			return _.map(categories, this.renderCategory.bind(this));
-			// return this.props.questions.map(this.renderQuestion.bind(this));
 		}
 	}
 

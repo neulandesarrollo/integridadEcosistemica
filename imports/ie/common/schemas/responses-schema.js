@@ -4,6 +4,9 @@ export default ResponsesSchema = new SimpleSchema({
   userId: {
     type: String
   },
+	username: {
+		type: String
+	},
   polygonId: {
     type: String
   },

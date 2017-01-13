@@ -10,11 +10,17 @@ export default AnswersListContainer = createContainer(({currentPolygonId, curren
 		userId: currentUserId,
 		polygonId: currentPolygonId
 	}
-  const answersHandle = Meteor.subscribe('answers.find', selector);
-  const isLoading = !answersHandle.ready();
+
+	let isLoading = true;
+
+	if(currentUserId) {
+		const answersHandle = Meteor.subscribe('answers.find', selector);
+		isLoading = !answersHandle.ready();
+	}
 
   return {
     isLoading,
-    answers: !isLoading ? Answers.find(selector).fetch() : []
+    answers: !isLoading ? Answers.find(selector).fetch() : [],
+		currentUserId
   };
 }, AnswersList);

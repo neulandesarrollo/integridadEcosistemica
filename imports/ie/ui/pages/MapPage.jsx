@@ -148,7 +148,7 @@ export default class MapPage extends Component {
 
 				<hr />
 
-				<h3 className="text-xs-center">Browse responses</h3>
+				<h3 className="text-xs-center mb-2">Browse responses</h3>
 				<ResponsesSection currentPolygonId={this.state.currentPolygonId} />
 
       </div>

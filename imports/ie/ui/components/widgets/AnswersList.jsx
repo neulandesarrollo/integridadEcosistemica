@@ -2,26 +2,35 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
 
 export default class AnswersList extends Component {
-	render() {
+	renderAnswer(answer) {
 		return (
 			<div>
-				<h4 className="mt-1">Browse Answers</h4>
-
-				{this.renderAnswers()}
+				<dt>{answer.questionText}</dt>
+				<dd>{answer.value}</dd>
 			</div>
-		);
+		)
 	}
 
-	renderAnswers() {
-		if(this.props.isLoading) {
-			return <h1>Loading...</h1>
+	render() {
+		if(this.props.currentUserId) {
+			if(this.props.isLoading) {
+				return <h4>Loading answers...</h4>
+			} else {
+				return (
+					<dl>
+						{this.props.answers.map(this.renderAnswer.bind(this))}
+
+					</dl>
+				);
+			}
 		} else {
-			return <h1>answers go here</h1>
+			return null;
 		}
 	}
 }
 
 AnswersList.propTypes = {
 	answers: PropTypes.array,
-	isLoading: PropTypes.bool
+	isLoading: PropTypes.bool,
+	currentUserId: PropTypes.string
 }

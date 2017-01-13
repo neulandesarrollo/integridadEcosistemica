@@ -8,6 +8,9 @@ export default AnswersSchema = new SimpleSchema({
   userId: {
     type: String
   },
+	responseId: {
+		type: String
+	},
   polygonId: {
     type: String
   },
