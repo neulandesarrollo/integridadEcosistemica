@@ -11,6 +11,11 @@ const classifyPolygon = (userId, username, polygonId, answers) => {
 		createdAt: new Date()
 	});
 
+	Polygons.update(polygonId, {
+		$inc: {numResponses: 1},
+		$set: {lastRespondedAt: new Date()}
+	});
+
 	_.each(answers, a => {
 		const question = Questions.findOne(a.questionId)
 		if(a.value) {
@@ -32,8 +37,6 @@ const classifyPolygon = (userId, username, polygonId, answers) => {
 
 Meteor.methods({
 	'polygons.insert': (polygon, answers) => {
-		console.log('polygons.insert');
-		console.log(answers);
 		const userId = Meteor.userId();
 
 		if(userId) {
@@ -59,8 +62,6 @@ Meteor.methods({
 
 Meteor.methods({
 	'polygons.classify': (polygonId, answers) => {
-		console.log('polygons.classify');
-		console.log(answers);
 		const userId = Meteor.userId();
 
 		if(userId) {

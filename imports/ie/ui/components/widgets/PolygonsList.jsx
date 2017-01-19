@@ -56,7 +56,7 @@ export default class PolygonsList extends Component {
 							<dt>Created</dt>
 							<dd>{this.stringTime(polygon.createdAt)}</dd>
 
-							<dt>Num respondents</dt>
+							<dt>Num responses</dt>
 							<dd>{polygon.numResponses}</dd>
 
 							<dt>Last response</dt>
