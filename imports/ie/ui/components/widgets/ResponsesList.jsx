@@ -29,7 +29,7 @@ export default class ResponsesList extends Component {
 			const responses = this.props.responses;
 			if(responses.length > 0) {
 				return (
-					<ul className="nav flex-column">
+					<ul className="nav flex-column ml-1">
 
 							{responses.map(this.renderResponse.bind(this))}
 					</ul>

@@ -35,3 +35,4 @@ accounts-password
 kadira:flow-router-ssr
 xinranxiao:spotify
 simple:json-routes
+simple:rest

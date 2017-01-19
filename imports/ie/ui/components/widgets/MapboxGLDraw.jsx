@@ -22,8 +22,9 @@ export default class MapboxGLDraw extends Component {
 				this.state.draw.changeMode(MAPBOX_MODES.STATIC);
 				break;
 			case DRAWING_STATES.SWITCHING:
-				if(this.state.draw)
+				if(this.state.draw) {
 					this.state.draw.deleteAll();
+				}
 				break;
 		}
 	}
@@ -79,8 +80,10 @@ export default class MapboxGLDraw extends Component {
 			switch (e.mode) {
 				case MAPBOX_MODES.SIMPLE_SELECT:
 					thiz.setFeatureAsPolygon(feature);
-					if(thiz.state.draw)
+					if(thiz.state.draw) {
+						
 						thiz.state.draw.deleteAll();
+					}
 					break;
 			}
 		});
