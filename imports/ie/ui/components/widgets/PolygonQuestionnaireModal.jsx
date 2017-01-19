@@ -6,14 +6,6 @@ import LikertQuestionInput from './LikertQuestionInput.jsx';
 import { MAPBOX_EVENTS } from '../../../lib/mapbox-events.js';
 
 export default class PolygonCreateModal extends Component {
-	renderForm() {
-		return (
-			<form onSubmit={this.handleSubmit.bind(this)} ref='polygonQuestionnaireForm' id='polygonQuestionnaireForm'>
-				{this.renderQuestions()}
-			</form>
-		)
-	}
-
 	handleSubmit(event) {
 		const thiz = this;
 		event.preventDefault();
@@ -44,16 +36,6 @@ export default class PolygonCreateModal extends Component {
 			const questionSelector = 'input[name=likertOption' + questionId + ']:checked';
 			$(questionSelector).prop( "checked", false );
 		});
-	}
-
-	submitForm() {
-		const form = ReactDOM.findDOMNode(this.refs.polygonQuestionnaireForm);
-		$(form).trigger('submit');
-	}
-
-	componentDidMount() {
-		const form = ReactDOM.findDOMNode(this.refs.polygonQuestionnaireForm);
-		$(form).submit(this.handleSubmit.bind(this));
 	}
 
 	renderQuestions() {
@@ -87,7 +69,7 @@ export default class PolygonCreateModal extends Component {
 		} else {
 			return (
 				<div className="modal-footer">
-					<button type="button" className="btn btn-primary" onClick={this.submitForm.bind(this)}>Create</button>
+					<button type="submit" className="btn btn-primary">Submit classification</button>
 					<button type="button" className="btn btn-secondary ml-1" data-dismiss="modal">Cancel</button>
 				</div>
 			);
@@ -99,18 +81,21 @@ export default class PolygonCreateModal extends Component {
 			<div
 				className="modal fade" id="polygonQuestionnaireModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div className="modal-dialog" role="document">
-			    <div className="modal-content">
-			      <div className="modal-header">
-			        <h5 className="modal-title">Classify this polygon</h5>
-			        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div className="modal-body">
-			        {this.renderForm()}
-			      </div>
-						{this.renderModalFooter()}
-			    </div>
+					<form onSubmit={this.handleSubmit.bind(this)} ref='polygonQuestionnaireForm' id='polygonQuestionnaireForm'>
+
+				    <div className="modal-content">
+				      <div className="modal-header">
+				        <h5 className="modal-title">Classify this polygon</h5>
+				        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div className="modal-body">
+								{this.renderQuestions()}
+				      </div>
+							{this.renderModalFooter()}
+				    </div>
+					</form>
 			  </div>
 			</div>
 		);

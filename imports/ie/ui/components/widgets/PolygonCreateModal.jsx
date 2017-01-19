@@ -8,7 +8,6 @@ import { MAPBOX_EVENTS } from '../../../lib/mapbox-events.js';
 export default class PolygonCreateModal extends Component {
 	renderForm() {
 		return (
-			<form onSubmit={this.handleSubmit.bind(this)} ref='polygonForm' id='polygonForm'>
 				<div className="form-group">
 					<label htmlFor="name">Name of region</label>
 					<input className="form-control" type="text" id="name" ref="name" />
@@ -17,8 +16,6 @@ export default class PolygonCreateModal extends Component {
 					</small>
 				</div>
 
-				{this.renderQuestions()}
-			</form>
 		)
 	}
 
@@ -58,15 +55,16 @@ export default class PolygonCreateModal extends Component {
 		});
 	}
 
-	submitForm() {
-		const form = ReactDOM.findDOMNode(this.refs.polygonForm);
-		$(form).trigger('submit');
-	}
+	// submitForm(event) {
+	// 	event.preventDefault();
+	// 	const form = ReactDOM.findDOMNode(this.refs.polygonForm);
+	// 	$(form).trigger('submit');
+	// }
 
-	componentDidMount() {
-		const form = ReactDOM.findDOMNode(this.refs.polygonForm);
-		$(form).submit(this.handleSubmit.bind(this));
-	}
+	// componentDidMount() {
+	// 	const form = ReactDOM.findDOMNode(this.refs.polygonForm);
+	// 	$(form).submit(this.handleSubmit.bind(this));
+	// }
 
 	renderQuestions() {
 		if(this.props.isLoading) {
@@ -99,7 +97,7 @@ export default class PolygonCreateModal extends Component {
 		} else {
 			return (
 				<div className="modal-footer">
-					<button type="button" className="btn btn-primary" onClick={this.submitForm.bind(this)}>Create</button>
+					<button type="submit" className="btn btn-primary">Create Polygon</button>
 					<button type="button" className="btn btn-secondary ml-1" data-dismiss="modal">Cancel</button>
 				</div>
 			);
@@ -111,6 +109,8 @@ export default class PolygonCreateModal extends Component {
 			<div
 				className="modal fade" id="polygonCreateModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div className="modal-dialog" role="document">
+					<form onSubmit={this.handleSubmit.bind(this)} ref='polygonForm' id='polygonForm'>
+
 			    <div className="modal-content">
 			      <div className="modal-header">
 			        <h5 className="modal-title">Create Polygon</h5>
@@ -120,9 +120,13 @@ export default class PolygonCreateModal extends Component {
 			      </div>
 			      <div className="modal-body">
 			        {this.renderForm()}
+							{this.renderQuestions()}
+
 			      </div>
 						{this.renderModalFooter()}
 			    </div>
+				</form>
+
 			  </div>
 			</div>
 		);

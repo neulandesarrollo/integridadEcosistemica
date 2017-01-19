@@ -3,7 +3,7 @@ import { questions } from '../../lib/question-fixtures.js'
 
 export function seedQuestions() {
 	// Comment in production
-  Questions.remove({})
+  // Questions.remove({})
 
   if(Questions.find().count() === 0) {
 	  _.each(questions, question => {
