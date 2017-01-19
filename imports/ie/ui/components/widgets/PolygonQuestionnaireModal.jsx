@@ -8,15 +8,7 @@ import { MAPBOX_EVENTS } from '../../../lib/mapbox-events.js';
 export default class PolygonCreateModal extends Component {
 	renderForm() {
 		return (
-			<form onSubmit={this.handleSubmit.bind(this)} ref='polygonForm' id='polygonForm'>
-				<div className="form-group">
-					<label htmlFor="name">Name of region</label>
-					<input className="form-control" type="text" id="name" ref="name" />
-					<small className="form-text text-muted">
-						Official city, province, or colloquial name.
-					</small>
-				</div>
-
+			<form onSubmit={this.handleSubmit.bind(this)} ref='polygonQuestionnaireForm' id='polygonQuestionnaireForm'>
 				{this.renderQuestions()}
 			</form>
 		)
@@ -25,27 +17,23 @@ export default class PolygonCreateModal extends Component {
 	handleSubmit(event) {
 		const thiz = this;
 		event.preventDefault();
-		let polygon = this.props.currentPolygon;
-		polygon.name = ReactDOM.findDOMNode(thiz.refs.name).value.trim();
 		const answers = thiz.getAnswers();
 
-		Meteor.call("polygons.insert", polygon, answers, (error, polygonId) => {
-
+		Meteor.call("polygons.classify", this.props.currentPolygonId, answers, (error, polygonId) => {
 			if(error) {
 				console.log("error", error);
 			}
 
-			this.props.consumeMapboxEvent(MAPBOX_EVENTS.DRAW.SAVED)
-			ReactDOM.findDOMNode(thiz.refs.name).value = '';
 			thiz.clearAnswers();
-			$("#polygonCreateModal").modal("hide");
+			$("#polygonQuestionnaireModal").modal("hide");
 		})
 	}
 
 	getAnswers() {
 		return _.map(this.props.questions, q => {
 			const questionId = q._id;
-			const value = $('input[name=likertOption' + questionId + ']:checked', "#polygonForm").val();
+			const questionSelector = 'input[name=likertOption' + questionId + ']:checked';
+			const value = $(questionSelector, "#polygonQuestionnaireForm").val();
 			return { questionId, value }
 		})
 	}
@@ -59,12 +47,12 @@ export default class PolygonCreateModal extends Component {
 	}
 
 	submitForm() {
-		const form = ReactDOM.findDOMNode(this.refs.polygonForm);
+		const form = ReactDOM.findDOMNode(this.refs.polygonQuestionnaireForm);
 		$(form).trigger('submit');
 	}
 
 	componentDidMount() {
-		const form = ReactDOM.findDOMNode(this.refs.polygonForm);
+		const form = ReactDOM.findDOMNode(this.refs.polygonQuestionnaireForm);
 		$(form).submit(this.handleSubmit.bind(this));
 	}
 
@@ -109,11 +97,11 @@ export default class PolygonCreateModal extends Component {
   render() {
     return (
 			<div
-				className="modal fade" id="polygonCreateModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				className="modal fade" id="polygonQuestionnaireModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div className="modal-dialog" role="document">
 			    <div className="modal-content">
 			      <div className="modal-header">
-			        <h5 className="modal-title">Create Polygon</h5>
+			        <h5 className="modal-title">Classify this polygon</h5>
 			        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
@@ -131,7 +119,6 @@ export default class PolygonCreateModal extends Component {
 
 PolygonCreateModal.propTypes = {
 	isLoading: PropTypes.bool,
-	currentPolygon: PropTypes.object,
+	currentPolygonId: PropTypes.string,
 	questions: PropTypes.array,
-	consumeMapboxEvent: PropTypes.func
 };

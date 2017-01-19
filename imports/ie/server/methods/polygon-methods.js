@@ -3,13 +3,41 @@ import Polygons from '../../common/collections/polygons.js';
 import Responses from '../../common/collections/responses.js';
 import Questions from '../../common/collections/questions.js';
 
+const classifyPolygon = (userId, username, polygonId, answers) => {
+	const responseId = Responses.insert({
+		userId,
+		username,
+		polygonId,
+		createdAt: new Date()
+	});
+
+	_.each(answers, a => {
+		const question = Questions.findOne(a.questionId)
+		if(a.value) {
+			Answers.insert({
+				username,
+				questionId: a.questionId,
+				questionText: question.text,
+				userId,
+				responseId,
+				polygonId,
+				value: a.value,
+				text: question.answers[a.value],
+				createdAt: new Date(),
+				updatedAt: new Date()
+			});
+		}
+	});
+}
+
 Meteor.methods({
 	'polygons.insert': (polygon, answers) => {
 		console.log('polygons.insert');
 		console.log(answers);
+		const userId = Meteor.userId();
 
-		if(Meteor.userId()) {
-			const user = Accounts.users.findOne(Meteor.userId());
+		if(userId) {
+			const user = Accounts.users.findOne(userId);
 			const email = user.emails[0].address
 			const polygonId = Polygons.insert(_.extend(polygon, {
 					username: email,
@@ -20,28 +48,25 @@ Meteor.methods({
 					updatedAt: new Date()
 				}));
 
-			const responseId = Responses.insert({
-				userId: Meteor.userId(),
-				username: email,
-				polygonId,
-				createdAt: new Date()
-			});
+			classifyPolygon(userId, email, polygonId, answers);
 
-			_.each(answers, a => {
-				if(a.value) {
-					Answers.insert({
-						username: email,
-						questionId: a.questionId,
-						questionText: Questions.findOne(a.questionId).text,
-						userId: Meteor.userId(),
-						responseId,
-						polygonId,
-						value: a.value,
-						createdAt: new Date(),
-						updatedAt: new Date()
-					});
-				}
-			});
+			return polygonId;
+		} else {
+			throw new Meteor.Error("Must be logged in to create polygons");
+		}
+	}
+});
+
+Meteor.methods({
+	'polygons.classify': (polygonId, answers) => {
+		console.log('polygons.classify');
+		console.log(answers);
+		const userId = Meteor.userId();
+
+		if(userId) {
+			const user = Accounts.users.findOne(userId);
+			const email = user.emails[0].address
+			classifyPolygon(userId, email, polygonId, answers);
 
 			return polygonId;
 		} else {

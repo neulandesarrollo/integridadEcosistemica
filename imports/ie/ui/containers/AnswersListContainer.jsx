@@ -5,15 +5,17 @@ import { createContainer } from 'meteor/react-meteor-data';
 import Answers from '../../common/collections/answers.js';
 import AnswersList from '../components/widgets/AnswersList.jsx';
 
-export default AnswersListContainer = createContainer(({currentPolygonId, currentUserId}) => {
+export default AnswersListContainer = createContainer(({ currentResponseId }) => {
 	const selector = {
-		userId: currentUserId,
-		polygonId: currentPolygonId
+		responseId: currentResponseId
 	}
 
+	console.log('AnswersListContainer');
+	console.log(selector);
+	
 	let isLoading = true;
 
-	if(currentUserId) {
+	if(currentResponseId) {
 		const answersHandle = Meteor.subscribe('answers.find', selector);
 		isLoading = !answersHandle.ready();
 	}
@@ -21,6 +23,6 @@ export default AnswersListContainer = createContainer(({currentPolygonId, curren
   return {
     isLoading,
     answers: !isLoading ? Answers.find(selector).fetch() : [],
-		currentUserId
+		currentResponseId
   };
 }, AnswersList);

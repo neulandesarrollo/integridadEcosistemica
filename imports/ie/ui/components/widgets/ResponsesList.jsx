@@ -8,7 +8,7 @@ export default class ResponsesList extends Component {
 
 	handlClick(e, response) {
 		e.preventDefault();
-		this.props.setCurrentUserId(response.userId);
+		this.props.setCurrentId(response.userId, response._id);
 	}
 
 	renderResponse(response) {
@@ -29,8 +29,9 @@ export default class ResponsesList extends Component {
 			const responses = this.props.responses;
 			if(responses.length > 0) {
 				return (
-					<ul className="nav nav-pills justify-content-center">
-					  {responses.map(this.renderResponse.bind(this))}
+					<ul className="nav flex-column">
+
+							{responses.map(this.renderResponse.bind(this))}
 					</ul>
 				)
 				return
@@ -45,5 +46,5 @@ ResponsesList.propTypes = {
 	responses: PropTypes.array,
 	isLoading: PropTypes.bool,
 	currentUserId: PropTypes.string,
-	setCurrentUserId: PropTypes.func
+	setCurrentId: PropTypes.func
 }

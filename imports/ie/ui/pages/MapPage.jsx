@@ -11,6 +11,7 @@ import MapboxGLDraw from '../components/widgets/MapboxGLDraw.jsx';
 import MapControlPanel from '../components/widgets/MapControlPanel.jsx';
 import MapControlPanelUI from '../components/widgets/MapControlPanelUI.jsx';
 import PolygonCreateModalContainer from '../containers/PolygonCreateModalContainer.jsx';
+import PolygonQuestionnaireModalContainer from '../containers/PolygonQuestionnaireModalContainer.jsx';
 import PolygonsListContainer from '../containers/PolygonsListContainer.jsx';
 import ResponsesSection from '../components/sections/ResponsesSection.jsx';
 
@@ -131,10 +132,17 @@ export default class MapPage extends Component {
 							{this.renderPolygon()}
 						</ReactMapboxGl>
 
-						<MapControlPanelUI drawingState={this.state.drawingState} />
+						<MapControlPanelUI
+							currentPolygon={this.state.currentPolygon}
+							drawingState={this.state.drawingState} />
+
 						<PolygonCreateModalContainer
 							currentPolygon={this.state.currentPolygon}
 							consumeMapboxEvent={this._consumeMapboxEvent.bind(this)} />
+
+						<PolygonQuestionnaireModalContainer
+							currentPolygonId={this.state.currentPolygonId} />
+
 					</div>
 
 					<div className="col-xs-12 col-md-4">

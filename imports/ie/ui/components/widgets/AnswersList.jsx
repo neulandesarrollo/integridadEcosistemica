@@ -4,15 +4,15 @@ import React, { Component, PropTypes } from 'react';
 export default class AnswersList extends Component {
 	renderAnswer(answer) {
 		return (
-			<div>
+			<div key={answer._id}>
 				<dt>{answer.questionText}</dt>
-				<dd>{answer.value}</dd>
+				<dd>{"(" + answer.value + ") " + answer.text}</dd>
 			</div>
 		)
 	}
 
 	render() {
-		if(this.props.currentUserId) {
+		if(this.props.currentResponseId) {
 			if(this.props.isLoading) {
 				return <h4>Loading answers...</h4>
 			} else {
@@ -32,5 +32,5 @@ export default class AnswersList extends Component {
 AnswersList.propTypes = {
 	answers: PropTypes.array,
 	isLoading: PropTypes.bool,
-	currentUserId: PropTypes.string
+	currentResponseId: PropTypes.string
 }

@@ -12,6 +12,11 @@ export default class MapControlPanelUI extends Component {
 								className="btn btn-primary mx-auto ml-1 my-1 btn-block"
 								data-toggle="modal"
 								data-target="#polygonCreateModal">Save</button>;
+			case DRAWING_STATES.SWITCHING:
+				return <button
+								className="btn btn-info mx-auto ml-1 my-1 btn-block"
+								data-toggle="modal"
+								data-target="#polygonQuestionnaireModal">{"Classify: " + this.props.currentPolygon.name}</button>
 			default:
 				return <h4 className="ml-1 text-xs-center">{this.props.drawingState}</h4>
 		}
@@ -32,5 +37,6 @@ export default class MapControlPanelUI extends Component {
 }
 
 MapControlPanelUI.propTypes = {
+	currentPolygon: PropTypes.object,
 	drawingState: PropTypes.string
 };

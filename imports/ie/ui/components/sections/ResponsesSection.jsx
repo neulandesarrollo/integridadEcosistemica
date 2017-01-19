@@ -8,12 +8,13 @@ export default class ResponsesSection extends Component {
 		super(props)
 
 		this.state = {
-			currentUserId: null
+			currentUserId: null,
+			currentResponseId: null
 		}
 	}
 
-	_setCurrentUserId(currentUserId) {
-		this.setState({ currentUserId })
+	_setCurrentId(currentUserId, currentResponseId) {
+		this.setState({ currentUserId, currentResponseId })
 	}
 
   render() {
@@ -27,14 +28,13 @@ export default class ResponsesSection extends Component {
 					<ResponsesListContainer
 						currentPolygonId={this.props.currentPolygonId}
 						currentUserId={this.state.currentUserId}
-						setCurrentUserId={this._setCurrentUserId.bind(this)} />
+						setCurrentId={this._setCurrentId.bind(this)} />
 				</div>
 
 				<div className="col-xs-12 col-md-6">
 
 					<AnswersListContainer
-						currentPolygonId={this.props.currentPolygonId}
-						currentUserId={this.state.currentUserId} />
+						currentResponseId={this.state.currentResponseId} />
 				</div>
 			</div>
     );

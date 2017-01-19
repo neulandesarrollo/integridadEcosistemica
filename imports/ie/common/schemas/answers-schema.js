@@ -17,6 +17,9 @@ export default AnswersSchema = new SimpleSchema({
   value: {
     type: Number
   },
+	text: {
+		type: String
+	},
   createdAt : {
     type: Date,
     autoValue: function() {
