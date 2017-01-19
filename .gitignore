@@ -6,3 +6,4 @@ scripts
 /imports/ie/server/fixtures
 packages/piwik-http-sandstorm
 dist
+npm-debug.log
